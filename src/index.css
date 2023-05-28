@@ -1,1 +1,17 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Alata&family=Poppins:ital,wght@1,100&family=Roboto:wght@300;400;500&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+    .active-state{
+        @apply mr-8 last:mr-0 text-red-500 after:block after:h-2 after:w-2 after:bg-red-500 after:rounded flex flex-col 
+        items-center
+    }
+    .inactive-state{
+        @apply mr-8 last:mr-0 text-red-500;
+    }
+}
