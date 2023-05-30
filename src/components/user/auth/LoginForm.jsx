@@ -6,8 +6,8 @@ import { NavLink } from 'react-router-dom';
 function LoginForm() {
   return (
     <div>
-       <form className='max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg shadow-teal-50'>
-      <h2 className='text-4xl dark:text-white font-bold text-center'>Login</h2>
+       <form className='max-w-[400px] w-full mx-auto bg-white p-8 px-8 rounded-lg shadow-teal-50'>
+      <h2 className='text-4xl dark:text-gray-800 font-bold text-center'>Login</h2>
       
       <div className='flex flex-col text-gray-400 py-2'>
           <label>Email</label>

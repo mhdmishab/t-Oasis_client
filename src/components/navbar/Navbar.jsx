@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import logo from "../../assets/images/t-oasis logo.png"
 
 function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleNavbar = () => {
+    setIsOpen(!isOpen);
+  };
   const NavItems=[
     {
       path:'/',
@@ -31,20 +36,66 @@ function Navbar() {
 
 
   return (
-    <>
-       <nav className='fixed  w-screen h-16 flex justify-between items-center bg-transparent'>
-        <div className='pl-5'>
-          <img className='w-16 h-16' src={logo} alt="" />
-        </div>
-        <div className='flex justify-center items-center pr-16'>
+    // <>
+    //    <nav className='fixed  w-screen h-16 flex justify-between items-center bg-transparent'>
+    //     <div className='pl-5'>
+    //       <img className='w-16 h-16' src={logo} alt="" />
+    //     </div>
+    //     <div className='flex justify-center items-center pr-16'>
 
-            {
-            NavItems.map((item,index)=>(
-              <NavLink key={index} to={item.path} className={({isActive})=>isActive?"active-state":"inactive-state"}>{item.icon}</NavLink>
-            ))
-            }
+    //         {
+    //         NavItems.map((item,index)=>(
+    //           <NavLink key={index} to={item.path} className={({isActive})=>isActive?"active-state":"inactive-state"}>{item.icon}</NavLink>
+    //         ))
+    //         }
+    //     </div>
+    //    </nav>
+    // </>
+    <>
+      <nav className="fixed w-screen h-16 flex justify-between items-center bg-transparent">
+        <div className="pl-5">
+          <img className="w-16 h-16" src={logo} alt="" />
         </div>
-       </nav>
+        <div className="flex justify-center items-center pr-16">
+          <div className={`flex lg:hidden ${isOpen ? 'block' : 'hidden'}`}>
+            {/* Render the mobile menu items */}
+            {NavItems.map((item, index) => (
+              <NavLink
+                key={index}
+                to={item.path}
+                className={({ isActive }) => isActive ? 'active-state' : 'inactive-state'}
+              >
+                {item.icon}
+              </NavLink>
+            ))}
+          </div>
+          {/* Render the toggle button */}
+          <button
+            className="lg:hidden ml-4 p-2 rounded-md bg-red-500 focus:outline-none"
+            onClick={toggleNavbar}
+          >
+            <svg className="h-5 w-5" viewBox="0 0 20 20" fill="white">
+              <path
+                fillRule="evenodd"
+                d="M3 6a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
+          {/* Render the desktop menu items */}
+          <div className="hidden lg:flex">
+            {NavItems.map((item, index) => (
+              <NavLink
+                key={index}
+                to={item.path}
+                className={({ isActive }) => isActive ? 'active-state' : 'inactive-state'}
+              >
+                {item.icon}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+      </nav>
     </>
   )
 }
