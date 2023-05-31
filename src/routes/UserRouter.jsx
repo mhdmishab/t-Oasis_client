@@ -4,6 +4,7 @@ import Signup from '../pages/user/auth/Signup';
 import Login from '../pages/user/auth/Login';
 import Home from '../pages/user/home/Home';
 import Navbar from '../components/navbar/Navbar';
+import OtpPage from '../pages/user/auth/OtpPage';
 
 
 
@@ -18,6 +19,7 @@ function UserRouter() {
             <Route path='/' element={<Home/>}/>
             <Route path='/signup' element={<Signup/>}/>
             <Route path='/login' element={<Login/>}/>
+            <Route path='/otp' element={<OtpPage/>}/>
             
         </Routes>
 

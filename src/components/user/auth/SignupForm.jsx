@@ -1,7 +1,8 @@
 
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Signup } from '../../../store/actions/AuthActions';
+import { useNavigate } from 'react-router-dom';
 
 function SignupForm() {
 
@@ -10,9 +11,22 @@ function SignupForm() {
     email:"",
     password:""
   })
+const navigate=useNavigate();
 const dispatch=useDispatch();
-const State=useSelector(state=>state)
-console.log(State);
+const State=useSelector(state=>state.auth)
+useEffect(() => {
+  // Check for dispatch response here
+  if (State.error) {
+    // Handle error
+    console.log('Signup error:', State.error);
+  } else if (State.otp) {
+    // Handle success
+    console.log('Signup success:', State);
+    navigate('/otp');
+    
+    
+  }
+}, [State,navigate]);
 const handleSubmit=(e)=>{
   e.preventDefault();
   dispatch(Signup(user));
@@ -39,10 +53,7 @@ const handleSubmit=(e)=>{
           <label className='text-gray-800'>Password</label>
           <input className='rounded-lg bg-[#9D9D9D] mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none' type='password' value={user.password} onChange={(e)=>setUser({...user,password:e.target.value})}/>
       </div>
-      <div className='flex flex-col text-white py-2'>
-          <label className='text-gray-800'>Password</label>
-          <input className='rounded-lg bg-[#9D9D9D] mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none' type='password' value={user.password} onChange={(e)=>setUser({...user,password:e.target.value})}/>
-      </div>
+      
      
       <button className='w-full my-5 py-5 bg-teal-500 shadow-lg shadow-teal-500/50 text-white font-semibold rounded-lg'>Sign Up</button>
 
