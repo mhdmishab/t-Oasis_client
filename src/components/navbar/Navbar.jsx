@@ -60,6 +60,7 @@ function Navbar() {
           <div className={`flex lg:hidden ${isOpen ? 'block' : 'hidden'}`}>
             {/* Render the mobile menu items */}
             {NavItems.map((item, index) => (
+
               <NavLink
                 key={index}
                 to={item.path}

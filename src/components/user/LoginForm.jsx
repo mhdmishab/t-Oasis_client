@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Login } from '../../../store/actions/AuthActions';
+
 
 
 
@@ -27,7 +27,7 @@ function LoginForm() {
   const dispatch=useDispatch();
   const handleSubmit=(e)=>{
     e.preventDefault();
-    dispatch(Login(user));
+    
     setuser({
       email:"",
       password:""

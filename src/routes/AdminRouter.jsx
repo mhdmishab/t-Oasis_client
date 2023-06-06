@@ -1,13 +1,15 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Signup from '../pages/admin/auth/Signup'
+import Signup from '../pages/vendor/auth/Signup'
+import OtpPage from '../pages/vendor/auth/OtpPage'
+
 
 function AdminRouter() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-            <Route path='/adminsignup' element={<Signup/>}/>
+            
         </Routes>
       </BrowserRouter>
     </>

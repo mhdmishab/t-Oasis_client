@@ -1,8 +1,13 @@
 import { combineReducers } from "redux";
-import AuthReducer from "./AuthReducer";
+
+import authReducer from "../../slices/vendor/Auth";
+import messageReducer from "../../slices/Message";
 
 const RootReducer=combineReducers({
-    auth:AuthReducer
+   
+    authe:authReducer,
+    message:messageReducer
+
 })
 
 export default RootReducer;
