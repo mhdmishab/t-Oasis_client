@@ -1,5 +1,5 @@
 import React from 'react'
-import OtpForm from '../../../components/Auth/OtpForm';
+import OtpForm from '../../../components/user/OtpForm';
 import otpImg from '../../../assets/images/signupbg.jpg';
 
 function OtpPage() {

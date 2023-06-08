@@ -8,10 +8,10 @@
 
 @layer components{
     .active-state{
-        @apply mr-8 last:mr-0 text-red-500 after:block after:h-2 after:w-2 after:bg-red-500 after:rounded flex flex-col 
+        @apply mr-8 last:mr-0 text-green-900 after:block after:h-2 after:w-2 after:bg-green-900 after:rounded flex flex-col 
         items-center
     }
     .inactive-state{
-        @apply mr-8 last:mr-0 text-red-500;
+        @apply mr-8 last:mr-0 text-green-900;
     }
 }

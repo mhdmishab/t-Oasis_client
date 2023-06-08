@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import authService from "../../services/vendor/AuthService";
+import authService from "../../services/user/AuthService";
 import { setMessage } from "../Message";
 import { toast } from "react-toastify";
 
-const user = JSON.parse(localStorage.getItem("user"));
+const user = JSON.parse(localStorage.getItem("usertoken"));
 
 export const register = createAsyncThunk(
   "auth/register",
@@ -44,15 +44,23 @@ export const otpVerification = createAsyncThunk(
       const otpToken = localStorage.getItem("otptoken");
       const otpObj = JSON.parse(otpToken);
       const otptoken = otpObj.token;
+      const expirationTime=otpObj.expiresAt;
       const otpData = { otp, otptoken };
+      const currentTime=Date.now();
+      
+      if(expirationTime < currentTime) {
+        console.log("otp expired");
+        const message = 'OTP Expired';
+      return thunkAPI.rejectWithValue({ message });
+      }
 
       const response = await authService.otpverification(otpData);
 
       console.log(response.success);
       if (response.success) {
-        localStorage.clear();
+        localStorage.removeItem("otptoken");
 
-        localStorage.setItem("vendorToken", JSON.stringify({
+        localStorage.setItem("userToken", JSON.stringify({
           token: response.token,
 
         }));
@@ -77,7 +85,7 @@ export const otpVerification = createAsyncThunk(
       toast.error(error.response?.data.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
-      return thunkAPI.rejectWithValue();
+      return thunkAPI.rejectWithValue({message});
     }
   }
 )
@@ -88,7 +96,7 @@ export const login = createAsyncThunk("auth/login",
 
       const data = await authService.login(user);
       console.log("inside login try")
-      console.log(data);
+      
       thunkAPI.dispatch(setMessage(data.message));
       return data;
     } catch (error) {
@@ -109,17 +117,15 @@ export const login = createAsyncThunk("auth/login",
     }
 
 
-  })
+  });
 
-
-
-export const resendotp = createAsyncThunk('auth/resendotp',
-  async (thunkAPI) => {
-    try {
+export const resendotp=createAsyncThunk('auth/resendotp',
+ async(thunkAPI)=>{
+      try{
       const otpToken = localStorage.getItem("otptoken");
       const otpObj = JSON.parse(otpToken);
       const otptoken = otpObj.token;
-      const otpData = { otptoken }
+      const otpData = {otptoken}
       const data = await authService.resendotp(otpData);
       console.log("inside resend try")
 
@@ -130,9 +136,9 @@ export const resendotp = createAsyncThunk('auth/resendotp',
       return data;
 
 
-    } catch (error) {
-      console.log("inside RESEND auth catsh")
-
+      }catch(error){
+        console.log("inside RESEND auth catsh")
+     
       const message =
         (error.response &&
           error.response.data &&
@@ -144,11 +150,12 @@ export const resendotp = createAsyncThunk('auth/resendotp',
       toast.error(error.response?.data.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
-      return thunkAPI.rejectWithValue();
+      return thunkAPI.rejectWithValue({message});
     }
-  }
-
+      }
+ 
 )
+
 
 
 const initialState = user ? { isLoggedIn: true, user: user, loading: false } : { isLoggedIn: false, user: null, loading: false };
@@ -193,6 +200,8 @@ const authSlice = createSlice({
 
       state.loading = false;
       state.isLoggedIn = false;
+      state.errorMessage = action.payload.message;
+      
     },
     [login.pending]: (state, action) => {
 
@@ -222,8 +231,11 @@ const authSlice = createSlice({
       state.loading = false;
       state.isLoggedIn = false;
     },
+
   },
 });
+
+
 
 export const { logout } = authSlice.actions;
 export default authSlice.reducer;

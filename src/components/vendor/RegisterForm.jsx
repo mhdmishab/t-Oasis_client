@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {  useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -11,7 +11,7 @@ function RegisterForm() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
    
-    const {loading } = useSelector((state) => state.authe);
+    const {loading } = useSelector((state) => state.vendorauth);
 
     const {message} = useSelector((state)=>state.message);
     
@@ -76,11 +76,11 @@ function RegisterForm() {
             onSubmit={handleSubmit}
         >
             <Form className='p-8 px-8 rounded-lg'>
-                <h2 className='text-4xl dark:text-gray-800 font-bold text-center'>Manager Sign up </h2>
-                <div className='flex flex-col text-white py-2'>
+                <h2 className='text-4xl mb-5 dark:text-gray-800 font-bold text-center'>Manager Sign up </h2>
+                <div className='flex flex-col text-black py-2'>
                     <label className='text-gray-800'>Name</label>
                     <Field
-                        className='rounded-lg bg-[#9D9D9D] mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+                        className='pl-8 m-2 border-b-2 font-display focus:outline-none focus:border-black  text-base'
                         type='text'
                         name='name'
                     />
@@ -90,10 +90,10 @@ function RegisterForm() {
                         className='text-red-500' // Set the error text color to red
                     />
                 </div>
-                <div className='flex flex-col text-white py-2'>
+                <div className='flex flex-col text-black py-2'>
                     <label className='text-gray-800'>Email</label>
                     <Field
-                        className='rounded-lg bg-[#9D9D9D] mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+                        className='pl-8 m-2 border-b-2 font-display focus:outline-none focus:border-black  text-base'
                         type='text'
                         name='email'
                     />
@@ -103,10 +103,10 @@ function RegisterForm() {
                         className='text-red-500' // Set the error text color to red
                     />
                 </div>
-                <div className='flex flex-col text-white py-2'>
+                <div className='flex flex-col text-black py-2'>
                     <label className='text-gray-800'>Password</label>
                     <Field
-                        className='rounded-lg bg-[#9D9D9D] mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+                        className='pl-8 m-2 border-b-2 font-display focus:outline-none focus:border-black  text-base'
                         type='password'
                         name='password'
                     />

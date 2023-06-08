@@ -1,12 +1,12 @@
 import axios from "axios";
 import { Url } from "../../apis/Axios";
-import { VendorLogin, VendorOtp, VendorResendOtp, VendorSignup } from "../../utils/endpoints/endpoints";
+import { UserOtp, UserLogin, UserSignup, UserResendOtp } from "../../utils/endpoints/endpoints";
 
 
 
 const register = (user) => {
     return new Promise((resolve, reject) => {
-      axios.post(Url +VendorSignup, user)
+      axios.post(Url +UserSignup, user)
         .then((response) => {
           console.log("inside token area");
           console.log(response);
@@ -14,7 +14,7 @@ const register = (user) => {
         const expirationTimeInMinutes = 1;
         const expirationTime = new Date().getTime() + expirationTimeInMinutes * 60 * 1000;
         
-      
+        console.log(response.data.token);
         localStorage.setItem("otptoken", JSON.stringify({
           token: response.data.token,
           expiresAt: expirationTime
@@ -30,7 +30,7 @@ const register = (user) => {
 const otpverification=(otpData)=>{
     return new Promise((resolve,reject)=>{
       console.log(otpData);
-        axios.post(Url+VendorOtp,otpData).then((response)=>{
+        axios.post(Url+UserOtp,otpData).then((response)=>{
             console.log(response.data);
             resolve(response.data) ;
         }).catch((error)=>{
@@ -42,7 +42,7 @@ const otpverification=(otpData)=>{
 const resendotp=(otpData)=>{
   return new Promise((resolve,reject)=>{
     console.log(otpData);
-      axios.post(Url+VendorResendOtp,otpData).then((response)=>{
+      axios.post(Url+UserResendOtp,otpData).then((response)=>{
         console.log("inside services resendotp")
           console.log(response);
           const expirationTimeInMinutes = 1;
@@ -63,7 +63,7 @@ const resendotp=(otpData)=>{
 
 const login=(user)=>{
   return new Promise((resolve,reject)=>{
-    axios.post(Url +VendorLogin, user)
+    axios.post(Url +UserLogin, user)
     .then((response) => {
       console.log("inside token area");
       console.log(response);
@@ -72,7 +72,7 @@ const login=(user)=>{
     const expirationTime = new Date().getTime() + expirationTimeInMinutes * 60 * 1000;
     
   
-    localStorage.setItem("vendorToken", JSON.stringify({
+    localStorage.setItem("userToken", JSON.stringify({
       token: response.data.token,
       expiresAt: expirationTime
     }));
@@ -91,4 +91,3 @@ const AuthService = {
   };
   
   export default AuthService;
-

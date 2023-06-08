@@ -1,11 +1,15 @@
 import { combineReducers } from "redux";
 
-import authReducer from "../../slices/vendor/Auth";
+import UserAuthReducer from '../../slices/user/Auth';
+import VendorAuthReducer from '../../slices/vendor/Auth'
+import AdminAuthReducer from '../../slices/admin/Auth'
 import messageReducer from "../../slices/Message";
 
 const RootReducer=combineReducers({
    
-    authe:authReducer,
+    userauth:UserAuthReducer,
+    vendorauth:VendorAuthReducer,
+    adminauth:AdminAuthReducer,
     message:messageReducer
 
 })

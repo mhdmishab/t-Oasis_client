@@ -1,17 +1,17 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Signup from '../pages/vendor/auth/Signup'
-import OtpPage from '../pages/vendor/auth/OtpPage'
+import {  Route, Routes } from 'react-router-dom'
+
+import Login from '../pages/admin/auth/Login'
 
 
 function AdminRouter() {
   return (
     <>
-      <BrowserRouter>
+      
         <Routes>
-            
+            <Route path='/login' element={<Login/>}></Route>
         </Routes>
-      </BrowserRouter>
+      
     </>
   )
 }

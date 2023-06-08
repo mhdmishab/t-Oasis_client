@@ -4,6 +4,7 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
+    
     fontFamily:{
       roboto:["roboto","poppins"],
       alata:["alata"]
