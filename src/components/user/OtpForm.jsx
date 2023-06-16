@@ -71,7 +71,7 @@ function OtpForm() {
 
   const handleResendOTP = () => {
 
-    console.log('Resend OTP clicked');
+    console.log('Inside user otp form');
     dispatch(resendotp()).then((response) => {
       console.log(response);
       navigate('/otp');

@@ -8,7 +8,7 @@ const register = (user) => {
     return new Promise((resolve, reject) => {
       axios.post(Url +VendorSignup, user)
         .then((response) => {
-          console.log("inside token area");
+          console.log("inside register vendor side");
           console.log(response);
 
         const expirationTimeInMinutes = 1;
@@ -16,6 +16,7 @@ const register = (user) => {
         
       
         localStorage.setItem("otptoken", JSON.stringify({
+          
           token: response.data.token,
           expiresAt: expirationTime
         }));
@@ -28,6 +29,7 @@ const register = (user) => {
   };
 
 const otpverification=(otpData)=>{
+  console.log("otp verification services vendor side");
     return new Promise((resolve,reject)=>{
       console.log(otpData);
         axios.post(Url+VendorOtp,otpData).then((response)=>{
@@ -43,7 +45,7 @@ const resendotp=(otpData)=>{
   return new Promise((resolve,reject)=>{
     console.log(otpData);
       axios.post(Url+VendorResendOtp,otpData).then((response)=>{
-        console.log("inside services resendotp")
+        console.log("inside services resendotp vendor side")
           console.log(response);
           const expirationTimeInMinutes = 1;
           const expirationTime = new Date().getTime() + expirationTimeInMinutes * 60 * 1000;
@@ -65,7 +67,7 @@ const login=(user)=>{
   return new Promise((resolve,reject)=>{
     axios.post(Url +VendorLogin, user)
     .then((response) => {
-      console.log("inside token area");
+      console.log("inside login vendor");
       console.log(response);
 
     const expirationTimeInMinutes = 60;
@@ -74,6 +76,7 @@ const login=(user)=>{
   
     localStorage.setItem("vendorToken", JSON.stringify({
       token: response.data.token,
+      vendorId:response.data._id,
       expiresAt: expirationTime
     }));
       resolve(response); 
@@ -91,4 +94,7 @@ const AuthService = {
   };
   
   export default AuthService;
+
+
+
 

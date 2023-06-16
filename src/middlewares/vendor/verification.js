@@ -1,3 +1,4 @@
+import { getNextKeyDef } from "@testing-library/user-event/dist/keyboard/getNextKeyDef";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -11,7 +12,8 @@ export default function VendorVerification({children}){
             if (location.pathname !== "/manager/register" && location.pathname !== "/manager/otp")
             navigate('/manager/login');
         }else{
-            navigate('/manager/dashboard')
+            navigate(location.pathname);
+            
         }
     },[navigate,location.pathname]);
     return children;

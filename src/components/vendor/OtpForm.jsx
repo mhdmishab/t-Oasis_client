@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import OTPInput from 'otp-input-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { otpVerification } from '../../slices/vendor/Auth';
+import { otpVerification, resendotp } from '../../slices/vendor/Auth';
 import { useNavigate } from 'react-router-dom';
 
 function OtpForm() {
@@ -13,14 +13,14 @@ function OtpForm() {
   const { loading } = useSelector(state => state.vendorauth);
   const errorMessage = useSelector((state) => state.vendorauth.errorMessage);
 
-  const token = localStorage.getItem("userToken");
+  const token = localStorage.getItem("vendorToken");
 
 
   useEffect(() => {
     if (isLoggedIn) {
 
       if (token) {
-        navigate('/');
+        navigate('/manager/dashboard');
       }
     }
 
@@ -73,10 +73,11 @@ function OtpForm() {
 
   const handleResendOTP = () => {
 
-    console.log('Resend OTP clicked');
+    
+    console.log('iniside vendor otp form');
     dispatch(resendotp()).then((response) => {
       console.log(response);
-      navigate('/otp');
+      navigate('/manager/otp');
     }).catch((err) => {
       console.log("error catched");
       console.log(err);

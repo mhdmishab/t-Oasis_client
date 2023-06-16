@@ -5,6 +5,8 @@ import OtpPage from '../pages/vendor/auth/OtpPage'
 import Login from '../pages/vendor/auth/Login'
 import VendorAuthentication from '../middlewares/vendor/verification';
 import Dashboard from '../pages/vendor/home/Dashboard'
+import Lounges from '../pages/vendor/home/Lounges'
+import Bookings from '../pages/vendor/home/Bookings'
 
 
 
@@ -18,6 +20,8 @@ function VendorRouter() {
             <Route path='/otp' element={<VendorAuthentication><OtpPage/></VendorAuthentication>}/>
             <Route path='/login' element={<VendorAuthentication><Login/></VendorAuthentication>}/>
             <Route path='/dashboard' element={<VendorAuthentication><Dashboard/></VendorAuthentication>}/>
+            <Route path='/lounges' element={<VendorAuthentication><Lounges/></VendorAuthentication>}/>
+            <Route path='/bookings' element={<VendorAuthentication><Bookings/></VendorAuthentication>}/>
 
               
           </Routes>

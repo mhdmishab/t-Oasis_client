@@ -49,11 +49,9 @@ function RegisterForm() {
 
 
     const handleSubmit = (user) => {
-     
-       
-        console.log(user);
+    
         dispatch(register(user)).unwrap().then((response)=>{
-       
+            console.log("register dispatch response at vendor aide")
             console.log(response);
             navigate('/manager/otp');
        

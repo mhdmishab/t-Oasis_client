@@ -1,18 +1,17 @@
 import React from 'react'
 import SideBar from '../../../components/vendor/SideBar'
-import DashboardManagement from '../../../components/vendor/DashboardManagement'
+import LoungesManagement from '../../../components/vendor/LoungesManagement'
 
 
-
-function Dashboard() {
+function Lounges() {
   return (
     <section className='flex gap-6'>
       
        
-    <SideBar/>
+            <SideBar/>
       
       <div className='p-7 text-2xl font-semibold flex-1 h-screen'>
-            <DashboardManagement/>
+            <LoungesManagement/>
         
       </div>
 
@@ -20,4 +19,4 @@ function Dashboard() {
   )
 }
 
-export default Dashboard
+export default Lounges

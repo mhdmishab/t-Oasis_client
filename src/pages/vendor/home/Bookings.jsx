@@ -1,10 +1,8 @@
 import React from 'react'
+import BookingManagment from '../../../components/vendor/BookingManagment'
 import SideBar from '../../../components/vendor/SideBar'
-import DashboardManagement from '../../../components/vendor/DashboardManagement'
 
-
-
-function Dashboard() {
+function Bookings() {
   return (
     <section className='flex gap-6'>
       
@@ -12,7 +10,7 @@ function Dashboard() {
     <SideBar/>
       
       <div className='p-7 text-2xl font-semibold flex-1 h-screen'>
-            <DashboardManagement/>
+    <BookingManagment/>
         
       </div>
 
@@ -20,4 +18,4 @@ function Dashboard() {
   )
 }
 
-export default Dashboard
+export default Bookings

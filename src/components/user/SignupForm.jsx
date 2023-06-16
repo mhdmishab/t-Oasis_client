@@ -51,7 +51,7 @@ function SignupForm() {
 
     const handleSubmit = (user) => {
 
-
+        
         
         dispatch(register(user)).unwrap().then((response) => {
 

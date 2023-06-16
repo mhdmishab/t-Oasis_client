@@ -3,13 +3,13 @@ import authService from "../../services/vendor/AuthService";
 import { setMessage } from "../Message";
 import { toast } from "react-toastify";
 
-const user = JSON.parse(localStorage.getItem("user"));
+const vendor = JSON.parse(localStorage.getItem("vendorToken"));
 
 export const register = createAsyncThunk(
   "auth/register",
-  async (user, thunkAPI) => {
+  async (vendor, thunkAPI) => {
     try {
-      const data = await authService.register(user);
+      const data = await authService.register(vendor);
 
       thunkAPI.dispatch(setMessage(data.message));
 
@@ -44,16 +44,27 @@ export const otpVerification = createAsyncThunk(
       const otpToken = localStorage.getItem("otptoken");
       const otpObj = JSON.parse(otpToken);
       const otptoken = otpObj.token;
+      const expirationTime = otpObj.expiresAt;
       const otpData = { otp, otptoken };
+      const currentTime = Date.now();
+
+      if (expirationTime < currentTime) {
+        console.log("otp expired");
+        const message = 'OTP Expired';
+        return thunkAPI.rejectWithValue({ message });
+      };
 
       const response = await authService.otpverification(otpData);
 
       console.log(response.success);
       if (response.success) {
-        localStorage.clear();
+        localStorage.removeItem("otptoken");
 
+
+        console.log("inside auth.js otpverification vendor side")
         localStorage.setItem("vendorToken", JSON.stringify({
           token: response.token,
+          vendorId:response._id
 
         }));
         toast.success(response.message, {
@@ -77,16 +88,16 @@ export const otpVerification = createAsyncThunk(
       toast.error(error.response?.data.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
-      return thunkAPI.rejectWithValue();
+      return thunkAPI.rejectWithValue({ message });
     }
   }
 )
 
 export const login = createAsyncThunk("auth/login",
-  async (user, thunkAPI) => {
+  async (vendor, thunkAPI) => {
     try {
 
-      const data = await authService.login(user);
+      const data = await authService.login(vendor);
       console.log("inside login try")
       console.log(data);
       thunkAPI.dispatch(setMessage(data.message));
@@ -151,7 +162,7 @@ export const resendotp = createAsyncThunk('auth/resendotp',
 )
 
 
-const initialState = user ? { isLoggedIn: true, user: user, loading: false } : { isLoggedIn: false, user: null, loading: false };
+const initialState = vendor ? { isLoggedIn: true, vendor: vendor, loading: false } : { isLoggedIn: false, vendor: null, loading: false };
 
 const authSlice = createSlice({
   name: "auth",
@@ -159,7 +170,7 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.isLoggedIn = false;
-      state.user = {};
+      state.vendor = {};
       state.loading = false;
     }
 
@@ -193,6 +204,7 @@ const authSlice = createSlice({
 
       state.loading = false;
       state.isLoggedIn = false;
+      state.errorMessage = action.payload.message;
     },
     [login.pending]: (state, action) => {
 

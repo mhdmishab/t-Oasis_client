@@ -58,6 +58,7 @@ export const otpVerification = createAsyncThunk(
 
       console.log(response.success);
       if (response.success) {
+        console.log("inside otpverification auth.js user side")
         localStorage.removeItem("otptoken");
 
         localStorage.setItem("userToken", JSON.stringify({
