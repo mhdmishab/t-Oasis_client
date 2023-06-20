@@ -3,7 +3,7 @@ import AuthService from "../../services/admin/AuthService";
 import { setMessage } from "../Message";
 import { toast } from "react-toastify";
 
-const user = JSON.parse(localStorage.getItem("admintoken"));
+const admin = JSON.parse(localStorage.getItem("adminToken"));
 
 export const login = createAsyncThunk(
     "auth/login",
@@ -35,38 +35,37 @@ export const login = createAsyncThunk(
 
 
 
-const initialState = user ? { isLoggedIn: true, user: user, loading: false } : { isLoggedIn: false, user: null, loading: false };
+const initialState = admin? { isLoggedInAdmin: true, user: admin, loading: false } : { isLoggedInAdmin: false, user: null, loading: false };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logout: (state) => {
-      state.isLoggedIn = false;
+    LogoutAdmin: (state) => {
+      localStorage.removeItem("adminToken");
+      state.isLoggedInAdmin = false;
       state.user = {};
       state.loading = false;
     }
 
   },
-  extraReducers: {
-    [login.pending]: (state, action) => {
-
-      state.loading = true;
-
-    },
-    [login.fulfilled]: (state, action) => {
-
-      state.loading = false;
-      state.isLoggedIn = true;
-    },
-    [login.rejected]: (state, action) => {
-
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-        state.isLoggedIn = false;
-      },
-}
+        state.isLoggedInAdmin = true;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.isLoggedInAdmin = false;
+      });
+  },
+  
 });
 
 
-export const { logout } = authSlice.actions;
+export const { LogoutAdmin } = authSlice.actions;
 export default authSlice.reducer;

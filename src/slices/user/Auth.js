@@ -159,7 +159,7 @@ export const resendotp=createAsyncThunk('auth/resendotp',
 
 
 
-const initialState = user ? { isLoggedIn: true, user: user, loading: false } : { isLoggedIn: false, user: null, loading: false };
+const initialState = user? { isLoggedIn: true, user: user, loading: false } : { isLoggedIn: false, user: null, loading: false };
 
 const authSlice = createSlice({
   name: "auth",
@@ -172,68 +172,55 @@ const authSlice = createSlice({
     }
 
   },
-  extraReducers: {
-    [register.pending]: (state, action) => {
-
-      state.loading = true;
-
-    },
-    [register.fulfilled]: (state, action) => {
-
-      state.loading = false;
-      state.isLoggedIn = false;
-    },
-    [register.rejected]: (state, action) => {
-
-      state.loading = false;
-      state.isLoggedIn = false;
-    },
-    [otpVerification.pending]: (state, action) => {
-
-      state.loading = true;
-    },
-    [otpVerification.fulfilled]: (state, action) => {
-
-      state.loading = false;
-      state.isLoggedIn = true;
-    },
-    [otpVerification.rejected]: (state, action) => {
-
-      state.loading = false;
-      state.isLoggedIn = false;
-      state.errorMessage = action.payload.message;
-      
-    },
-    [login.pending]: (state, action) => {
-
-      state.loading = true;
-    },
-    [login.fulfilled]: (state, action) => {
-
-      state.loading = false;
-      state.isLoggedIn = true;
-    },
-    [login.rejected]: (state, action) => {
-
-      state.loading = false;
-      state.isLoggedIn = false;
-    },
-    [resendotp.pending]: (state, action) => {
-
-      state.loading = true;
-    },
-    [resendotp.fulfilled]: (state, action) => {
-
-      state.loading = false;
-      state.isLoggedIn = false;
-    },
-    [resendotp.rejected]: (state, action) => {
-
-      state.loading = false;
-      state.isLoggedIn = false;
-    },
-
+  extraReducers: (builder) => {
+    builder
+      .addCase(register.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = false;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = false;
+      })
+      .addCase(otpVerification.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(otpVerification.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = true;
+      })
+      .addCase(otpVerification.rejected, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = false;
+        state.errorMessage = action.payload.message;
+      })
+      .addCase(login.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = true;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = false;
+      })
+      .addCase(resendotp.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(resendotp.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = false;
+      })
+      .addCase(resendotp.rejected, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = false;
+      });
   },
+  
 });
 
 

@@ -1,7 +1,8 @@
 import React from 'react'
 
-import LoungesManagement from '../../../components/vendor/LoungesManagement'
-import VendorSidebar from '../../../components/vendor/VendorSidebar'
+
+import AdminSidebar from '../../../components/admin/AdminSideBar'
+import LoungeManagment from '../../../components/admin/LoungeManagment'
 
 
 function Lounges() {
@@ -9,10 +10,10 @@ function Lounges() {
     <section className='flex gap-6'>
       
        
-         <VendorSidebar/>
+         <AdminSidebar/>
       
       <div className='p-7 text-2xl font-semibold flex-1 h-screen'>
-            <LoungesManagement/>
+           <LoungeManagment/>
         
       </div>
 

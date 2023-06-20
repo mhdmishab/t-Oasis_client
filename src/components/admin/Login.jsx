@@ -16,7 +16,7 @@ function LoginForm() {
   const dispatch = useDispatch();
  
   const {loading } = useSelector((state) => state.adminauth);
-  const {isLoggedIn}=useSelector(state=>state.adminauth);
+  const {isLoggedInAdmin}=useSelector(state=>state.adminauth);
   const {message} = useSelector((state)=>state.message);
   
   
@@ -30,12 +30,12 @@ function LoginForm() {
   
 
   useEffect(() => {
-    if(isLoggedIn){
+    if(isLoggedInAdmin){
       navigate('/admin/dashboard');
     }
       
       dispatch(clearmessage());
-    }, [dispatch,isLoggedIn,navigate]);
+    }, [dispatch,isLoggedInAdmin,navigate]);
 
  
 

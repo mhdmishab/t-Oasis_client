@@ -1,15 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from '../helpers/Card'
 import VendorCard from './VendorCard'
 import { Button, Modal } from 'antd';
 import LoungeForm from './LoungeForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { getlounge } from '../../slices/vendor/Lounges';
 
 function LoungesManagement() {
+    const {vendor}=useSelector(state=>state.vendorauth);
+    const {lounges}=useSelector(state=>state.loungevendor);
+    
+    const id = vendor.vendor_id;
+    const dispatch=useDispatch();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
         setIsModalOpen(true);
     };
+
+    useEffect(()=>{
+        try{
+        dispatch(getlounge(id));
+        }catch(error){
+            console.log(error)
+        }
+    },[dispatch])
+    
 
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -30,7 +46,7 @@ function LoungesManagement() {
 
 
 
-            <VendorCard />
+            <VendorCard lounges={lounges}/>
 
 
 

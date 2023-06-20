@@ -1,14 +1,19 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { addlounge } from '../../slices/vendor/Lounges';
 import { Button, Modal } from 'antd';
 import Map from '../helpers/Map';
 import imgPreview from '../../assets/images/signupbg.jpg'
+import { useNavigate } from 'react-router-dom';
 
 
 function LoungeForm() {
+    const navigate=useNavigate();
+
+    
+    
     const dispatch = useDispatch();
     const loungeData = {
         loungeName: "",
@@ -77,12 +82,19 @@ function LoungeForm() {
 
     })
 
+    const { vendor } = useSelector(state => state.vendorauth);
+
     const handleSubmit = (loungeData) => {
         try {
-            console.log(lat,lng)
+
+           
+            
+
+        console.log(lat,lng)
           console.log(loungeData);
       
           const { loungeImage, loungeAddress, loungeDescription, loungeDistrict, loungeLocation, loungeName, loungeState } = loungeData;
+          console.log(loungeImage);
       
           const data = new FormData();
           data.append('loungeImage', loungeImage);
@@ -95,9 +107,13 @@ function LoungeForm() {
           data.append('loungeState', loungeState);
       
           console.log(data);
+      
+          
+        
 
-          dispatch(addlounge(data)).then((response)=>{
+          dispatch(addlounge({data:data,id:vendor.vendor_id})).then((response)=>{
             console.log("response is here",response)
+            navigate('/manager/lounges');
           }).catch((err)=>{
             console.log(err);
           })

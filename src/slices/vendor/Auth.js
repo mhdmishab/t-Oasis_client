@@ -134,7 +134,7 @@ export const resendotp = createAsyncThunk('auth/resendotp',
       const data = await authService.resendotp(otpData);
       console.log("inside resend try")
 
-      // thunkAPI.dispatch(setMessage(data.message));
+      thunkAPI.dispatch(setMessage(data.message));
       toast.success(data.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
@@ -162,79 +162,71 @@ export const resendotp = createAsyncThunk('auth/resendotp',
 )
 
 
-const initialState = vendor ? { isLoggedIn: true, vendor: vendor, loading: false } : { isLoggedIn: false, vendor: null, loading: false };
+const initialState = vendor? { isLoggedIn: true, loading: false } : { isLoggedIn: false, vendor: null, loading: false };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     logout: (state) => {
+      localStorage.removeItem("vendorToken");
       state.isLoggedIn = false;
       state.vendor = {};
       state.loading = false;
     }
 
   },
-  extraReducers: {
-    [register.pending]: (state, action) => {
-
-      state.loading = true;
-
-    },
-    [register.fulfilled]: (state, action) => {
-
-      state.loading = false;
-      state.isLoggedIn = false;
-    },
-    [register.rejected]: (state, action) => {
-
-      state.loading = false;
-      state.isLoggedIn = false;
-    },
-    [otpVerification.pending]: (state, action) => {
-
-      state.loading = true;
-    },
-    [otpVerification.fulfilled]: (state, action) => {
-
-      state.loading = false;
-      state.isLoggedIn = true;
-    },
-    [otpVerification.rejected]: (state, action) => {
-
-      state.loading = false;
-      state.isLoggedIn = false;
-      state.errorMessage = action.payload.message;
-    },
-    [login.pending]: (state, action) => {
-
-      state.loading = true;
-    },
-    [login.fulfilled]: (state, action) => {
-
-      state.loading = false;
-      state.isLoggedIn = true;
-    },
-    [login.rejected]: (state, action) => {
-
-      state.loading = false;
-      state.isLoggedIn = false;
-    },
-    [resendotp.pending]: (state, action) => {
-
-      state.loading = true;
-    },
-    [resendotp.fulfilled]: (state, action) => {
-
-      state.loading = false;
-      state.isLoggedIn = false;
-    },
-    [resendotp.rejected]: (state, action) => {
-
-      state.loading = false;
-      state.isLoggedIn = false;
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(register.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = false;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = false;
+      })
+      .addCase(otpVerification.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(otpVerification.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = true;
+      })
+      .addCase(otpVerification.rejected, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = false;
+        state.errorMessage = action.payload.message;
+      })
+      .addCase(login.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = true;
+        console.log(action.payload);
+        state.vendor = { vendor_id: action.payload.data._id };
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = false;
+      })
+      .addCase(resendotp.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(resendotp.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = false;
+      })
+      .addCase(resendotp.rejected, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = false;
+      });
   },
+  
 });
 
 export const { logout } = authSlice.actions;
