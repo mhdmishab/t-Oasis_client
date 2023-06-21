@@ -7,26 +7,28 @@ const admin = JSON.parse(localStorage.getItem("adminToken"));
 
 export const login = createAsyncThunk(
     "auth/login",
-    async (user, thunkAPI)=>{
+    async (admin, thunkAPI)=>{
         try {
-            const data = await AuthService.login(user);
+            const data = await AuthService.login(admin);
+            console.log("inside admin slice");
             thunkAPI.dispatch(setMessage(data.message));
             return data;
         } catch(error) {
             console.log("inside login auth catsh")
             console.log(error)
             const message =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
-                error.toString();
-            thunkAPI.dispatch(setMessage(error.data.message));
-
-            toast.error(error.data.message, {
-                position: toast.POSITION.BOTTOM_RIGHT,
-            });
-            return thunkAPI.rejectWithValue();
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+          thunkAPI.dispatch(setMessage(error.response.data.message));
+    
+          toast.error(error.response?.data.message, {
+            position: toast.POSITION.BOTTOM_RIGHT,
+          });
+           
+          return thunkAPI.rejectWithValue();
         }
     }
 )
@@ -35,7 +37,7 @@ export const login = createAsyncThunk(
 
 
 
-const initialState = admin? { isLoggedInAdmin: true, user: admin, loading: false } : { isLoggedInAdmin: false, user: null, loading: false };
+const initialState = admin? { isLoggedInAdmin: true, admin: admin, loading: false } : { isLoggedInAdmin: false, admin: null, loading: false };
 
 const authSlice = createSlice({
   name: "auth",
@@ -44,7 +46,7 @@ const authSlice = createSlice({
     LogoutAdmin: (state) => {
       localStorage.removeItem("adminToken");
       state.isLoggedInAdmin = false;
-      state.user = {};
+      state.admin = {};
       state.loading = false;
     }
 
@@ -61,6 +63,7 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.isLoggedInAdmin = false;
+
       });
   },
   

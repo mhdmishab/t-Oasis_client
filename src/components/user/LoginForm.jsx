@@ -15,7 +15,6 @@ function LoginForm() {
   const dispatch = useDispatch();
  
   const {loading } = useSelector((state) => state.userauth);
-  const {isLoggedIn}=useSelector(state=>state.userauth);
   const {message} = useSelector((state)=>state.message);
   
   
@@ -29,12 +28,9 @@ function LoginForm() {
   
 
   useEffect(() => {
-    if(isLoggedIn){
-      navigate('/');
-    }
-      
+   
       dispatch(clearmessage());
-    }, [dispatch,isLoggedIn,navigate]);
+    }, [dispatch]);
 
  
 
@@ -52,7 +48,12 @@ function LoginForm() {
 
   const handleSubmit = (user) => {
       
-      dispatch(login(user));
+      dispatch(login(user)).then((response)=>{
+        console.log(response);
+        if(response.payload?.success || response.payload?.data?.success){
+          navigate('/');
+        }
+      })
     
   
   };

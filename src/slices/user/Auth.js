@@ -3,7 +3,7 @@ import authService from "../../services/user/AuthService";
 import { setMessage } from "../Message";
 import { toast } from "react-toastify";
 
-const user = JSON.parse(localStorage.getItem("usertoken"));
+const user = JSON.parse(localStorage.getItem("userToken"));
 
 export const register = createAsyncThunk(
   "auth/register",
@@ -114,7 +114,7 @@ export const login = createAsyncThunk("auth/login",
       toast.error(error.response?.data.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
-      return thunkAPI.rejectWithValue();
+      return error;
     }
 
 

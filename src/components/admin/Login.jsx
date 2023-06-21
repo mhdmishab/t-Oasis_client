@@ -16,7 +16,7 @@ function LoginForm() {
   const dispatch = useDispatch();
  
   const {loading } = useSelector((state) => state.adminauth);
-  const {isLoggedInAdmin}=useSelector(state=>state.adminauth);
+
   const {message} = useSelector((state)=>state.message);
   
   
@@ -27,17 +27,11 @@ function LoginForm() {
       password: ''
   }
   
-  
-
   useEffect(() => {
-    if(isLoggedInAdmin){
-      navigate('/admin/dashboard');
-    }
+   
       
-      dispatch(clearmessage());
-    }, [dispatch,isLoggedInAdmin,navigate]);
-
- 
+    dispatch(clearmessage());
+  }, [dispatch]);
 
 
   const validationSchema = Yup.object().shape({
@@ -53,7 +47,17 @@ function LoginForm() {
 
   const handleSubmit = (user) => {
       
-      dispatch(login(user));
+      dispatch(login(user)).then((response)=>{
+
+        console.log(response.payload);
+        if(response.payload?.success || response.payload?.data?.success){
+
+          navigate('/admin/dashboard')
+        }else{
+          console.log(response.payload);
+        }
+
+      })
     
   
   };

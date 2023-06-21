@@ -112,7 +112,7 @@ function LoungeForm() {
         
 
           dispatch(addlounge({data:data,id:vendor.vendor_id})).then((response)=>{
-            console.log("response is here",response)
+            console.log("response is here",response);
             navigate('/manager/lounges');
           }).catch((err)=>{
             console.log(err);

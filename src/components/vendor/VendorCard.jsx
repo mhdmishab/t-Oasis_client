@@ -4,11 +4,11 @@ import img from '../../assets/images/signupbg.jpg';
 function VendorCard({ lounges }) {
     return (
         <>
-            {lounges.map((lounge, index) => (
-                <div key={index} className='w-72 h-48 bg-white rounded-lg mt-9 relative drop-shadow-[0_15px_15px_rgba(0,0,0,0.16)] hover:drop-shadow-xl m-3'>
+            {lounges?.map((lounge, index) => (
+                <div key={index} className='w-72 h-48 bg-white rounded-lg mt-16 relative drop-shadow-[0_15px_15px_rgba(0,0,0,0.16)] hover:drop-shadow-xl m-3'>
                     <div className='w-60 h-52 bg-white rounded-md ml-6 -mt-12 absolute'>
                         <div className='flex-1 hover:cursor-pointer'>
-                            <img src={img} className='rounded-lg' alt='Lounge' />
+                            <img src={lounge.loungeImages[0]?.url} className='rounded-lg' alt='Lounge' />
                         </div>
                         <div className='flex-1 flex-col items-center mt-2'>
                             <h5 className='text-sm text-bold'>

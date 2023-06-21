@@ -16,15 +16,6 @@ function OtpForm() {
   const token = localStorage.getItem("userToken");
 
 
-  useEffect(() => {
-    if (isLoggedIn) {
-
-      if (token) {
-        navigate('/');
-      }
-    }
-
-  }, [isLoggedIn, navigate,token])
 
   let startTimer = (timer) => {
     if (timer === 0) {
@@ -64,7 +55,13 @@ function OtpForm() {
     if (otp.length === 6) {
       console.log(otp);
 
-      dispatch(otpVerification(otp));
+      dispatch(otpVerification(otp)).then((response)=>{
+        console.log(response);
+        
+        if(response.payload?.success || response.payload?.data?.success){
+          navigate('/');
+        }
+      })
 
     }
   };

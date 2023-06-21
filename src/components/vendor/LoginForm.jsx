@@ -15,7 +15,7 @@ function LoginForm() {
   const dispatch = useDispatch();
  
   const {loading } = useSelector((state) => state.vendorauth);
-  const {isLoggedIn}=useSelector(state=>state.vendorauth);
+  
   const {message} = useSelector((state)=>state.message);
   
   
@@ -29,12 +29,10 @@ function LoginForm() {
   
 
   useEffect(() => {
-    if(isLoggedIn){
-      navigate('/manager/dashboard');
-    }
+   
       
       dispatch(clearmessage());
-    }, [dispatch,isLoggedIn,navigate]);
+    }, [dispatch]);
 
  
 
@@ -52,7 +50,16 @@ function LoginForm() {
 
   const handleSubmit = (user) => {
       console.log(user);
-      dispatch(login(user));
+      dispatch(login(user)).then((response)=>{
+        console.log(response);
+        
+        if(response.payload?.success || response.payload?.data?.success){
+
+          navigate('/manager/dashboard')
+        }else{
+          console.log(response);
+        }
+      })
     
   
   };

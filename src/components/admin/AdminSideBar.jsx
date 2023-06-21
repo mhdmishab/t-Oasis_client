@@ -1,20 +1,10 @@
 import React, { useEffect } from 'react'
 import SideBar from '../helpers/SideBar'
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+
 
 function AdminSideBar() {
 
-    const navigate = useNavigate();
-    const { isLoggedInAdmin } = useSelector((state) => state.adminauth)
-
-    useEffect(() => {
-        console.log(isLoggedInAdmin);
-        if (!isLoggedInAdmin) {
-            navigate('/admin/login');
-        }
-        
-    }, [isLoggedInAdmin, navigate])
+     
 
     const Menus = [
         {

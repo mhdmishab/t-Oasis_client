@@ -6,6 +6,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 const persistConfig={
     key:'root',
     storage:storage,
+    blacklist:['vendorauth','adminauth','userauth']
     
 }
 

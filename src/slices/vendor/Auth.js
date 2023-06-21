@@ -116,10 +116,8 @@ export const login = createAsyncThunk("auth/login",
       toast.error(error.response?.data.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
-      return thunkAPI.rejectWithValue();
+      return thunkAPI.rejectWithValue({ message });
     }
-
-
   })
 
 
@@ -155,14 +153,14 @@ export const resendotp = createAsyncThunk('auth/resendotp',
       toast.error(error.response?.data.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
-      return thunkAPI.rejectWithValue();
+      return thunkAPI.rejectWithValue({ message });
     }
   }
 
 )
 
 
-const initialState = vendor? { isLoggedIn: true, loading: false } : { isLoggedIn: false, vendor: null, loading: false };
+const initialState = vendor? { isLoggedInVendor: true, loading: false } : { isLoggedInVendor: false, vendor: null, loading: false };
 
 const authSlice = createSlice({
   name: "auth",
@@ -170,7 +168,7 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       localStorage.removeItem("vendorToken");
-      state.isLoggedIn = false;
+      state.isLoggedInVendor = false;
       state.vendor = {};
       state.loading = false;
     }
@@ -183,22 +181,23 @@ const authSlice = createSlice({
       })
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;
-        state.isLoggedIn = false;
+        state.isLoggedInVendor = false;
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
-        state.isLoggedIn = false;
+        state.isLoggedInVendor = false;
+        
       })
       .addCase(otpVerification.pending, (state, action) => {
         state.loading = true;
       })
       .addCase(otpVerification.fulfilled, (state, action) => {
         state.loading = false;
-        state.isLoggedIn = true;
+        state.isLoggedInVendor = true;
       })
       .addCase(otpVerification.rejected, (state, action) => {
         state.loading = false;
-        state.isLoggedIn = false;
+        state.isLoggedInVendor = false;
         state.errorMessage = action.payload.message;
       })
       .addCase(login.pending, (state, action) => {
@@ -206,24 +205,25 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-        state.isLoggedIn = true;
-        console.log(action.payload);
-        state.vendor = { vendor_id: action.payload.data._id };
+        state.isLoggedInVendor = true;
+        
+
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
-        state.isLoggedIn = false;
+        state.isLoggedInVendor = false;
+        console.log(action.payload);
       })
       .addCase(resendotp.pending, (state, action) => {
         state.loading = true;
       })
       .addCase(resendotp.fulfilled, (state, action) => {
         state.loading = false;
-        state.isLoggedIn = false;
+        state.isLoggedInVendor = false;
       })
       .addCase(resendotp.rejected, (state, action) => {
         state.loading = false;
-        state.isLoggedIn = false;
+        state.isLoggedInVendor = false;
       });
   },
   

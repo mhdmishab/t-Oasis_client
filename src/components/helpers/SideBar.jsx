@@ -11,8 +11,10 @@ function SideBar({Menus}) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [open, setOpen] = useState(true);
-    const { isLoggedIn } = useSelector((state) => state.vendorauth)
-    const {isLoggedInAdmin}=useSelector((state) => state.adminauth);
+    // const { isLoggedInVendor } = useSelector((state) => state.vendorauth)
+    // const {isLoggedInAdmin}=useSelector((state) => state.adminauth);
+    const vendorLogout=localStorage.getItem('vendorToken');
+    const adminLogout=localStorage.getItem('adminToken');
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -44,12 +46,12 @@ function SideBar({Menus}) {
     const handleLogout = () => {
 
         console.log("inside logout");
-        if(isLoggedIn){
+        if(vendorLogout){
             dispatch(logout());
-            // navigate('/manager/login');
-        }else if(isLoggedInAdmin){
+            navigate('/manager/login');
+        }else if(adminLogout){
             dispatch(LogoutAdmin());
-            // navigate('/admin/login')
+            navigate('/admin/login')
         }
         
         setIsModalOpen(false);

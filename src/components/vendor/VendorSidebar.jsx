@@ -7,14 +7,7 @@ function VendorSidebar() {
    
    
     const navigate = useNavigate();
-    const { isLoggedIn } = useSelector((state) => state.vendorauth)
-
-    useEffect(() => {
-        if (!isLoggedIn) {
-            navigate('/manager/login');
-        }
-        
-    }, [isLoggedIn, navigate])
+    
 
     const Menus = [
         {

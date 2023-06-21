@@ -16,15 +16,15 @@ function OtpForm() {
   const token = localStorage.getItem("vendorToken");
 
 
-  useEffect(() => {
-    if (isLoggedIn) {
+  // useEffect(() => {
+  //   if (isLoggedIn) {
 
-      if (token) {
-        navigate('/manager/dashboard');
-      }
-    }
+  //     if (token) {
+  //       navigate('/manager/dashboard');
+  //     }
+  //   }
 
-  }, [isLoggedIn, navigate])
+  // }, [isLoggedIn, navigate])
 
   let startTimer = (timer) => {
     if (timer === 0) {
@@ -66,7 +66,16 @@ function OtpForm() {
     if (otp.length === 6) {
       console.log(otp);
 
-      dispatch(otpVerification(otp));
+      dispatch(otpVerification(otp)).then((response)=>{
+        console.log(response);
+        
+        if(response.payload?.success || response.payload?.data?.success){
+
+          navigate('/manager/dashboard');
+        }else{
+          console.log(response.data);
+        }
+      })
 
     }
   };
