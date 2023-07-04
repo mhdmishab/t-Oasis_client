@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import authService from "../../services/user/AuthService";
 import { setMessage } from "../Message";
 import { toast } from "react-toastify";
+import { message } from "antd";
 
 const user = JSON.parse(localStorage.getItem("userToken"));
 
@@ -12,6 +13,7 @@ export const register = createAsyncThunk(
       const data = await authService.register(user);
 
       thunkAPI.dispatch(setMessage(data.message));
+      
 
       return data;
 
@@ -19,17 +21,7 @@ export const register = createAsyncThunk(
     } catch (error) {
 
       console.log(error)
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      thunkAPI.dispatch(setMessage(error.response.data.message));
-
-      toast.error(error.response?.data.message, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
+      message.error(error.response?.data.message);
       return thunkAPI.rejectWithValue();
 
     }
@@ -159,7 +151,7 @@ export const resendotp=createAsyncThunk('auth/resendotp',
 
 
 
-const initialState = user? { isLoggedIn: true, user: user, loading: false } : { isLoggedIn: false, user: null, loading: false };
+const initialState = user? { isLoggedIn: true,  loading: false } : { isLoggedIn: false, user_id:null, loading: false };
 
 const authSlice = createSlice({
   name: "auth",
@@ -168,6 +160,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.isLoggedIn = false;
       state.user = {};
+      state.user_id=null;
       state.loading = false;
     }
 
@@ -191,6 +184,8 @@ const authSlice = createSlice({
       .addCase(otpVerification.fulfilled, (state, action) => {
         state.loading = false;
         state.isLoggedIn = true;
+        console.log(action.payload.data._id)
+        state.user_id=action.payload.data._id;
       })
       .addCase(otpVerification.rejected, (state, action) => {
         state.loading = false;
@@ -203,6 +198,8 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.isLoggedIn = true;
+        console.log(action.payload.data._id)
+        state.user_id=action.payload.data._id;
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;

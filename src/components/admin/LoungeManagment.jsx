@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { getlounge } from '../../slices/admin/Lounges';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import LoungeApproval from '../../pages/admin/home/LoungeApproval';
 
 function LoungeManagment() {
+    const navigate=useNavigate();
   const dispatch = useDispatch();
-  const selectedStatusRef = useRef();
   const { lounges } = useSelector((state) => state.loungeadmin);
   const [selectedStatus, setSelectedStatus] = useState('');
 
@@ -21,6 +23,11 @@ function LoungeManagment() {
       console.log(error);
     }
   }, [dispatch]);
+
+  const handleLounge = (loungeId) => {
+    console.log("inside ")
+    navigate('/admin/approval', { state: { loungeId, lounges } });
+  };
 
   const filteredLounges = selectedStatus
     ? lounges.filter((lounge) => lounge.isApproved === selectedStatus)
@@ -51,7 +58,7 @@ function LoungeManagment() {
                     onChange={handleStatusFilter}
                   >
                     <option value="">All</option>
-                    <option value="active">Active</option>
+                    <option value="approved">Active</option>
                     <option value="pending">Approval Pending</option>
                     <option value="rejected">Rejected</option>
                   </select>
@@ -75,7 +82,7 @@ function LoungeManagment() {
           </thead>
           <tbody>
             {filteredLounges?.map((lounge, index) => (
-              <tr key={index} className="bg-white border-b" >
+              <tr key={index} className="bg-white border-b cursor-pointer" onClick={()=>handleLounge(lounge._id)}>
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                   {lounge.loungeName}
                 </th>

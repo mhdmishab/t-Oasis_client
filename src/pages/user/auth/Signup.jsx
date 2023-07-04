@@ -4,7 +4,7 @@ import signupImg from '../../../assets/images/signupbg.jpg'
 
 function Signup() {
   return (
-    
+ 
     <div className="font-alata w-screen h-screen flex justify-center items-center p-4 sm:p-8 md:p-12 lg:p-16">
     <div className="flex bg-white shadow-xl shadow-white-600/80 sm:flex-col md:flex-row lg:flex-row">
       <div className="hidden md:block flex-1 pt-12">
@@ -16,7 +16,10 @@ function Signup() {
         </div>
       </div>
     </div>
+    
   </div>
+  
+
   )
 }
 

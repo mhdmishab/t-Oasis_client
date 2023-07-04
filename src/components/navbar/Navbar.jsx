@@ -5,6 +5,8 @@ import logo from "../../assets/images/t-oasis logo.png"
 import jwtDecode from 'jwt-decode';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../slices/user/Auth';
+import { resetLoungeSliceUser } from '../../slices/user/Lounges';
+import { resetFacilitySliceUser } from '../../slices/user/Facility';
 
 function Navbar() {
   let user;
@@ -30,6 +32,8 @@ function Navbar() {
 
   const handleLogout=()=>{
     localStorage.removeItem("userToken");
+    dispatch(resetLoungeSliceUser);
+    dispatch(resetFacilitySliceUser);
     dispatch(logout());
     navigate('/login');
   }
@@ -82,14 +86,14 @@ function Navbar() {
    
   ]
 
- const NavItems=user||isLoggedIn?NavItemsLoggedIn:NavItemsLoggedOut;
+ const NavItems=user?NavItemsLoggedIn:NavItemsLoggedOut;
   
 
 
   return (
    
-    <>
-      <nav className="fixed w-screen h-16 flex justify-between items-center bg-transparent">
+    
+      <nav className="z-10 fixed w-screen h-16 flex justify-between items-center bg-white shadow-md ">
         <div className="pl-5">
           <img className="w-16 h-16" src={logo} alt="" />
         </div>
@@ -134,7 +138,7 @@ function Navbar() {
           </div>
         </div>
       </nav>
-    </>
+    
   )
 }
 

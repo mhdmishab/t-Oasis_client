@@ -1,24 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import VendorCard from './VendorCard'
+import React, { useEffect, useState } from 'react';
 import { Button, Modal } from 'antd';
-import LoungeForm from './LoungeForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { getlounge } from '../../slices/vendor/Lounges';
 import { useNavigate } from 'react-router-dom';
+import FacilityForm from './FacilityForm';
+import { getfacilities } from '../../slices/vendor/Facility';
+import FacilityCard from '../helpers/FacilityCard';
 
-function LoungesManagement() {
-    const navigate=useNavigate();
+function Facilities() {
+  const navigate=useNavigate();
     const dispatch=useDispatch();
-    const {isLoggedInVendor}=useSelector(state=>state.vendorauth);
-    const {vendor}=useSelector(state=>state.vendorauth);
-    const {lounges}=useSelector(state=>state.loungevendor);
+    const id=useSelector(state=>state.loungevendor).loungeId;
+    const facilities=useSelector(state=>state.facilityvendor).facilities;
 
-
-    const vendorToken = localStorage.getItem('vendorToken');
-    const parsedVendorToken = JSON.parse(vendorToken);
-    const id = parsedVendorToken?.vendorId;
-
-    // const id = vendor.vendor_id;
     
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,10 +21,10 @@ function LoungesManagement() {
 
     useEffect(()=>{
         try{
-            if(isLoggedInVendor){
-        dispatch(getlounge(id));
+           
+        dispatch(getfacilities(id));
             }
-        }catch(error){
+      catch(error){
             console.log(error)
         }
     },[dispatch])
@@ -41,23 +34,29 @@ function LoungesManagement() {
         setIsModalOpen(false);
     };
 
+    const handleSubmit = () => {
+        console.log("dasda");
+        
+    };
 
 
 
     return (
-        <div className='flex flex-wrap m-2'>
+        <div className='flex flex-wrap'>
             <Button className='w-44 h-44 mr-7 mt-10 shadow-lg flex-col  items-center cursor-pointer pt-9 text-md' onClick={showModal} ><svg fill="none" stroke="gray" strokeWidth={1.5} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" className='' /> 
-            </svg>Add Lounge</Button>
+            </svg>Add Facility</Button>
 
 
 
-            <VendorCard lounges={lounges}/>
+       
+          <FacilityCard facilities={facilities} />
+     
 
 
 
                 <Modal
-                    title="Add Lounge"
+                    title="Add Facility"
                     open={isModalOpen}
                     onCancel={handleCancel}
                     className="w-96 scroll-"
@@ -66,10 +65,14 @@ function LoungesManagement() {
                     width={1000}
                 >
 
-                   <LoungeForm/>
+                   <FacilityForm/>
                 </Modal>
         </div>
     )
 }
 
-export default LoungesManagement
+
+export default Facilities
+
+
+

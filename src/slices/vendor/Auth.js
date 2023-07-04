@@ -2,8 +2,10 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import authService from "../../services/vendor/AuthService";
 import { setMessage } from "../Message";
 import { toast } from "react-toastify";
+import { message } from "antd";
 
 const vendor = JSON.parse(localStorage.getItem("vendorToken"));
+
 
 export const register = createAsyncThunk(
   "auth/register",
@@ -160,7 +162,7 @@ export const resendotp = createAsyncThunk('auth/resendotp',
 )
 
 
-const initialState = vendor? { isLoggedInVendor: true, loading: false } : { isLoggedInVendor: false, vendor: null, loading: false };
+const initialState = vendor? { isLoggedInVendor: true, loading: false } : { isLoggedInVendor: false, vendor_id: null, loading: false };
 
 const authSlice = createSlice({
   name: "auth",
@@ -169,7 +171,7 @@ const authSlice = createSlice({
     logout: (state) => {
       localStorage.removeItem("vendorToken");
       state.isLoggedInVendor = false;
-      state.vendor = {};
+      state.vendor_id = null;
       state.loading = false;
     }
 
@@ -194,6 +196,7 @@ const authSlice = createSlice({
       .addCase(otpVerification.fulfilled, (state, action) => {
         state.loading = false;
         state.isLoggedInVendor = true;
+        state.vendor_id=action.payload.data._id;
       })
       .addCase(otpVerification.rejected, (state, action) => {
         state.loading = false;
@@ -206,6 +209,8 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.isLoggedInVendor = true;
+        console.log(action.payload.data._id)
+        state.vendor_id=action.payload.data._id;
         
 
       })
