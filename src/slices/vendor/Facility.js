@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setMessage } from "../Message";
 import { toast } from "react-toastify";
-import axios from "axios";
-import { Url } from "../../apis/Axios";
+// import axios from "axios";
+// import { Url } from "../../apis/Axios";
+import axios from "../../apis/AxiosVendor";
 import { useSelector } from "react-redux";
 import { message } from "antd";
 
@@ -16,7 +17,7 @@ export const addfacility = createAsyncThunk(
     try {
       console.log("facility slice", loungeId,vendorId);
 
-      const response = await axios.post(Url + `/vendor/addfacility/${loungeId}/${vendorId}`, data);
+      const response = await axios.post(`/vendor/addfacility/${loungeId}/${vendorId}`, data);
       message.success(response?.data.message);
       return response;
 
@@ -41,7 +42,7 @@ export const getfacilities = createAsyncThunk(
   "facility/getfacilities",
   async (id, thunkAPI) => {
     try {
-      const response = await axios.get(Url +`/vendor/get-facilities/${id}`);
+      const response = await axios.get(`/vendor/get-facilities/${id}`);
       console.log(response,"facilities");
       return response;
 

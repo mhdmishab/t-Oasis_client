@@ -1,11 +1,12 @@
-import axios from "axios";
-import { Url } from "../../apis/Axios";
+// import axios from "axios";
+// import { Url } from "../../apis/Axios";
+import axios from "../../apis/AxiosAdmin";
 
 
 
 const login=(user)=>{
     return new Promise((resolve,reject)=>{
-      axios.post(Url +"/admin/login", user)
+      axios.post("/admin/login", user)
       .then((response) => {
         console.log("inside token area");
         console.log(response);

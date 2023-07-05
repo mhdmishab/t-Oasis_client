@@ -1,12 +1,13 @@
-import axios from "axios";
-import { Url } from "../../apis/Axios";
+// import axios from "axios";
+// import { Url } from "../../apis/Axios";
+import axios from "../../apis/AxiosUser";
 import { UserOtp, UserLogin, UserSignup, UserResendOtp } from "../../utils/endpoints/endpoints";
 
 
 
 const register = (user) => {
     return new Promise((resolve, reject) => {
-      axios.post(Url +UserSignup, user)
+      axios.post(UserSignup, user)
         .then((response) => {
           console.log("inside token area user register");
           console.log(response);
@@ -32,7 +33,7 @@ const otpverification=(otpData)=>{
     return new Promise((resolve,reject)=>{
       console.log("inside otp verification user side")
       console.log(otpData);
-        axios.post(Url+UserOtp,otpData).then((response)=>{
+        axios.post(UserOtp,otpData).then((response)=>{
             console.log(response.data);
             resolve(response.data) ;
         }).catch((error)=>{
@@ -44,7 +45,7 @@ const otpverification=(otpData)=>{
 const resendotp=(otpData)=>{
   return new Promise((resolve,reject)=>{
     console.log(otpData);
-      axios.post(Url+UserResendOtp,otpData).then((response)=>{
+      axios.post(UserResendOtp,otpData).then((response)=>{
         console.log("inside services resendotp userside")
           console.log(response);
           const expirationTimeInMinutes = 1;
@@ -65,7 +66,7 @@ const resendotp=(otpData)=>{
 
 const login=(user)=>{
   return new Promise((resolve,reject)=>{
-    axios.post(Url +UserLogin, user)
+    axios.post(UserLogin, user)
     .then((response) => {
       console.log("inside login area user side ");
       console.log(response);

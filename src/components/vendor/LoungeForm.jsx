@@ -12,8 +12,8 @@ import { useNavigate } from 'react-router-dom';
 function LoungeForm() {
     const navigate=useNavigate();
 
-    const vendorId=useSelector((state)=>state.vendorauth).vendor_id;
-    const {loading}=useSelector((state)=>state.vendorauth);
+    const vendorId=useSelector((state)=>state.loungevendor).vendor_id;
+    const {loading}=useSelector((state)=>state.loungevendor);
     
     const dispatch = useDispatch();
     const loungeData = {

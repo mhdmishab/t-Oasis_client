@@ -1,15 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setMessage } from "../Message";
 import { toast } from "react-toastify";
-import axios from "axios";
-import { Url } from "../../apis/Axios";
+// import axios from "axios";
+// import { Url } from "../../apis/Axios";
+import axios from "../../apis/AxiosAdmin";
 import { useSelector } from "react-redux";
 
 export const getlounge = createAsyncThunk(
     "lounges/getlounge",
     async (thunkAPI) => {
       try {
-        const response = await axios.get(Url +`/admin/get-lounge`);
+        const response = await axios.get(`/admin/get-lounge`);
         console.log(response,"inside lounge.js admin");
         return response
   
@@ -37,7 +38,7 @@ export const getlounge = createAsyncThunk(
     "lounges/reject",
     async(loungeId,thunkAPI)=>{
         try{
-            const response=await axios.patch(Url+`/admin/reject-lounge/${loungeId}`);
+            const response=await axios.patch(`/admin/reject-lounge/${loungeId}`);
             console.log(response);
             toast.error(response?.data.message, {
                 position: toast.POSITION.BOTTOM_RIGHT,
@@ -57,7 +58,7 @@ export const getlounge = createAsyncThunk(
     "lounges/approve",
     async(loungeId,thunkAPI)=>{
         try{
-            const response=await axios.patch(Url+`/admin/approve-lounge/${loungeId}`);
+            const response=await axios.patch(`/admin/approve-lounge/${loungeId}`);
             console.log(response);
             toast.success(response?.data.message, {
                 position: toast.POSITION.BOTTOM_RIGHT,

@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setMessage } from "../Message";
 import { toast } from "react-toastify";
-import axios from "axios";
-import { Url } from "../../apis/Axios";
+// import axios from "axios";
+// import { Url } from "../../apis/Axios";
+import axios from "../../apis/AxiosVendor";
 import { useSelector } from "react-redux";
 
 
@@ -15,7 +16,7 @@ export const addlounge = createAsyncThunk(
     try {
       console.log("lounge slice", id);
 
-      const response = await axios.post(Url + `/vendor/addlounge/${id}`, data);
+      const response = await axios.post(`/vendor/addlounge/${id}`, data);
       return response;
 
 
@@ -41,7 +42,7 @@ export const getlounge = createAsyncThunk(
   "lounges/getlounge",
   async (id, thunkAPI) => {
     try {
-      const response = await axios.get(Url +`/vendor/get-lounge/${id}`);
+      const response = await axios.get(`/vendor/get-lounge/${id}`);
       console.log(response);
       return response
 

@@ -8,7 +8,7 @@ function Lounge() {
     const {lounges}=useSelector((state)=>state.loungevendor);
     const {loungeId}=useSelector((state)=>state.loungevendor);
     return (
-        <section className='flex gap-6'>
+        <section className='flex gap-6 max-h-screen'>
 
 
             <LoungeSidebar />

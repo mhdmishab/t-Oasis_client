@@ -1,15 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setMessage } from "../Message";
 import { toast } from "react-toastify";
-import axios from "axios";
-import { Url } from "../../apis/Axios";
+// import axios from "axios";
+// import { Url } from "../../apis/Axios";
+import axios from "../../apis/AxiosUser";
 import { useSelector } from "react-redux";
 
 export const getfacilities = createAsyncThunk(
     "facilities/getfacilities",
     async (id,thunkAPI) => {
       try {
-        const response = await axios.get(Url +`/get-facilities/${id}`);
+        const response = await axios.get(`/get-facilities/${id}`);
         console.log(response,"inside facility.js user");
         return response;
   
@@ -38,7 +39,7 @@ export const getfacilities = createAsyncThunk(
     async({user_id,loungeId,facilityId,bookedData})=>{
         try{
             console.log(loungeId,facilityId);
-            const response=await axios.post(Url+`/book-facility/${user_id}/${loungeId}/${facilityId}`,bookedData);
+            const response=await axios.post(`/book-facility/${user_id}/${loungeId}/${facilityId}`,bookedData);
             console.log(response,"booked response is here")
             return response;
 
@@ -53,7 +54,7 @@ export const getfacilities = createAsyncThunk(
     async({date,loungeId,facilityId})=>{
         try{
             
-            const response=await axios.get(Url+`/get-slots/${date}/${loungeId}/${facilityId}`);
+            const response=await axios.get(`/get-slots/${date}/${loungeId}/${facilityId}`);
             console.log(response,"booked response is here")
             return response;
 
