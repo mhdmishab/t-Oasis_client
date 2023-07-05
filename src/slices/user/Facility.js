@@ -36,10 +36,10 @@ export const getfacilities = createAsyncThunk(
 
   export const bookFacility=createAsyncThunk(
     "facilities/bookfacilities",
-    async({user_id,loungeId,facilityId,bookedData})=>{
+    async({user_id,vendorId,facilityId,bookedData})=>{
         try{
-            console.log(loungeId,facilityId);
-            const response=await axios.post(`/book-facility/${user_id}/${loungeId}/${facilityId}`,bookedData);
+            console.log(vendorId,facilityId);
+            const response=await axios.post(`/book-facility/${user_id}/${vendorId}/${facilityId}`,bookedData);
             console.log(response,"booked response is here")
             return response;
 
@@ -51,10 +51,10 @@ export const getfacilities = createAsyncThunk(
 
   export const GetAvailableSlots=createAsyncThunk(
     "facilities/availableslots",
-    async({date,loungeId,facilityId})=>{
+    async({date,vendorId,facilityId})=>{
         try{
             
-            const response=await axios.get(`/get-slots/${date}/${loungeId}/${facilityId}`);
+            const response=await axios.get(`/get-slots/${date}/${vendorId}/${facilityId}`);
             console.log(response,"booked response is here")
             return response;
 

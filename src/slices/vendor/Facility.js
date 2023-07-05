@@ -13,11 +13,11 @@ import { message } from "antd";
 export const addfacility = createAsyncThunk(
   "facility/addfacility",
 
-  async ({ data, loungeId,vendorId }, thunkAPI) => {
+  async ({ data,vendorId }, thunkAPI) => {
     try {
-      console.log("facility slice", loungeId,vendorId);
+      console.log("facility slice", vendorId);
 
-      const response = await axios.post(`/vendor/addfacility/${loungeId}/${vendorId}`, data);
+      const response = await axios.post(`/vendor/addfacility/${vendorId}`, data);
       message.success(response?.data.message);
       return response;
 
@@ -67,7 +67,7 @@ export const getfacilities = createAsyncThunk(
 
 
 
-const initialState = { facilityId: null, loading: false ,facilities:null};
+const initialState = { facilityId: null, loading: false ,facilities:null,vendor_id:null};
 
 
 
@@ -80,7 +80,7 @@ const FacilitySlice = createSlice({
             state.facilityId=action.payload.id;
           },
 
-    resetFacilitySlice:()=>initialState
+        resetFacilitySlice:()=>initialState
   },
   extraReducers: (builder) => {
 
@@ -100,7 +100,7 @@ const FacilitySlice = createSlice({
       })
       .addCase(getfacilities.fulfilled, (state, action) => {
         state.loading = false;
-        // state.vendor_id = action.payload.data.vendor_id;
+        state.vendor_id = action.payload.data.vendor_id;
         state.facilities=action.payload.data?.facilities;
         
 

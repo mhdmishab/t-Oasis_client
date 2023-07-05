@@ -1,7 +1,7 @@
 import React from 'react'
-import LoungeSidebar from '../../../components/vendor/LoungeSidebar';
 import FacilityDetails from '../../../components/helpers/FacilityDetails';
 import { useSelector } from 'react-redux';
+import VendorSidebar from '../../../components/vendor/VendorSidebar';
 
 function Facility() {
     
@@ -10,17 +10,14 @@ function Facility() {
     console.log("hellooo",facilityId);
     
     return (
-        <section className='flex gap-6'>
-            
-
-            <LoungeSidebar />
+       
 
             <div className='p-7 text-2xl font-semibold flex-1 h-screen'>
             <FacilityDetails facilityId={facilityId} facilities={facilities}/>
 
             </div>
 
-        </section>
+        
     )
 }
 

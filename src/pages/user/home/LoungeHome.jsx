@@ -10,6 +10,7 @@ function LoungeHome() {
 
     const dispatch=useDispatch();
     const {loungeId}=useSelector(state=>state.loungeuser);
+    const {vendorId}=useSelector(state=>state.loungeuser);
     const {lounges}=useSelector(state=>state.loungeuser);
     const {facilities}=useSelector(state=>state.facilityuser);
 
@@ -19,8 +20,8 @@ function LoungeHome() {
     console.log(loungeId,lounges);
 
     useEffect(()=>{
-        console.log(loungeId)
-        dispatch(getfacilities(loungeId))
+        console.log(vendorId)
+        dispatch(getfacilities(vendorId))
     },[dispatch])
 
     const lounge=lounges?.filter((lounge)=>lounge._id===loungeId);
@@ -43,7 +44,7 @@ function LoungeHome() {
         // height: '40vh',
       };
   return (
-    <div >
+    <div  className='flex-col '>
         <div className=' w-full  flex justify-center items-end ' style={containerStyle1} >
             <div className='flex-col'>
 
@@ -55,7 +56,7 @@ function LoungeHome() {
        
             <LoungeDetails lounge={lounge}/>
         </div>
-        <div className='w-full h-96 flex p-10'>
+        <div className='w-full h-96 flex p-10 mt-20'>
 
             {facilities?.map((facility)=>{
                 return  <UserFacilityCard facility={facility} key={lounge.id} />

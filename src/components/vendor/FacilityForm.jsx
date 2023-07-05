@@ -10,8 +10,8 @@ function FacilityForm() {
     const dispatch=useDispatch();
     const navigate=useNavigate();
     const [imagePreview, setImagePreview] = useState(null);
-    const {loungeId}=useSelector(state=>state.loungevendor);
-    const vendorId=useSelector((state)=>state.vendorauth).vendor_id;
+    // const {loungeId}=useSelector(state=>state.loungevendor);
+    const vendorId=useSelector((state)=>state.facilityvendor).vendor_id;
 
     const formik = useFormik({
       initialValues: {
@@ -71,10 +71,11 @@ function FacilityForm() {
         
       
           console.log(data);
-          console.log(loungeId);
-          dispatch(addfacility({data:data,loungeId:loungeId,vendorId:vendorId})).then((response)=>{
+          console.log("checking",vendorId);
+          
+          dispatch(addfacility({data:data,vendorId:vendorId})).then((response)=>{
             console.log(response,"response of facility dispatch")
-            navigate('/manager/lounge/dashboard');
+            navigate('/manager/dashboard');
 
           }).catch((err)=>{
             console.log(err);

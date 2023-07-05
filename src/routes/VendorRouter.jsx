@@ -11,6 +11,7 @@ import Lounge from '../pages/vendor/home/Lounge'
 import LoungeSubcription from '../pages/vendor/home/LoungeSubcription'
 import LoungeFacilities from '../pages/vendor/home/LoungeFacilities'
 import Facility from '../pages/vendor/home/Facility'
+import VendorSidebar from '../components/vendor/VendorSidebar'
 
 
 
@@ -23,13 +24,15 @@ function VendorRouter() {
             <Route path='/register' element={<VendorAuthentication><Signup/></VendorAuthentication>}/>
             <Route path='/otp' element={<VendorAuthentication><OtpPage/></VendorAuthentication>}/>
             <Route path='/login' element={<VendorAuthentication><Login/></VendorAuthentication>}/>
+            <Route element={<VendorSidebar/>}>
             <Route path='/dashboard' element={<VendorAuthentication><Dashboard/></VendorAuthentication>}/>
             <Route path='/lounges' element={<VendorAuthentication><Lounges/></VendorAuthentication>}/>
             <Route path='/bookings' element={<VendorAuthentication><Bookings/></VendorAuthentication>}/>
             <Route path='/lounge/dashboard' element={<VendorAuthentication><Lounge/></VendorAuthentication>}/>
-            <Route path='/lounge/facilities' element={<VendorAuthentication><LoungeFacilities/></VendorAuthentication>}/>
+            <Route path='/facilities' element={<VendorAuthentication><LoungeFacilities/></VendorAuthentication>}/>
             <Route path='/lounge/subcriptions' element={<VendorAuthentication><LoungeSubcription/></VendorAuthentication>}/>
             <Route path='/lounge/facility' element={<VendorAuthentication><Facility/></VendorAuthentication>}/>
+            </Route>
 
               
           </Routes>

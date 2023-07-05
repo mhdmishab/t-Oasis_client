@@ -39,7 +39,7 @@ export const getlounges = createAsyncThunk(
   
   
   
-  const initialState = { loading: false,lounges: null,loungeId:null};
+  const initialState = { loading: false,lounges: null,vendorId:null,loungeId:null};
   
   
   
@@ -49,6 +49,9 @@ export const getlounges = createAsyncThunk(
     reducers: {
       resetLoungeSliceUser:()=>initialState,
 
+      setVendorId:(state,action)=>{
+        state.vendorId=action.payload.id;
+      },
       setLoungeId:(state,action)=>{
         state.loungeId=action.payload.id;
       },
@@ -72,5 +75,5 @@ export const getlounges = createAsyncThunk(
   });
   
 
-  export const {resetLoungeSliceUser,setLoungeId}=LoungeSlice.actions;
+  export const {resetLoungeSliceUser,setVendorId,setLoungeId}=LoungeSlice.actions;
   export default LoungeSlice.reducer;

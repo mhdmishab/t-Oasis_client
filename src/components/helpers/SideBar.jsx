@@ -14,8 +14,7 @@ function SideBar({ Menus }) {
   const [open, setOpen] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const vendorLogout = localStorage.getItem('vendorToken');
-  const adminLogout = localStorage.getItem('adminToken');
+  
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -46,15 +45,12 @@ function SideBar({ Menus }) {
 
   const handleLogout = () => {
     console.log("inside logout");
-    if (vendorLogout) {
+    
       dispatch(logout());
       dispatch(resetLoungeSlice());
       navigate('/manager/login');
-    } else if (adminLogout) {
-      dispatch(LogoutAdmin());
-      dispatch(resetLoungeSliceAdmin());
-      navigate('/admin/login');
-    }
+    
+     
 
     setIsModalOpen(false);
   };

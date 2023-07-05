@@ -1,20 +1,17 @@
 import React from 'react'
-import LoungeSidebar from '../../../components/vendor/LoungeSidebar'
 import Subcriptions from '../../../components/vendor/Subcriptions'
+import VendorSidebar from '../../../components/vendor/VendorSidebar'
 
 function LoungeSubcription() {
   return (
-    <section className='flex gap-6'>
-
-
-            <LoungeSidebar/>
+    
 
             <div className='p-7 text-2xl font-semibold flex-1 h-screen'>
                 <Subcriptions/>
 
             </div>
 
-        </section>
+     
   )
 }
 

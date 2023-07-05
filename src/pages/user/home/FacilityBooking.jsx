@@ -18,12 +18,13 @@ function FacilityBooking() {
     const { facilities } = useSelector(state => state.facilityuser);
     const { facilityId } = useSelector(state => state.facilityuser);
     const { loungeId } = useSelector(state => state.loungeuser);
+    const { vendorId } = useSelector(state => state.loungeuser);
     const { user_id } = useSelector(state => state?.userauth);
     const { bookedSlots } = useSelector(state => state?.facilityuser)
     
     console.log(bookedSlots)
 
-    console.log(loungeId, user_id, facilityId);
+    console.log(vendorId, user_id, facilityId);
 
    
 
@@ -33,7 +34,7 @@ function FacilityBooking() {
         if (selectedDate) {
             const date= selectedDate.toISOString().substring(0, 10);
             console.log(date)
-            dispatch(GetAvailableSlots({date,loungeId,facilityId}));
+            dispatch(GetAvailableSlots({date,vendorId,facilityId}));
             
         }
         
@@ -113,14 +114,14 @@ function FacilityBooking() {
 
         
 
-        // dispatch(bookFacility({ user_id, loungeId, facilityId, bookedData })).then((response) => {
-        //     console.log(response);
+        dispatch(bookFacility({ user_id, vendorId, facilityId, bookedData })).then((response) => {
+            console.log(response);
 
-        //     setSelectedSlots([]);
-        //     console.log('Booking successful');
-        //     message.success('booking succesful');
-        //     console.log('Date:', selectedDate.format('YYYY-MM-DD'));
-        // })
+            setSelectedSlots([]);
+            console.log('Booking successful');
+            message.success('booking succesful');
+            console.log('Date:', selectedDate.format('YYYY-MM-DD'));
+        })
 
 
 
@@ -208,7 +209,7 @@ function FacilityBooking() {
                                     {selectedSlots.length > 0 ? <h3 className='flex justify-between  font-bold mt-14'>Total Amount to be Paid:<span>Rs {selectedSlots.length * price}/-</span> </h3> : null}
                                 </div>
                             </div>
-                            <button className=' bg-green-800 text-white  px-3 py-3 rounded-md' >proceed to payment</button>
+                            <button className=' bg-green-800 text-white  px-3 py-3 rounded-md' onClick={handleBooking} >proceed to payment</button>
                         </div>
                     </div>
 
@@ -227,17 +228,7 @@ function FacilityBooking() {
                     width={400}
                 >
 
-                   <div className='h-full w-full flex-col flex justify-around items-center'>
-                    <div className='w-full h-full m-3 p-3'>
-                        <h3 className='flex justify-between'>Booked Date: <p>{selectedDate?.toISOString().substring(0, 10)}</p></h3>
-                        <h3 className='flex justify-between'>Booked Slots: <p>{selectedSlots && selectedSlots.map((slot) => (
-                        <p key={slot}>{`${slot}:00-${slot}:59`}</p>))}</p></h3>
-                        <h3 className='flex justify-between'>No of Slots Booked:<p>{selectedSlots.length}</p> </h3>
-                        <h3 className='flex justify-between'>Total amount to be <p>{selectedSlots.length}</p> </h3>
-
-                    </div>
-                    <button className=' bg-green-800 text-white  px-3 py-3 rounded-md'>proceed to payment</button>
-                   </div>
+                   
             </Modal> */}
         
         </div>

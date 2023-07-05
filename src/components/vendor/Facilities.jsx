@@ -9,8 +9,12 @@ import FacilityCard from '../helpers/FacilityCard';
 function Facilities() {
   const navigate=useNavigate();
     const dispatch=useDispatch();
-    const id=useSelector(state=>state.loungevendor).loungeId;
+    // const id=useSelector(state=>state.loungevendor).vendor_id;
     const facilities=useSelector(state=>state.facilityvendor).facilities;
+
+    const vendorToken = localStorage.getItem('vendorToken');
+    const parsedVendorToken = JSON.parse(vendorToken);
+    const id = parsedVendorToken?.vendorId;
 
     
 

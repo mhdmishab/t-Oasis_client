@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import AuthService from "../../services/admin/AuthService";
 import { setMessage } from "../Message";
 import { toast } from "react-toastify";
+import axios from "../../apis/AxiosAdmin";
 
 const admin = JSON.parse(localStorage.getItem("adminToken"));
 
@@ -9,10 +9,22 @@ export const login = createAsyncThunk(
     "auth/login",
     async (admin, thunkAPI)=>{
         try {
-            const data = await AuthService.login(admin);
+            const response = await axios.post("/admin/login", admin);
+            if(response.data.success){
+            
+              const expirationTimeInMinutes = 60;
+              const expirationTime = new Date().getTime() + expirationTimeInMinutes * 60 * 1000;
+              
+              
+              
+              localStorage.setItem("adminToken", JSON.stringify({
+                  token: response.data.token,
+                  expiresAt: expirationTime
+              }));
+            }
             console.log("inside admin slice");
-            thunkAPI.dispatch(setMessage(data.message));
-            return data;
+            thunkAPI.dispatch(setMessage(response.data.message));
+            return response;
         } catch(error) {
             console.log("inside login auth catsh")
             console.log(error)

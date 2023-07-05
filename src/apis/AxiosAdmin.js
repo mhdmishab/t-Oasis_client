@@ -9,9 +9,9 @@ const axiosPublic = axios.create({
 axiosPublic.interceptors.request.use(
     async (config) => {
       if (!config.headers.Authorization) {
-        const accesstoken = JSON.parse(localStorage.getItem('adminToken'));
-        console.log("accessToken", accesstoken.token)
-        const token=accesstoken.token;
+        const accesstoken = JSON.parse(localStorage?.getItem('adminToken'));
+
+        const token=accesstoken?.token;
         config.headers.Authorization = `Bearer ${token}`;
       }
       return config;
