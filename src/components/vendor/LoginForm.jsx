@@ -56,8 +56,6 @@ function LoginForm() {
         if(response.payload?.success || response.payload?.data?.success){
 
           navigate('/manager/dashboard')
-        }else{
-          console.log(response);
         }
       })
     

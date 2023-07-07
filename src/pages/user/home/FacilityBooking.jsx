@@ -4,9 +4,11 @@ import UserFacilityDetail from '../../../components/user/UserFacilityDetail';
 import { DatePicker, TimePicker, Space, message, Modal, Button } from 'antd';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
-import { GetAvailableSlots, bookFacility} from '../../../slices/user/Facility';
+import { BookingPayment, GetAvailableSlots, VerifyPayment, bookFacility} from '../../../slices/user/Facility';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import logo from '../../../assets/images/t-oasis logo.png'
+
 
 
 function FacilityBooking() {
@@ -14,20 +16,71 @@ function FacilityBooking() {
     const navigate = useNavigate();
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedSlots, setSelectedSlots] = useState([]);
-    const [facilityPrice, setFacilityPrice] = useState(null);
     const { facilities } = useSelector(state => state.facilityuser);
     const { facilityId } = useSelector(state => state.facilityuser);
-    const { loungeId } = useSelector(state => state.loungeuser);
     const { vendorId } = useSelector(state => state.loungeuser);
-    const { user_id } = useSelector(state => state?.userauth);
+    const { loungeId } = useSelector(state => state.loungeuser);
+    // const { user_id } = useSelector(state => state?.userauth);
     const { bookedSlots } = useSelector(state => state?.facilityuser)
     
     console.log(bookedSlots)
 
+    
+    const userToken = localStorage?.getItem('userToken');
+    const parsedUserToken = JSON?.parse(userToken);
+    const user_id = parsedUserToken?.userId;
+  
     console.log(vendorId, user_id, facilityId);
 
    
+    const initPayment=async(datas)=>{
+        const options={
+            key:"rzp_test_TI7s3WQB1jrFOA",
+            amount:datas.amount,
+            currency:datas.currency,
+            name:facility[0].facilityName,
+            description:"Booking Payment",
+            image:logo,
+            order_id:datas.id,
+            handler:async(response)=>{
+                try{
 
+                    console.log("inside hacdler",response);
+                    const data= await dispatch(VerifyPayment({response}));
+                    console.log(data);
+                    if(data){
+                        const amount_paid=datas.amount/100;
+                        const {
+                            razorpay_order_id,
+                            razorpay_payment_id,
+                            razorpay_signature}=response;
+                        const bookedDate = selectedDate.toISOString().substring(0, 10);
+                        const bookedSlots=selectedSlots;
+                        const bookedData = { bookedDate,bookedSlots,razorpay_order_id,razorpay_payment_id,amount_paid};
+                        
+                
+                        dispatch(bookFacility({ user_id, vendorId,loungeId,facilityId, bookedData })).then((response) => {
+                            console.log(response);
+                
+                            setSelectedSlots([]);
+                            console.log('Booking successful');
+                            message.success('booking and payment successful');
+                            console.log('Date:', selectedDate.format('YYYY-MM-DD'));
+                            window.location.reload();
+                            navigate('/facilitybooking');
+
+                        })
+
+                    }
+                }catch(error){
+                    console.log(error)
+                }
+            },
+            
+        }
+        const rzp1=new window.Razorpay(options);
+        rzp1.open();
+    }
     
 
     useEffect(()=>{
@@ -81,7 +134,7 @@ function FacilityBooking() {
     
 
 
-    const handleBooking = () => {
+    const handleBooking = async() => {
 
         if (!user_id) {
             message.error("user is not loged in");
@@ -108,46 +161,18 @@ function FacilityBooking() {
         }
 
         
-        const bookedDate = selectedDate.toISOString().substring(0, 10);
-        const bookedSlots=selectedSlots;
-        const bookedData = { bookedDate,bookedSlots};
-
+       
+        const numberOfSlots=selectedSlots.length;
+        console.log(numberOfSlots);
         
 
-        dispatch(bookFacility({ user_id, vendorId, facilityId, bookedData })).then((response) => {
-            console.log(response);
+        const response= await dispatch(BookingPayment({facilityId,numberOfSlots}));
+        console.log(response.payload.data.data);
 
-            setSelectedSlots([]);
-            console.log('Booking successful');
-            message.success('booking succesful');
-            console.log('Date:', selectedDate.format('YYYY-MM-DD'));
-        })
-
-
+        initPayment(response.payload.data.data);
+        
 
     };
-
-    
-    
-        // if (!user_id) {
-        //     message.error("user is not loged in");
-        //     return
-        // }
-        
-        // if (!selectedDate) {
-        //     message.error('Please select date');
-        //     return;
-        // }
-
-        // if(selectedSlots.length===0){
-
-        //     message.error('Please select atleast one slot')
-        //     return 
-        // }
-   
-
-    
-   
     
 
     const facility = facilities?.filter(facility => facility._id === facilityId);
@@ -209,7 +234,7 @@ function FacilityBooking() {
                                     {selectedSlots.length > 0 ? <h3 className='flex justify-between  font-bold mt-14'>Total Amount to be Paid:<span>Rs {selectedSlots.length * price}/-</span> </h3> : null}
                                 </div>
                             </div>
-                            <button className=' bg-green-800 text-white  px-3 py-3 rounded-md' onClick={handleBooking} >proceed to payment</button>
+                            <button className=' bg-green-800 text-white  px-3 py-3 rounded-md' onClick={handleBooking} >Pay Now</button>
                         </div>
                     </div>
 

@@ -8,6 +8,7 @@ import messageReducer from "../../slices/Message";
 import VendorLoungeReducer from "../../slices/vendor/Lounges";
 import AdminLoungeReducer from "../../slices/admin/Lounges"
 import VendorFacilityReducer from "../../slices/vendor/Facility";
+import VendorBookingReducer from "../../slices/vendor/Bookings"
 import UserLoungeReducer from "../../slices/user/Lounges";
 import UserFacilityReducer from "../../slices/user/Facility";
 
@@ -19,6 +20,7 @@ const RootReducer=combineReducers({
     vendorauth:VendorAuthReducer,
     loungevendor:VendorLoungeReducer,
     facilityvendor:VendorFacilityReducer,
+    bookingvendor:VendorBookingReducer,
     adminauth:AdminAuthReducer,
     loungeadmin:AdminLoungeReducer,
     message:messageReducer

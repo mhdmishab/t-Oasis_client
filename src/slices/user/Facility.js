@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import axios from "../../apis/AxiosUser";
 import { useSelector } from "react-redux";
 
+
 export const getfacilities = createAsyncThunk(
     "facilities/getfacilities",
     async (id,thunkAPI) => {
@@ -36,10 +37,10 @@ export const getfacilities = createAsyncThunk(
 
   export const bookFacility=createAsyncThunk(
     "facilities/bookfacilities",
-    async({user_id,vendorId,facilityId,bookedData})=>{
+    async({user_id,vendorId,loungeId,facilityId,bookedData})=>{
         try{
             console.log(vendorId,facilityId);
-            const response=await axios.post(`/book-facility/${user_id}/${vendorId}/${facilityId}`,bookedData);
+            const response=await axios.post(`/book-facility/${user_id}/${vendorId}/${loungeId}/${facilityId}`,bookedData);
             console.log(response,"booked response is here")
             return response;
 
@@ -57,6 +58,35 @@ export const getfacilities = createAsyncThunk(
             const response=await axios.get(`/get-slots/${date}/${vendorId}/${facilityId}`);
             console.log(response,"booked response is here")
             return response;
+
+        }catch(error){
+            console.log(error);
+        }
+    }
+  )
+
+  export const BookingPayment=createAsyncThunk(
+    "facilities/payment",
+    async({facilityId,numberOfSlots})=>{
+        try{
+            console.log(numberOfSlots)
+            const response=await axios.post(`/booking-payment/${facilityId}`,{numberOfSlots});
+            console.log(response);
+            return response;
+
+        }catch(error){
+            console.log(error); 
+        }
+    }
+  )
+
+  export const VerifyPayment=createAsyncThunk(
+    "facilities/verifypayment",
+    async({response})=>{
+        try{
+            console.log(response);
+            const veriyPaymentData=await axios.post(`/verify-payment`,response);
+            console.log(veriyPaymentData);
 
         }catch(error){
             console.log(error);

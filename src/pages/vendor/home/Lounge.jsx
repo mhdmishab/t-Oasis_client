@@ -11,7 +11,7 @@ function Lounge() {
     return (
        
 
-            <div className='p-7 text-2xl font-semibold flex-1 h-screen'>
+            <div className='p-7 text-2xl font-semibold flex-1 h-screen overflow-auto'>
             <LoungeDetails loungeId={loungeId} lounges={lounges}/>
 
             </div>

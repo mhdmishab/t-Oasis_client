@@ -5,8 +5,8 @@ import SideBar from './SideBar'
 function SideBArLayout({Menus}) {
   return (
     <div className='flex '>
-        <SideBar Menus={Menus} className={"overflow-hidden"}/>
-        <Outlet className={"overflow-auto"}/>
+        <SideBar Menus={Menus} />
+        <Outlet />
       
     </div>
   )

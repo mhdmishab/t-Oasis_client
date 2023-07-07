@@ -7,6 +7,8 @@ import { resetLoungeSlice } from '../../slices/vendor/Lounges';
 import { resetLoungeSliceAdmin } from '../../slices/admin/Lounges';
 import { Button, Modal } from 'antd';
 import { LogoutAdmin } from '../../slices/admin/Auth';
+import { resetFacilitySlice } from '../../slices/vendor/Facility';
+import { resetBookingSlice } from '../../slices/vendor/Bookings';
 
 function SideBar({ Menus }) {
   const dispatch = useDispatch();
@@ -48,6 +50,8 @@ function SideBar({ Menus }) {
     
       dispatch(logout());
       dispatch(resetLoungeSlice());
+      dispatch(resetFacilitySlice());
+      dispatch(resetBookingSlice());
       navigate('/manager/login');
     
      
@@ -56,7 +60,7 @@ function SideBar({ Menus }) {
   };
 
   return (
-    <div className={`bg-green-800 min-h-screen ${open ? "w-72" : "w-20"} duration-300 p-5 pt-8 relative  `}>
+    <div className={`bg-green-800 min-h-screen ${open ? "w-72" : "w-20"} duration-300 p-5 pt-8 relative z-10 `}>
       <svg
         className={`absolute ${!open && "rotate-180"} w-7 cursor-pointer -right-3 top-9 bg-white border-2 border-green-800 rounded-full`}
         onClick={() => setOpen(!open)}

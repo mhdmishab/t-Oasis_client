@@ -93,7 +93,7 @@ function AdminSideBar() {
           <div className={`w-20 cursor-pointer duration-500 flex justify-center bg-white rounded ${!open && "rotate-180"} border-blue-600`}>
             <img src={logo} alt="logo" className={`w-16 cursor-pointer duration-500`} />
           </div>
-          <h2 className={`text-white origin-left font-medium text-xl duration-200 ${!open && "scale-0"}`}>Manager Panel</h2>
+          <h2 className={`text-white origin-left font-medium text-xl duration-200 ${!open && "scale-0"}`}>Admin Panel</h2>
         </div>
         <ul className="pt-6">
           {Menus.map((menu, index) => (

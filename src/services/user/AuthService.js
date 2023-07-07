@@ -76,7 +76,8 @@ const login=(user)=>{
     
   
     localStorage.setItem("userToken", JSON.stringify({
-      token: response.data.token,
+      userId:response?.data?._id,
+      token: response?.data?.token,
       expiresAt: expirationTime
     }));
       resolve(response); 

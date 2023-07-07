@@ -15,3 +15,7 @@
         @apply mr-8 last:mr-0 text-green-900;
     }
 }
+
+body{
+    overflow: scroll;
+}

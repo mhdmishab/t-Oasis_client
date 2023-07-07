@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 function App() {
   return (
     <>
+    <div className="max-w-screen-4xl mx-auto">
     <BrowserRouter>
       <Routes>
           <Route path='/*'  element={<UserRouter/>}/>
@@ -20,7 +21,7 @@ function App() {
       
       <ToastContainer position="bottom-right" />
       
-
+      </div>
     </>
   );
 }

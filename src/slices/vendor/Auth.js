@@ -3,6 +3,8 @@ import authService from "../../services/vendor/AuthService";
 import { setMessage } from "../Message";
 import { toast } from "react-toastify";
 import { message } from "antd";
+import axios from "../../apis/AxiosVendor";
+import { VendorLogin, VendorOtp, VendorResendOtp, VendorSignup } from "../../utils/endpoints/endpoints";
 
 const vendor = JSON.parse(localStorage.getItem("vendorToken"));
 
@@ -11,28 +13,31 @@ export const register = createAsyncThunk(
   "auth/register",
   async (vendor, thunkAPI) => {
     try {
-      const data = await authService.register(vendor);
+      const response = await axios.post(VendorSignup, vendor);
 
-      thunkAPI.dispatch(setMessage(data.message));
+      console.log("inside register vendor side");
+          console.log(response);
 
-      return data;
+        const expirationTimeInMinutes = 1;
+        const expirationTime = new Date().getTime() + expirationTimeInMinutes * 60 * 1000;
+        
+      
+        localStorage.setItem("otptoken", JSON.stringify({
+          
+          token: response.data.token,
+          expiresAt: expirationTime
+        }));
+
+      message.success(response.data.message)
+
+      return response;
 
 
     } catch (error) {
 
       console.log(error)
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      thunkAPI.dispatch(setMessage(error.response.data.message));
-
-      toast.error(error.response?.data.message, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-      return thunkAPI.rejectWithValue();
+    
+      message.error(error.response.data.message);
 
     }
   }
@@ -53,44 +58,29 @@ export const otpVerification = createAsyncThunk(
       if (expirationTime < currentTime) {
         console.log("otp expired");
         const message = 'OTP Expired';
-        return thunkAPI.rejectWithValue({ message });
+        message.error(message);
       };
 
-      const response = await authService.otpverification(otpData);
+      const response = await axios.post(VendorOtp,otpData);
 
-      console.log(response.success);
-      if (response.success) {
+      console.log(response.data.success);
+      if (response.data.success) {
         localStorage.removeItem("otptoken");
 
 
         console.log("inside auth.js otpverification vendor side")
         localStorage.setItem("vendorToken", JSON.stringify({
-          token: response.token,
-          vendorId:response._id
+          token: response.configdata.token,
+          vendorId:response.data._id
 
         }));
-        toast.success(response.message, {
-          position: toast.POSITION.BOTTOM_RIGHT,
-        });
+        message.success(response.data.message)
         return response;
       }
-
-
-
     } catch (error) {
 
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      thunkAPI.dispatch(setMessage(message));
-
-      toast.error(error.response?.data.message, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-      return thunkAPI.rejectWithValue({ message });
+      message.error(error.response?.data.message);
+      
     }
   }
 )
@@ -99,26 +89,28 @@ export const login = createAsyncThunk("auth/login",
   async (vendor, thunkAPI) => {
     try {
 
-      const data = await authService.login(vendor);
+      const response = await axios.post(VendorLogin, vendor);
       console.log("inside login try")
-      console.log(data);
-      thunkAPI.dispatch(setMessage(data.message));
-      return data;
-    } catch (error) {
-      console.log("inside login auth catsh")
-      console.log(error)
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      thunkAPI.dispatch(setMessage(error.response.data.message));
+      console.log("inside login vendor");
+      console.log(response);
 
-      toast.error(error.response?.data.message, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-      return thunkAPI.rejectWithValue({ message });
+    const expirationTimeInMinutes = 60;
+    const expirationTime = new Date().getTime() + expirationTimeInMinutes * 60 * 1000;
+    
+  
+    localStorage.setItem("vendorToken", JSON.stringify({
+      token: response.data.token,
+      vendorId:response.data._id,
+      expiresAt: expirationTime
+    }));
+      
+      message.success(response.data.message);
+      return response;
+    } catch (error) {
+      console.log("inside login auth vendor catsh")
+      console.log(error)
+      
+      message.error(error.response?.data.message);
     }
   })
 
@@ -131,31 +123,29 @@ export const resendotp = createAsyncThunk('auth/resendotp',
       const otpObj = JSON.parse(otpToken);
       const otptoken = otpObj.token;
       const otpData = { otptoken }
-      const data = await authService.resendotp(otpData);
-      console.log("inside resend try")
+      const response = await axios.post(VendorResendOtp,otpData);
+      console.log("inside resend try");
+      console.log("inside  resendotp vendor side")
+          console.log(response);
+          const expirationTimeInMinutes = 1;
+          const expirationTime = new Date().getTime() + expirationTimeInMinutes * 60 * 1000;
+          
+          console.log(response.data.token);
+          localStorage.removeItem("otptoken");
+          localStorage.setItem("otptoken", JSON.stringify({
+            token: response.data.token,
+            expiresAt: expirationTime
+          }));
 
-      thunkAPI.dispatch(setMessage(data.message));
-      toast.success(data.message, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-      return data;
+      message.success(response.data.message);
+      
+      return response;
 
 
     } catch (error) {
       console.log("inside RESEND auth catsh")
-
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      thunkAPI.dispatch(setMessage(error.response.data.message));
-
-      toast.error(error.response?.data.message, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-      return thunkAPI.rejectWithValue({ message });
+      message.error(error.response?.data.message);
+      
     }
   }
 
@@ -209,7 +199,8 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.isLoggedInVendor = true;
-        console.log(action.payload.data._id)
+        console.log("inside vendor login fullfilled reducer")
+        console.log(action.payload?.data?._id)
         state.vendor_id=action.payload.data._id;
         
 
