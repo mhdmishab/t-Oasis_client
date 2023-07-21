@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setMessage } from "../Message";
 import { toast } from "react-toastify";
+import { message } from "antd";
 // import axios from "axios";
 // import { Url } from "../../apis/Axios";
 import axios from "../../apis/AxiosAdmin";
@@ -16,18 +17,9 @@ export const getlounge = createAsyncThunk(
   
       } catch (error) {
         console.log(error)
-        const message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        thunkAPI.dispatch(setMessage(error.response.data.message));
-  
-        toast.error(error.response?.data.message, {
-          position: toast.POSITION.BOTTOM_RIGHT,
-        });
-        return thunkAPI.rejectWithValue();
+        message.error(error.response?.data?.message);
+        throw error;
+     
       }
   
     }
@@ -40,16 +32,13 @@ export const getlounge = createAsyncThunk(
         try{
             const response=await axios.patch(`/admin/reject-lounge/${loungeId}`);
             console.log(response);
-            toast.error(response?.data.message, {
-                position: toast.POSITION.BOTTOM_RIGHT,
-              });
+            message.error(response?.data.message);
             return response;
-        }catch(error){
-            console.log(error);
-            toast.error(error.response?.data.message, {
-                position: toast.POSITION.BOTTOM_RIGHT,
-              });
-
+        }catch (error) {
+          console.log(error)
+          message.error(error.response?.data?.message);
+          throw error;
+       
         }
     }
   )
@@ -60,16 +49,13 @@ export const getlounge = createAsyncThunk(
         try{
             const response=await axios.patch(`/admin/approve-lounge/${loungeId}`);
             console.log(response);
-            toast.success(response?.data.message, {
-                position: toast.POSITION.BOTTOM_RIGHT,
-              });
+            message.success(response?.data.message);
             return response;
-        }catch(error){
-            console.log(error);
-            toast.error(error.response?.data.message, {
-                position: toast.POSITION.BOTTOM_RIGHT,
-              });
-
+        }catch (error) {
+          console.log(error)
+          message.error(error.response?.data?.message);
+          throw error;
+       
         }
     }
   )
@@ -98,6 +84,7 @@ export const getlounge = createAsyncThunk(
         .addCase(getlounge.fulfilled, (state, action) => {
           state.loading = false;
           state.lounges=action.payload.data.lounges;
+          
         })
         .addCase(getlounge.rejected, (state, action) => {
           state.loading = false;

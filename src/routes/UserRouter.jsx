@@ -10,6 +10,7 @@ import NavabarLayout from '../components/navbar/NavabarLayout';
 import SearchPage from '../pages/user/home/SearchPage';
 import LoungeHome from '../pages/user/home/LoungeHome';
 import FacilityBooking from '../pages/user/home/FacilityBooking';
+import UserProfile from '../pages/user/home/UserProfile';
 
 
 
@@ -26,6 +27,7 @@ function UserRouter() {
             <Route path='/search-lounges' element={<SearchPage/>}/>
             <Route path='/lounge' element={<LoungeHome/>}/>
             <Route path='/facilitybooking' element={<FacilityBooking/>}/>
+            <Route path='/profile' element={<UserVerification><UserProfile/></UserVerification>}/>
             <Route path='/register' element={<UserVerification><Signup/></UserVerification>}/>
             <Route path='/login' element={<UserVerification><Login/></UserVerification>}/>
          </Route>

@@ -12,6 +12,7 @@ export const UserLogin="/login"
 export const UserSignup="/signup"
 export const UserOtp="/verifyotp"
 export const UserResendOtp="/resendotp"
+// export const UploadUserImage=""
 
 
 

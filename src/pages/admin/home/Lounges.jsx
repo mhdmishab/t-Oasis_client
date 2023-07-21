@@ -12,7 +12,7 @@ function Lounges() {
        
          <AdminSidebar/>
       
-      <div className='p-7 text-2xl font-semibold flex-1 h-screen'>
+      <div className='p-7 text-2xl font-semibold flex-1 h-screen overflow-auto'>
            <LoungeManagment/>
         
       </div>

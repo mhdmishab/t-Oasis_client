@@ -2,36 +2,49 @@ import React, { useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Facility from '../../pages/vendor/home/Facility';
-import { setFacilityId } from '../../slices/vendor/Facility';
+import { editfacilitystatus, setFacilityId } from '../../slices/vendor/Facility';
+import FacilityEditForm from '../vendor/FacilityEditForm';
 
 
-function FacilityCard({ facilities}) {
+function FacilityCard({ facilities,vendorId}) {
     const dispatch=useDispatch();
     const navigate=useNavigate();
+
 
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isBlockModalOpen, setIsBlockModalOpen] = useState(false);
     const [facilityId, setfacilityId] = useState(null);
+    const [isBlocked,setIsBlocked]=useState(null);
 
 
 
 
-    const showEditModal = (id) => {
-         setfacilityId(id);
-    
-       
+    let showEditModal = async(id) => {
+        console.log(1);
+     
+            setfacilityId(id)
+            setIsEditModalOpen(true);
         
-        setIsEditModalOpen(true);
     };
 
-    // useEffect(()=> {
+    useEffect(()=> {
+         showEditModal = async(id) => {
+            console.log(1);
+         
+                setfacilityId(id)
+                setIsEditModalOpen(true);
+            
+        };
+    
 
-    // }, [])
+    }, [showEditModal])
 
-    const showBlockModal = (id) => {
+    const showBlockModal = ({id,isblocked}) => {
         
+        setIsBlocked(isblocked);
+        setfacilityId(id)
         setIsBlockModalOpen(true);
     };
 
@@ -41,13 +54,20 @@ function FacilityCard({ facilities}) {
     };
 
     const handleBlockCancel = () => {
+        setfacilityId(null);
         setIsBlockModalOpen(false);
     };
 
     const handleBlock = () => {
         try{
-
-            console.log("block modal")
+            console.log(vendorId,facilityId);
+            console.log("block modal");
+            dispatch(editfacilitystatus({vendorId,facilityId})).then((response)=>{
+                if(response){
+                    navigate('/manager/dashboard');
+                }
+            })
+        
             
             setIsBlockModalOpen(false);
             
@@ -95,7 +115,7 @@ function FacilityCard({ facilities}) {
                             </p>
                         </div>
                     </div>
-                    <button className='w-7 h-7 border-2 border-gray-500 bg-white rounded-full cursor-pointer absolute left-60 top-44 ml-1' onClick={showBlockModal}>
+                    <button className='w-7 h-7 border-2 border-gray-500 bg-white rounded-full cursor-pointer absolute left-60 top-44 ml-1' onClick={()=>showBlockModal({id:facility._id,isblocked:facility.isBlocked})}>
                         <svg fill='none' stroke='gray' strokeWidth={1.5} viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'>
                             <path strokeLinecap='round' strokeLinejoin='round' d='M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0' />
                         </svg>
@@ -118,7 +138,7 @@ function FacilityCard({ facilities}) {
                 bodyStyle={{height:'500px',overflow:'auto'}}
                 width={1000}
             >
-                {/* <facilityEditForm facilityId={facilityId} facilitys={facilitys}/> */}
+                <FacilityEditForm facilityId={facilityId}/>
 
             </Modal>
             <Modal
@@ -134,13 +154,23 @@ function FacilityCard({ facilities}) {
                     <p>
                         Are you sure you wanna Block this facility
                     </p>
-                    <button
+
+                    {!isBlocked? <button
                         type="submit"
                         className="px-5 py-1 rounded-md bg-red-700 text-white hover:bg-red-300 mt-5"
                         onClick={handleBlock}
                     >
+
                         Block
-                    </button>
+                    </button>: <button
+                        type="submit"
+                        className="px-5 py-1 rounded-md bg-green-700 text-white hover:bg-red-300 mt-5"
+                        onClick={handleBlock}
+                    >
+
+                     Activate
+                    </button>}
+                   
                 </div>
 
             </Modal>

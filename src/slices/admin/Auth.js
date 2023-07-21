@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setMessage } from "../Message";
 import { toast } from "react-toastify";
 import axios from "../../apis/AxiosAdmin";
+import { message } from "antd";
 
 const admin = JSON.parse(localStorage.getItem("adminToken"));
 
@@ -25,22 +26,11 @@ export const login = createAsyncThunk(
             console.log("inside admin slice");
             thunkAPI.dispatch(setMessage(response.data.message));
             return response;
-        } catch(error) {
-            console.log("inside login auth catsh")
-            console.log(error)
-            const message =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-          thunkAPI.dispatch(setMessage(error.response.data.message));
-    
-          toast.error(error.response?.data.message, {
-            position: toast.POSITION.BOTTOM_RIGHT,
-          });
-           
-          return thunkAPI.rejectWithValue();
+        }catch (error) {
+          console.log(error)
+          message.error(error.response?.data?.message);
+          throw error;
+       
         }
     }
 )

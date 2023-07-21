@@ -11,7 +11,7 @@ function LoungeDetails({ loungeId, lounges }) {
             <img
               src={lounge.loungeImages[0]?.url}
               alt="Lounge"
-              className="w-full h-full rounded-md object-cover custom-image"
+              className="w-96 h-96 rounded-md object-cover custom-image"
             />
           </div>
           <div className="w-1/2 p-4">

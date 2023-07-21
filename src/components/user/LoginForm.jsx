@@ -51,7 +51,7 @@ function LoginForm() {
       dispatch(login(user)).then((response)=>{
         console.log(response);
         if(response.payload?.success || response.payload?.data?.success){
-          navigate('/');
+          navigate('/profile');
         }
       })
     

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setMessage } from "../Message";
 import { toast } from "react-toastify";
+import { message } from "antd";
 // import axios from "axios";
 // import { Url } from "../../apis/Axios";
 import axios from "../../apis/AxiosUser";
@@ -17,18 +18,9 @@ export const getfacilities = createAsyncThunk(
   
       } catch (error) {
         console.log(error)
-        const message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        thunkAPI.dispatch(setMessage(error.response.data.message));
-  
-        toast.error(error.response?.data.message, {
-          position: toast.POSITION.BOTTOM_RIGHT,
-        });
-        return thunkAPI.rejectWithValue();
+       
+        message.error(error.response?.data.message);
+        throw error;
       }
   
     }
@@ -46,6 +38,8 @@ export const getfacilities = createAsyncThunk(
 
         }catch(error){
             console.log(error);
+            message.error(error.response?.data.message);
+            throw error;
         }
     }
   )
@@ -60,7 +54,9 @@ export const getfacilities = createAsyncThunk(
             return response;
 
         }catch(error){
-            console.log(error);
+            console.log(error)
+            message.error(error.response?.data.message);
+            throw error;
         }
     }
   )
@@ -75,7 +71,9 @@ export const getfacilities = createAsyncThunk(
             return response;
 
         }catch(error){
-            console.log(error); 
+            console.log(error)
+            message.error(error.response?.data.message);
+            throw error;
         }
     }
   )
@@ -89,7 +87,9 @@ export const getfacilities = createAsyncThunk(
             console.log(veriyPaymentData);
 
         }catch(error){
-            console.log(error);
+            console.log(error)
+            message.error(error.response?.data.message);
+            throw error;
         }
     }
   )

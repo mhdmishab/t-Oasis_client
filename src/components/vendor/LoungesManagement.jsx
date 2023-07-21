@@ -52,7 +52,7 @@ function LoungesManagement() {
 
 
 
-            <VendorCard lounges={lounges}/>
+            <VendorCard lounges={lounges} vendorId={id}/>
 
 
 

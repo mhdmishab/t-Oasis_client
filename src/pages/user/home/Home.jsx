@@ -14,85 +14,72 @@ function Home() {
   // const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    dispatch(getlounges());
+    dispatch(getlounges()).then((response) => {
+      console.log(response);
+    });
   }, [dispatch]);
 
   console.log(lounges);
 
-  const containerStyle = {
-    backgroundImage: `url(${bgImg})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    height: '100vh',
-  };
-  const containerStyle2 = {
-    backgroundImage: `url(${bgImg})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    height: '70vh',
-  };
-
-  const containerStyle3 = {
-    backgroundImage: `url(${bgImg})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    // height: '45vh',
-  };
-
-
-
- 
-
   return (
     <div className="p-5">
-      <div style={containerStyle} className="rounded-xl mt-16">
-        <div
-          className="h-4/5 w-1/3 bg-slate-300  ml-32 p-24 pt-48"
-          style={{ backgroundColor: 'rgba(138, 43, 226, 0.4)' }}
-        >
-          <h3 className="text-white text-6xl" style={{ lineHeight: '1.5' }}>
-            <p className="text-lg">t-Oasis</p>A fertile spot for travellers. <br />
+      <div
+        className="rounded-xl  bg-cover bg-center bg-no-repeat h-[70vh] md:h-[100vh]"
+        style={{ backgroundImage: `url(${bgImg})` }}
+      >
+        <div className="h-4/5 w-4/5 mx-auto md:w-1/3 bg-slate-300 mt-20 p-8 md:p-24 sm:mt-48 md:mt-0 md:pt-48 bg-opacity-40">
+          <h3 className="text-white text-5xl font-semibold md:text-6xl leading-tight">
+            t-Oasis
           </h3>
+          <p className="text-white text-lg mt-4 md:text-xl md:leading-relaxed">
+            A fertile spot for travellers.
+          </p>
         </div>
       </div>
-      <div className="h-96 w-full pt-5 ">
-        <div className=' flex justify-center items-center '>
-
-            <Search />
+      <div className="h-auto md:h-96 w-full mt-10">
+        <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto">
+          <Search />
         </div>
+      </div>
+{/* 
+      <div
+        className="rounded-xl h-40 md:h-60 lg:h-80 w-full bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${bgImg})` }}
+      >
+        <div className="h-full w-11/12 mx-auto md:w-1/2 lg:w-1/3 bg-slate-300 p-8 md:p-16 lg:p-24 bg-opacity-70 flex justify-center items-center flex-col">
     
-      </div>
-      <div style={containerStyle2} className="rounded-xl h-44 w-full">
-        <div
-          className="h-full w-full bg-slate-300  p-24 pt-48"
-          style={{ backgroundColor: 'rgba(138, 43, 226, 0.4)' }}
-        >
-          
         </div>
-      </div>
-      <div className='h-96 w-full m-5 flex items-center'>
-        <div className='w-1/2 h-full ml-8 bg-blue-300 p-20 flex justify-start items-center flex-col'>
-            <h1 className='text-white text-2xl mb-5'>About Us</h1>
-            <p className='text-white' style={{lineHeight:'1.5'}}>t-Oasis stands out from the conventional restrooms owing to this distinctive and exceptional feature, what we call “TOLOO”.It is a set of toilet stations installed within the Travlounge restrooms. This is the major revival in the Travlounge initiative,
-             brought in to address a relevant community cause as well as to introduce a convenient sophisticated sanitation culture.</p>
+      </div> */}
 
+      <div className="h-auto w-full mx-auto px-5 md:px-0 md:flex md:items-center">
+        <div className="w-full md:w-1/2 md:ml-8 bg-blue-300 p-8 md:p-10 lg:p-16 flex justify-start items-center flex-col">
+          <h1 className="text-white text-xl md:text-3xl lg:text-4xl font-semibold mb-4">
+            About Us
+          </h1>
+          <p className="text-white md:text-base md:leading-relaxed lg:text-lg xl:text-xl">
+            t-Oasis stands out from the conventional restrooms owing to this
+            distinctive and exceptional feature, what we call “TOLOO”. It is a set of
+            toilet stations installed within the Travlounge restrooms. This is the
+            major revival in the Travlounge initiative, brought in to address a
+            relevant community cause as well as to introduce a convenient
+            sophisticated sanitation culture.
+          </p>
         </div>
-        <div className='w-2/5 h-5/6 bg-red-300 -ml-12' style={containerStyle3}>
-          
-        </div>
+        <div className="hidden md:block w-1/2 md:h-64 lg:h-80 xl:h-96 md:-ml-12 bg-cover bg-center bg-no-repeat"  style={{ backgroundImage: `url(${bgImg})` }}></div>
       </div>
-      <div className='h-96 w-full flex items-center bg-purple-400'>
-        
-        </div>
-     
+
+      <div className="h-72 w-full bg-purple-400 mt-5"></div>
+      <footer className="h-16 bg-blue-900 text-white text-center flex items-center justify-center">
+        © {new Date().getFullYear()} t-Oasis. All rights reserved.
+      </footer>
     </div>
   );
 }
 
 export default Home;
+
+
+
 
 
 

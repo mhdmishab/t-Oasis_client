@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 // import { Url } from "../../apis/Axios";
 import axios from "../../apis/AxiosVendor";
 import { useSelector } from "react-redux";
+import { message } from "antd";
 
 
 
@@ -22,18 +23,9 @@ export const addlounge = createAsyncThunk(
 
     } catch (error) {
       console.log(error)
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      thunkAPI.dispatch(setMessage(error.response.data.message));
-
-      toast.error(error.response?.data.message, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-      return thunkAPI.rejectWithValue();
+      message.error(error.response?.data?.message);
+      throw error;
+   
     }
   }
 );
@@ -48,22 +40,51 @@ export const getlounge = createAsyncThunk(
 
     } catch (error) {
       console.log(error)
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      thunkAPI.dispatch(setMessage(error.response.data.message));
-
-      toast.error(error.response?.data.message, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-      return thunkAPI.rejectWithValue();
+      message.error(error.response?.data?.message);
+      throw error;
+   
     }
 
   }
 
+)
+
+export const editlounge=createAsyncThunk(
+  "lounges/editlounge",
+  async ({ data, vendorId,loungeId }, thunkAPI) => {
+    try {
+      console.log("lounge slice", vendorId,loungeId);
+
+      const response = await axios.patch(`/vendor/edit-lounge/${vendorId}/${loungeId}`, data);
+      message.success(response?.data.message);
+      return response;
+
+
+    } catch (error) {
+      console.log(error)
+      message.error(error.response?.data?.message);
+      throw error;
+   
+    }
+  }
+)
+
+export const editloungestatus=createAsyncThunk(
+  "lounges/managestatus",
+
+  async({vendorId,loungeId},thunkAPI)=>{
+    try{
+        const response=await axios.patch(`/vendor/block-unblock-lounge/${vendorId}/${loungeId}`);
+        console.log(response);
+        message.success(response?.data.message);
+        return response;
+    }catch (error) {
+      console.log(error)
+      message.error(error.response?.data?.message);
+      throw error;
+   
+    }
+}
 )
 
 
@@ -104,6 +125,7 @@ const LoungeSlice = createSlice({
         state.loading = false;
         state.vendor_id = action.payload.data.vendor_id;
         state.lounges=action.payload.data.lounges;
+       
 
       })
       .addCase(getlounge.rejected, (state, action) => {

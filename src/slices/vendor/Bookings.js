@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../apis/AxiosVendor";
+import { message } from "antd";
 
 
 export const GetBookings=createAsyncThunk(
@@ -12,6 +13,9 @@ export const GetBookings=createAsyncThunk(
 
         }catch(error){
             console.log(error);
+            message.error(error.response.data.message);
+            throw error;
+
         }
     }
 )

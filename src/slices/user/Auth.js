@@ -36,6 +36,7 @@ export const register = createAsyncThunk(
 
       console.log(error)
       message.error(error.response?.data.message);
+      throw error;
       
     }
   }
@@ -67,8 +68,9 @@ export const otpVerification = createAsyncThunk(
         localStorage.removeItem("otptoken");
 
         localStorage.setItem("userToken", JSON.stringify({
-          userId: response._id,
-          token: response.token,
+          userId:response?.data?._id,
+        token: response?.data?.token,
+        expiresAt: expirationTime
 
         }));
         message.success(response.data.message);
@@ -80,6 +82,7 @@ export const otpVerification = createAsyncThunk(
     } catch (error) {
 
       message.error(error.response?.data.message)   
+      throw error;
     }
   }
 )
@@ -111,6 +114,7 @@ export const login = createAsyncThunk("auth/login",
       console.log("inside login auth user catsh")
      
       message.error(error.response?.data.message);
+      throw error;
     }
 
 
@@ -124,22 +128,34 @@ export const resendotp = createAsyncThunk('auth/resendotp',
       const otptoken = otpObj.token;
       const otpData = { otptoken }
       const response = await axios.post(UserResendOtp,otpData);
-      console.log("inside user resend try")
+      console.log("inside resend try");
+      console.log("inside  resendotp vendor side")
+          console.log(response);
+          const expirationTimeInMinutes = 1;
+          const expirationTime = new Date().getTime() + expirationTimeInMinutes * 60 * 1000;
+          
+          console.log(response.data.token);
+          localStorage.removeItem("otptoken");
+          localStorage.setItem("otptoken", JSON.stringify({
+            token: response.data.token,
+            expiresAt: expirationTime
+          }));
 
+      message.success(response.data.message);
       
-      message.success(response.data.message)
       return response;
 
 
     } catch (error) {
-      console.log("inside RESEND auth user catsh")
-
+      console.log("inside RESEND auth catsh")
       message.error(error.response?.data.message);
-
+      throw error;
+      
     }
   }
 
 )
+
 
 
 

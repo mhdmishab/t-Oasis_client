@@ -10,18 +10,18 @@ import { useNavigate } from 'react-router-dom';
 
 
 function LoungeForm() {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
-    const vendorId=useSelector((state)=>state.loungevendor).vendor_id;
-    const {loading}=useSelector((state)=>state.loungevendor);
-    
+    const vendorId = useSelector((state) => state.loungevendor).vendor_id;
+    const { loading } = useSelector((state) => state.loungevendor);
+
     const dispatch = useDispatch();
     const loungeData = {
         loungeName: "",
         loungeDescription: "",
         loungeDistrict: "",
         loungeState: "",
-        loungeImage:null,
+        loungeImage: null,
         loungeLocation: ""
 
     }
@@ -30,25 +30,25 @@ function LoungeForm() {
 
     const [lat, setLat] = useState(null);
     const [lng, setLng] = useState(null);
-    const [location,setLocation]=useState('');
+    const [location, setLocation] = useState('');
 
     const handleModalOpen = () => {
         setIsModalVisible(true);
-      };
-    
-      const handleModalClose = () => {
+    };
+
+    const handleModalClose = () => {
         setIsModalVisible(false);
-      };
-    
-      const handleModalOk = () => {
+    };
+
+    const handleModalOk = () => {
         setIsModalVisible(false);
-      };
-    
+    };
 
 
-    const updateLocation=(name)=>{
+
+    const updateLocation = (name) => {
         setLocation(name)
-        
+
     }
 
     const validationSchema = Yup.object().shape({
@@ -73,44 +73,44 @@ function LoungeForm() {
             }),
     })
 
-    
 
-    const handleSubmit = async(loungeData) => {
+
+    const handleSubmit = async (loungeData) => {
         try {
 
-        console.log(lat,lng)
-          console.log(loungeData);
-      
-          const { loungeImage, loungeAddress, loungeDescription, loungeDistrict, loungeLocation, loungeName, loungeState } = loungeData;
-          console.log(loungeImage);
-      
-          const data = new FormData();
-          data.append('image', loungeImage);
-          data.append('loungeLat', lat);
-          data.append('loungeLng', lng);
-          data.append('loungeDescription', loungeDescription);
-          data.append('loungeDistrict', loungeDistrict);
-          data.append('loungeLocation', location);
-          data.append('loungeName', loungeName);
-          data.append('loungeState', loungeState);
-      
-          console.log(data);
-          console.log(vendorId);
-      
-           dispatch(addlounge({data:data,id:vendorId})).then((response)=>{
-            navigate('/manager/dashboard');
-            console.log("response is here",response);
-          }).catch((err)=>{
-            console.log(err);
-          })
+            console.log(lat, lng)
+            console.log(loungeData);
+
+            const { loungeImage, loungeAddress, loungeDescription, loungeDistrict, loungeLocation, loungeName, loungeState } = loungeData;
+            console.log(loungeImage);
+
+            const data = new FormData();
+            data.append('image', loungeImage);
+            data.append('loungeLat', lat);
+            data.append('loungeLng', lng);
+            data.append('loungeDescription', loungeDescription);
+            data.append('loungeDistrict', loungeDistrict);
+            data.append('loungeLocation', location);
+            data.append('loungeName', loungeName);
+            data.append('loungeState', loungeState);
+
+            console.log(data);
+            console.log(vendorId);
+
+            dispatch(addlounge({ data: data, id: vendorId })).then((response) => {
+                navigate('/manager/dashboard');
+                console.log("response is here", response);
+            }).catch((err) => {
+                console.log(err);
+            })
 
 
         } catch (error) {
-          console.log(error);
+            console.log(error);
         }
-      };
-      
-      
+    };
+
+
 
 
     return (
@@ -171,7 +171,7 @@ function LoungeForm() {
                                     className='text-red-500 text-sm' />
                             </div>
 
-                            
+
 
                             <div className='w-full sm:w-1/2 pr-4'>
                                 <label className='block text-gray-700 font-semibold mb-2 text-sm'>Location :</label>
@@ -182,7 +182,7 @@ function LoungeForm() {
                                 >
                                     Get Location
                                 </button>
-                                <input disabled className="py-2 px-4 border border-gray-600 text-gray-700 rounded w-full bg-white mt-2 text-sm" defaultValue={location?location:""} />
+                                <input disabled className="py-2 px-4 border border-gray-600 text-gray-700 rounded w-full bg-white mt-2 text-sm" defaultValue={location ? location : ""} />
                                 <ErrorMessage
                                     name='loungeLocation'
                                     component='div'
@@ -196,10 +196,10 @@ function LoungeForm() {
                                     type='textarea'
                                     name='loungeDescription'
                                     placeholder='Description'
-                                   
+
                                 />
 
-                                  
+
                                 <ErrorMessage
                                     name='loungeDescription'
                                     component='div'
@@ -242,11 +242,11 @@ function LoungeForm() {
                                     name='loungeImage'
                                     component='div'
                                     className='text-red-500 text-sm' />
-                                
+
                             </div>
                             <div className=''>
                                 <button type='submit' className='px-5 py-2  rounded-md bg-green-700 text-white hover:bg-green-300 '>
-                                {loading ? 'Loading...' : 'Submit'}
+                                    {loading ? 'Loading...' : 'Submit'}
                                 </button>
                             </div>
 
@@ -263,14 +263,14 @@ function LoungeForm() {
                 open={isModalVisible}
                 onCancel={handleModalClose}
                 footer={[
-                  <Button key="cancel" className="bg-red-400 text-white" onClick={handleModalClose}>
-                    Cancel
-                  </Button>,
-                  <Button key="ok" onClick={handleModalOk}>
-                    Submit
-                  </Button>,
+                    <Button key="cancel" className="bg-red-400 text-white" onClick={handleModalClose}>
+                        Cancel
+                    </Button>,
+                    <Button key="ok" onClick={handleModalOk}>
+                        Submit
+                    </Button>,
                 ]}
-        
+
                 bodyStyle={{ height: '400px', overflow: 'auto' }}
                 width={800}>
 

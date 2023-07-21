@@ -29,7 +29,7 @@ function OtpForm() {
 
   useEffect(() => {
     const otpToken = localStorage.getItem("otptoken");
-    console.log("inside useeffect otp")
+
     if (otpToken) {
       const otpObj = JSON.parse(otpToken);
       const expirationTime = otpObj.expiresAt;
@@ -47,7 +47,9 @@ function OtpForm() {
 
 
 
-  }, [startTimer,timer]);
+  }, [startTimer]);
+
+
 
 
   const handleOTPChange = (otp) => {
@@ -59,7 +61,10 @@ function OtpForm() {
         console.log(response);
         
         if(response.payload?.success || response.payload?.data?.success){
-          navigate('/');
+
+          navigate('/profile');
+        }else{
+          console.log(response.data);
         }
       })
 
@@ -68,7 +73,8 @@ function OtpForm() {
 
   const handleResendOTP = () => {
 
-    console.log('Inside user otp form');
+    
+    console.log('iniside user otp form');
     dispatch(resendotp()).then((response) => {
       console.log(response);
       navigate('/otp');

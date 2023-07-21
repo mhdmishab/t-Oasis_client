@@ -4,15 +4,16 @@ import LoungeEditForm from './LoungeEditForm';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setLoungeId } from '../../slices/vendor/Lounges';
+import { editloungestatus, setLoungeId } from '../../slices/vendor/Lounges';
 
-function VendorCard({ lounges }) {
+function VendorCard({ lounges,vendorId }) {
     const dispatch=useDispatch();
     const navigate=useNavigate();
 
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isBlockModalOpen, setIsBlockModalOpen] = useState(false);
     const [loungeId, setloungeId] = useState(null);
+    const [isBlocked,setIsBlocked]=useState(null);
 
 
     const showEditModal = (id) => {
@@ -25,8 +26,9 @@ function VendorCard({ lounges }) {
 
     // }, [])
 
-    const showBlockModal = (id) => {
-        
+    const showBlockModal = (id,isblocked) => {
+        setloungeId(id);
+        setIsBlocked(isblocked);
         setIsBlockModalOpen(true);
     };
 
@@ -36,13 +38,20 @@ function VendorCard({ lounges }) {
     };
 
     const handleBlockCancel = () => {
+        setloungeId(null);
         setIsBlockModalOpen(false);
     };
 
     const handleBlock = () => {
         try{
 
-            console.log("block modal")
+
+            console.log("block modal");
+            dispatch(editloungestatus({vendorId,loungeId})).then((response)=>{
+                if(response){
+                    navigate('/manager/dashboard');
+                }
+            })
             
             setIsBlockModalOpen(false);
             
@@ -95,7 +104,7 @@ function VendorCard({ lounges }) {
                             </p>
                         </div>
                     </div>
-                    <button className='w-7 h-7 border-2 border-gray-500 bg-white rounded-full cursor-pointer absolute left-60 top-44 ml-1' onClick={showBlockModal}>
+                    <button className='w-7 h-7 border-2 border-gray-500 bg-white rounded-full cursor-pointer absolute left-60 top-44 ml-1' onClick={()=>showBlockModal(lounge._id,lounge.isBlocked)}>
                         <svg fill='none' stroke='gray' strokeWidth={1.5} viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'>
                             <path strokeLinecap='round' strokeLinejoin='round' d='M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0' />
                         </svg>
@@ -133,13 +142,21 @@ function VendorCard({ lounges }) {
                     <p>
                         Are you sure you wanna Block this lounge
                     </p>
-                    <button
+                    {!isBlocked? <button
                         type="submit"
                         className="px-5 py-1 rounded-md bg-red-700 text-white hover:bg-red-300 mt-5"
                         onClick={handleBlock}
                     >
+
                         Block
-                    </button>
+                    </button>: <button
+                        type="submit"
+                        className="px-5 py-1 rounded-md bg-green-700 text-white hover:bg-red-300 mt-5"
+                        onClick={handleBlock}
+                    >
+
+                     Activate
+                    </button>}
                 </div>
 
             </Modal>

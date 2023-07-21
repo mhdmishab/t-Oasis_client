@@ -53,7 +53,7 @@ function RegisterForm() {
         dispatch(register(user)).unwrap().then((response)=>{
             console.log("register dispatch response at vendor aide")
             console.log(response);
-            if(response.payload?.success || response.payload?.data?.success){
+            if(response?.data?.success){
                 navigate('/manager/otp')
             }
        

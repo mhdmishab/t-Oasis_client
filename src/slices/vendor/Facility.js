@@ -23,18 +23,11 @@ export const addfacility = createAsyncThunk(
 
 
     } catch (error) {
-      console.log(error)
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      thunkAPI.dispatch(setMessage(error.response.data.message));
-
-      message.error(error.response?.data.message);
-      return thunkAPI.rejectWithValue();
-    }
+        console.log(error)
+        message.error(error.response?.data?.message);
+        throw error;
+     
+      }
   }
 );
 
@@ -48,26 +41,57 @@ export const getfacilities = createAsyncThunk(
 
     } catch (error) {
       console.log(error)
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      thunkAPI.dispatch(setMessage(error.response.data.message));
-
-      message.error(error.response?.data.message);
-      return thunkAPI.rejectWithValue();
+      message.error(error.response?.data?.message);
+      throw error;
+   
     }
 
   }
 
 )
 
+export const  editfacility=createAsyncThunk(
+    "facility/editfacility",
+    async ({ data,vendorId,facilityId }, thunkAPI) => {
+        try {
+          console.log("facility slice", vendorId);
+    
+          const response = await axios.patch(`/vendor/edit-facility/${vendorId}/${facilityId}`, data);
+          message.success(response?.data.message);
+          return response;
+    
+    
+        } catch (error) {
+            console.log(error)
+            message.error(error.response?.data?.message);
+            throw error;
+         
+          }
+      }
+    
+)
+
+export const editfacilitystatus=createAsyncThunk(
+    "facility/managestatus",
+    async({vendorId,facilityId},thunkAPI)=>{
+        try{
+            const response=await axios.patch(`/vendor/block-unblock-facility/${vendorId}/${facilityId}`);
+            console.log(response);
+            message.success(response?.data.message);
+            return response;
+        }catch (error) {
+          console.log(error)
+          message.error(error.response?.data?.message);
+          throw error;
+       
+        }
+    }
+) 
 
 
 
-const initialState = { facilityId: null, loading: false ,facilities:null,vendor_id:null};
+
+const initialState = { facilityId: null, loading: false ,facilities:null,vendor_id:null,facilitytypes:null};
 
 
 
@@ -102,6 +126,7 @@ const FacilitySlice = createSlice({
         state.loading = false;
         state.vendor_id = action.payload.data.vendor_id;
         state.facilities=action.payload.data?.facilities;
+        state.facilitytypes=action.payload.data.facilitytypes;
         
 
       })

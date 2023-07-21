@@ -73,8 +73,8 @@ function LoungeApproval() {
        
     <AdminSideBar/>
  
- <div className='p-7 text-2xl font-semibold flex-1 h-screen'>
-      <LoungeDetails loungeId={loungeId} lounges={lounges}/>
+ <div className='p-7 text-2xl font-semibold flex-1 h-screen overflow-auto'>
+      <LoungeDetails loungeId={loungeId} lounges={lounges} />
       <div className='pt-10 flex justify-between'>
         <button className='px-3 py-3 rounded-md bg-red-400 text-sm text-white' onClick={showRejectModal} >Reject</button>
         <button className='px-3 py-3 rounded-md bg-green-400 text-sm text-white' onClick={showApproveModal}>Approve</button>

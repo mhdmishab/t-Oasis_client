@@ -54,7 +54,7 @@ function Facilities() {
 
 
        
-          <FacilityCard facilities={facilities} />
+          <FacilityCard facilities={facilities} vendorId={id} />
      
 
 

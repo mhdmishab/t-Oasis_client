@@ -10,7 +10,7 @@ function Search() {
   const navigate=useNavigate();
 
   const filterLounges = (query) => {
-    const filtered = lounges.filter(
+    const filtered = lounges?.filter(
       (lounge) =>
         !lounge.isBlocked && lounge.isApproved === 'approved' && lounge.loungeDistrict.toLowerCase().includes(query.toLowerCase())
     );
@@ -67,7 +67,7 @@ function Search() {
         </span>
       </div>
       <div className='flex flex-wrap max-h-[calc(100vh-64px)]'>
-        {filteredLounges.map((lounge) => (
+        {filteredLounges?.map((lounge) => (
           <UserLoungeCard key={lounge._id} lounge={lounge} />
         ))}
       </div>

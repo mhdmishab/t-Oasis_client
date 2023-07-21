@@ -1,10 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { setMessage } from "../Message";
-import { toast } from "react-toastify";
-// import axios from "axios";
-// import { Url } from "../../apis/Axios";
+import { message } from "antd";
 import axios from "../../apis/AxiosUser";
-import { useSelector } from "react-redux";
+
 
 export const getlounges = createAsyncThunk(
     "lounges/getlounges",
@@ -16,30 +13,74 @@ export const getlounges = createAsyncThunk(
   
       } catch (error) {
         console.log(error)
-        const message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        thunkAPI.dispatch(setMessage(error.response.data.message));
-  
-        toast.error(error.response?.data.message, {
-          position: toast.POSITION.BOTTOM_RIGHT,
-        });
-        return thunkAPI.rejectWithValue();
+    
+        message.error(error.response?.data.message);
+        throw error;
       }
   
     }
   
   )
 
+  export const getuserprofile=createAsyncThunk(
+    'auth/profile',
+    async(id)=>{
+      try{
+        console.log(id,"user profile lounge.js");
+        const response= await axios.get(`/user-profile/${id}`);
+        console.log(response,"user profile response is here");
+        return response;
+  
+  
+      }catch(error){
+  
+        console.log(error);
+  
+        message.error(error.response?.data.message);
+        throw error;
+  
+      }
+    }
+  )
 
+export const UploadUserImage=createAsyncThunk(
+    'auth/uploadImage',
+    async({user_id,data})=>{
+        try{
+        console.log(user_id);
+        const response= await axios.patch(`/upload-image/${user_id}`,data);
+        console.log(response,"user Image response is here");
+        return response;
   
+
+        }catch(error){
+            console.log(error);
   
+            message.error(error.response?.data.message);
+            throw error;
+        }
+    }
+)
+
+export const CancelBooking=createAsyncThunk(
+    'auth/cancelbooking',
+    async({user_id,bookId})=>{
+        try{
+        console.log(user_id);
+        const response= await axios.patch(`/cancel-booking/${user_id}/${bookId}`);
+        console.log(response,"user cancel booking");
+        return response;
+        }catch(error){
+            console.log(error);
   
+            message.error(error.response?.data.message);
+            throw error;
+
+        }
+    }
+)
   
-  const initialState = { loading: false,lounges: null,vendorId:null,loungeId:null};
+  const initialState = { loading: false,lounges: null,vendorId:null,loungeId:null,user:null,bookings:null};
   
   
   
@@ -70,7 +111,20 @@ export const getlounges = createAsyncThunk(
         })
         .addCase(getlounges.rejected, (state, action) => {
           state.loading = false;
-        });
+        })
+        .addCase(getuserprofile.pending, (state, action) => {
+            state.loading = true;
+          
+          })
+          .addCase(getuserprofile.fulfilled, (state, action) => {
+            state.loading = false;
+            state.user=action.payload.data.user;
+            state.bookings=action.payload.data.bookings;
+          })
+          .addCase(getuserprofile.rejected, (state, action) => {
+            state.loading = false;
+          })
+          
     },
   });
   

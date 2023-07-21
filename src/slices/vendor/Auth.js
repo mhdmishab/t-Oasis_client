@@ -38,6 +38,7 @@ export const register = createAsyncThunk(
       console.log(error)
     
       message.error(error.response.data.message);
+      throw error;
 
     }
   }
@@ -64,13 +65,14 @@ export const otpVerification = createAsyncThunk(
       const response = await axios.post(VendorOtp,otpData);
 
       console.log(response.data.success);
+      console.log(response);
       if (response.data.success) {
         localStorage.removeItem("otptoken");
 
 
         console.log("inside auth.js otpverification vendor side")
         localStorage.setItem("vendorToken", JSON.stringify({
-          token: response.configdata.token,
+          token: response.data.token,
           vendorId:response.data._id
 
         }));
@@ -80,6 +82,7 @@ export const otpVerification = createAsyncThunk(
     } catch (error) {
 
       message.error(error.response?.data.message);
+      throw error;
       
     }
   }
@@ -111,6 +114,7 @@ export const login = createAsyncThunk("auth/login",
       console.log(error)
       
       message.error(error.response?.data.message);
+      throw error;
     }
   })
 
@@ -145,6 +149,7 @@ export const resendotp = createAsyncThunk('auth/resendotp',
     } catch (error) {
       console.log("inside RESEND auth catsh")
       message.error(error.response?.data.message);
+      throw error;
       
     }
   }
@@ -186,7 +191,7 @@ const authSlice = createSlice({
       .addCase(otpVerification.fulfilled, (state, action) => {
         state.loading = false;
         state.isLoggedInVendor = true;
-        state.vendor_id=action.payload.data._id;
+        // state.vendor_id=action.payload.data._id;
       })
       .addCase(otpVerification.rejected, (state, action) => {
         state.loading = false;

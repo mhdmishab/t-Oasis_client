@@ -4,23 +4,55 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { addfacility } from '../../slices/vendor/Facility';
+import { addfacility, editfacility } from '../../slices/vendor/Facility';
+import { useEffect } from 'react';
 
-function FacilityForm() {
+function FacilityEditForm({facilityId}) {
+    
+
+
     const dispatch=useDispatch();
     const navigate=useNavigate();
+    const facilities=useSelector(state=>state.facilityvendor).facilities;
     const [imagePreview, setImagePreview] = useState(null);
     // const {loungeId}=useSelector(state=>state.loungevendor);
+    console.log(facilities);
+    // const facility = facilities?.find((facility) => facility._id === facilityId);
+    
     const vendorId=useSelector((state)=>state.facilityvendor).vendor_id;
     const {facilitytypes}=useSelector(state=>state.facilityvendor);
     console.log(facilitytypes);
 
+    let image;
+
+    useEffect(() => {
+
+        const facility = facilities?.find((facility) => facility._id === facilityId);
+        console.log(facility);
+        if (facility) {
+           
+            setImagePreview(facility.facilityImage);
+            console.log(facility.facilityImage)
+          formik.setValues({
+            facilityToken: facility.facilityToken,
+            facilityPrice: facility.facilityPrice,
+            facilityName: facility.facilityName,
+            facilityImage: null,
+            existingFacilityImage:facility.facilityImage,
+            facilityDescription: facility.facilityDescription
+          });
+        }
+      }, [facilityId]);
+
     const formik = useFormik({
-      initialValues: {
+
+        
+      initialValues:{
         facilityToken: '',
         facilityPrice: '',
         facilityName: '',
-        facilityImage: null,
+        facilityImage: '',
+        existingFacilityImage:null,
         facilityDescription: ''
       },
       validationSchema: Yup.object({
@@ -35,47 +67,46 @@ function FacilityForm() {
           .max(17, 'Name must be 17 characters or less')
           .required('Required'),
         facilityDescription: Yup.string().min(5).max(100).required('Required'),
-        facilityImage: Yup.mixed()
-          .required('Document is required')
-          .test('FILE_SIZE', 'Too big!', (value) => value && value.size < 1024 * 1024)
-          .test('FILE_TYPE', 'Invalid', (value) =>
-            value && ['image/png', 'image/jpeg'].includes(value.type)
-          ).test('FILE_DIMENSIONS', 'Invalid image dimensions supported width and height is lessthan 5000*4000', (value) => {
-            if (!value) {
-              return false;
+        facilityImage: Yup.mixed().nullable().test('fileFormat', 'Invalid file format', function (value) {
+            if (this.parent.facilityImage && !value) {
+                // New image not selected, no validation required
+                return true;
             }
-            return new Promise((resolve, reject) => {
-              const image = new Image();
-              image.src = URL.createObjectURL(value);
-              image.onload = function () {
-                const { width, height } = this;
-                URL.revokeObjectURL(image.src);
-                if (width && height && width <= 5000 && height <= 4000) {
-                  resolve(true);
-                } else {
-                  reject(false);
-                }
-              };
-            });
-          }),
+            if (value) {
+                return ['image/jpeg', 'image/jpg', 'image/png'].includes(value.type);
+            }
+            return true;
+        }),
         facilityDescription: Yup.string().required('Required')
       }),
       onSubmit: (facilityData) => {
         console.log(facilityData);
-        const {facilityName,facilityToken,facilityPrice,facilityDescription,facilityImage}=facilityData;
+        const {facilityName,facilityToken,facilityPrice,facilityDescription,facilityImage,existingFacilityImage}=facilityData;
 
         const data = new FormData();
           data.append('facilityName', facilityName);
           data.append('facilityToken', facilityToken);
           data.append('facilityPrice', facilityPrice);
           data.append('facilityDescription', facilityDescription);
-          data.append('image', facilityImage);
+          
         
       
           console.log(data);
           console.log("checking",vendorId);
+
+          if (facilityImage) {
+            console.log(2)
+            
+            data.append('image', facilityImage);
+        } else if (existingFacilityImage) {
+            
+            console.log(1)
+            console.log(existingFacilityImage)
+            data.append('existingImage', existingFacilityImage);
+        }
+
           
-          dispatch(addfacility({data:data,vendorId:vendorId})).then((response)=>{
+          dispatch(editfacility({data:data,vendorId:vendorId,facilityId:facilityId})).then((response)=>{
             console.log(response,"response of facility dispatch")
             navigate('/manager/dashboard');
 
@@ -86,6 +117,8 @@ function FacilityForm() {
 
       },
     });
+
+   
   
     return (
       <div className="bg-[#ffff] py-4 pb-16">
@@ -97,24 +130,31 @@ function FacilityForm() {
                   <label className="text-gray-800 text-sm">Images:</label>
                   {imagePreview ? (
                     <img
-                      src={imagePreview}
+                      src={imagePreview?.url || imagePreview}
                       alt="Preview"
+                      value={image}
                       className="object-cover rounded-lg"
                       style={{ width: "1425px", height: "300px" }}
                     />
                   ) : (
                     <div className="mb-4 aspect-w-1 aspect-h-1 mt-4 rounded-sm">
-                      <img src={imgPreview} alt="" />
+                      <img src={imagePreview?.url } alt="preview" />
                     </div>
-                  )}
+                  )} 
                   <input
                     type="file"
                     id="image"
                     accept="image/*"
+                    
                     onChange={(event) => {
                       const file = event.currentTarget.files[0];
+                      console.log(file);
                       formik.setFieldValue("facilityImage", file);
-                      setImagePreview(URL.createObjectURL(file));
+                      if (file) {
+                        setImagePreview(URL.createObjectURL(file));
+                      } else {
+                        setImagePreview(null);
+                      }
                     }}
                     className="py-2 px-4 border border-gray-700 rounded bg-white w-full text-sm"
                   />
@@ -136,7 +176,7 @@ function FacilityForm() {
                                     className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
 
                                 >
-                                    <option value='' >Select a Facility</option>
+                                    {/* <option value={facility.facilityName} disabled >{facility.facilityName}</option> */}
                                     {facilitytypes?.map((facility, index) => (
                                         <option value={facility.facilitytypeName} key={index}>{facility.facilitytypeName}</option>
                                     ))}
@@ -209,6 +249,6 @@ function FacilityForm() {
         </div>
        </div>
     );
-  }
+}
 
-export default FacilityForm
+export default FacilityEditForm

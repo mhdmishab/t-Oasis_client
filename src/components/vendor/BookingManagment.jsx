@@ -29,6 +29,7 @@ function BookingManagment() {
 
   const handlePageChange = (pageNumber,pagesize) => {
     console.log(pageNumber,pagesize);
+    
     setCurrentPage(pageNumber);
   };
 
@@ -44,13 +45,16 @@ function BookingManagment() {
         
         
     }
-    if(bookings?.length>1){
+    if(bookings?.length>=10){
       console.log(bookings);
       console.log(bookings.length)
 
-      settotalItems((currentPage+1)*1)
+      settotalItems((currentPage+1)*10)
   
+    }else{
+      settotalItems((currentPage)*10);
     }
+    
    
   },[currentPage])
 
@@ -133,7 +137,7 @@ function BookingManagment() {
         </tbody>
       </table>
     </div>
-    <Pagination className='pt-5' total={bookings?.length<1?totalItems-1:totalItems}  pageSize={1} onChange={handlePageChange}/>
+    <Pagination className='pt-5' total={bookings?.length<10?totalItems-1:totalItems}  pageSize={10} onChange={handlePageChange}/>
     
   </>
   )

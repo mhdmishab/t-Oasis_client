@@ -56,7 +56,7 @@ function SignupForm() {
         dispatch(register(user)).unwrap().then((response) => {
 
             console.log(response);
-            if(response.payload?.success || response.payload?.data?.success){
+            if(response?.data || response.payload?.data?.success){
             navigate('/otp')
             }
 
