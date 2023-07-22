@@ -9,6 +9,7 @@ import { BookingPayment, GetAvailableSlots, VerifyPayment, bookFacility } from '
 import { useEffect } from 'react';
 import { useState } from 'react';
 import logo from '../../../assets/images/t-oasis logo.png'
+import ReviewBox from '../../../components/user/ReviewBox';
 
 
 
@@ -25,6 +26,7 @@ function FacilityBooking() {
     const { bookedSlots } = useSelector(state => state?.facilityuser);
 
     let updatedBookedSlots = [];
+    let formattedselectedDate=null
 
     if (bookedSlots) {
         updatedBookedSlots = [...bookedSlots];
@@ -43,7 +45,19 @@ function FacilityBooking() {
         console.log(selectedDate)
 
         let formattedcurrentDate = moment(currentDate).format('YYYY-MM-DD');
-        let formattedselectedDate = selectedDate.toISOString().substring(0, 10);
+
+        const dateObj = new Date(selectedDate.$y, selectedDate.$M, selectedDate.$D);
+
+        const year = dateObj.getFullYear();
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        
+        const formattedDate = `${year}-${month}-${day}`;
+
+        formattedselectedDate = formattedDate;
+        
+
+
         console.log(formattedcurrentDate);
         console.log(formattedselectedDate);
 
@@ -258,7 +272,7 @@ function FacilityBooking() {
                                         Amount Required for one Slot: <span>Rs {price}/-</span>
                                     </h3>
                                     <h3 className="flex justify-between">
-                                        Booked Date: <span>{selectedDate?.toISOString().substring(0, 10)}</span>
+                                        Booked Date: <span>{formattedselectedDate}</span>
                                     </h3>
                                     <h3 className="flex justify-between mt-1">
                                         Booked Slots:
@@ -289,6 +303,9 @@ function FacilityBooking() {
 
                 </div>
 
+            </div>
+            <div className='w-full flex justify-start'>
+                <ReviewBox facility={facility}/>
             </div>
         </div>
     );

@@ -120,7 +120,7 @@ function LoungeHome() {
       </div>
       <div className="w-full flex flex-wrap justify-center p-8 mt-10 sm:mt-0 ">
         {facilities?.map((facility) => (
-          <UserFacilityCard facility={facility} key={facility._id} />
+          <UserFacilityCard lounge={lounge} facility={facility} key={facility._id} />
         ))}
       </div>
     </div>

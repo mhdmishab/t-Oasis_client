@@ -37,8 +37,8 @@ function Home() {
         </div>
       </div>
       <div className="h-auto md:h-96 w-full mt-10">
-        <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto">
-          <Search />
+        <div className="">
+          <Search limit={3}/>
         </div>
       </div>
 {/* 

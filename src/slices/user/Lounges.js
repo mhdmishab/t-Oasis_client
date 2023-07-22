@@ -49,6 +49,7 @@ export const UploadUserImage=createAsyncThunk(
         try{
         console.log(user_id);
         const response= await axios.patch(`/upload-image/${user_id}`,data);
+        message.success(response?.data.message);
         console.log(response,"user Image response is here");
         return response;
   
@@ -68,6 +69,7 @@ export const CancelBooking=createAsyncThunk(
         try{
         console.log(user_id);
         const response= await axios.patch(`/cancel-booking/${user_id}/${bookId}`);
+        message.success(response?.data.message);
         console.log(response,"user cancel booking");
         return response;
         }catch(error){
@@ -78,6 +80,44 @@ export const CancelBooking=createAsyncThunk(
 
         }
     }
+)
+
+export const AddReview=createAsyncThunk(
+  'auth/addreview',
+  async({bookId,data})=>{
+      try{
+      console.log(bookId,data);
+      const response= await axios.post(`/add-review/${bookId}`,data);
+      message.success(response?.data.message);
+      console.log(response,"add review response");
+      return response;
+      }catch(error){
+          console.log(error);
+
+          message.error(error.response?.data.message);
+          throw error;
+
+      }
+  }
+)
+
+export const AddComplaint=createAsyncThunk(
+  'auth/addcomplaint',
+  async({bookId,complaint})=>{
+      try{
+      console.log(bookId,complaint);
+      const response= await axios.post(`/add-complaint/${bookId}`,complaint);
+      message.success(response?.data.message);
+      console.log(response,"add review response");
+      return response;
+      }catch(error){
+          console.log(error);
+
+          message.error(error.response?.data.message);
+          throw error;
+
+      }
+  }
 )
   
   const initialState = { loading: false,lounges: null,vendorId:null,loungeId:null,user:null,bookings:null};

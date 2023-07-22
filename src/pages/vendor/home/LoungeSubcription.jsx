@@ -6,7 +6,7 @@ function LoungeSubcription() {
   return (
     
 
-            <div className='p-7 text-2xl font-semibold flex-1 h-screen'>
+            <div className='p-7 text-2xl font-semibold flex-1 h-screen overflow-auto'>
                 <Subcriptions/>
 
             </div>

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { CancelBooking, UploadUserImage, getuserprofile } from '../../../slices/user/Lounges';
+import { AddComplaint, AddReview, CancelBooking, UploadUserImage, getuserprofile } from '../../../slices/user/Lounges';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AiOutlineCloudUpload } from 'react-icons/ai'
 import moment from 'moment';
 import { Modal } from 'antd';
+import RatingForm from '../../../components/user/RatingForm';
+import ComplaintLetter from '../../../components/user/ComplaintLetter';
 
 function UserProfile() {
     const dispatch = useDispatch();
@@ -17,17 +19,40 @@ function UserProfile() {
     const { user, bookings } = useSelector(state => state.loungeuser);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
+    const [isReportModalOpen, setIsReportModalOpen] = useState(false);
     const [bookId, setBookId] = useState(null);
+
+   
+
+
     const showModal = (id) => {
         console.log(id);
         setBookId(id);
         setIsModalOpen(true);
     };
+    const showRatingModal = (id) => {
+        console.log(id);
+        setIsRatingModalOpen(true);
+        setBookId(id);
+        // setIsModalOpen(true);
+    };
+    const showReportModal = (id) => {
+        console.log(id);
+        setBookId(id);
+        setIsReportModalOpen(true);
+    };
     const handleCancel = () => {
+        setComplaint(null);
+        setRating(null);
+        setRatingText(null);
         setBookId(null);
         setIsModalOpen(false);
+        setIsRatingModalOpen(false);
+        setIsReportModalOpen(false);
     };
     console.log(user_id)
+
 
  
 
@@ -36,12 +61,52 @@ function UserProfile() {
           navigate('/login');
         } else {
           dispatch(getuserprofile(user_id));
+          
         }
       }, [dispatch,user_id]);
 
     console.log(user);
 
     const [selectedStatus, setSelectedStatus] = useState('');
+    const [rating, setRating] = useState(null);
+    const [ratingText, setRatingText] = useState(null);
+    const [complaint, setComplaint] = useState(null);
+
+    useEffect(() => {
+        if (rating) {
+          const submitReview = async () => {
+            console.log(rating);
+            console.log(ratingText);
+            console.log(bookId);
+            const data = { rating, ratingText };
+            await dispatch(AddReview({ bookId, data })).then((response) => {
+              console.log(response);
+              setRating(null);
+              setRatingText(null);
+              handleCancel();
+            });
+          };
+
+          submitReview();
+        }
+      }, [rating, ratingText, bookId, dispatch]);
+
+      useEffect(() => {
+        if (complaint) {
+          const submitComplaint = async () => {
+            console.log(complaint)
+            
+            await dispatch(AddComplaint({ bookId,complaint })).then((response) => {
+              console.log(response);
+              setComplaint(null);
+              handleCancel();
+            });
+          };
+
+          submitComplaint();
+        }
+      }, [complaint, bookId, dispatch]);
+      
 
     const handleStatusFilter = (e) => {
         setSelectedStatus(e.target.value);
@@ -89,7 +154,7 @@ function UserProfile() {
         console.log(bookId, "cancel booking id");
         dispatch(CancelBooking({user_id,bookId})).then((response)=>{
             console.log(response);
-            navigate('/contact')
+            navigate('/profile')
         })
 
     }
@@ -223,87 +288,94 @@ function UserProfile() {
                                 </div>
                             </div>
                             <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
-    <div className="flex flex-wrap justify-center">
-        <div className="w-full lg:w-9/12 px-4">
-            <div className="mb-4 text-lg leading-relaxed text-blueGray-700 w-full">
-                {bookings.length !== 0 && (
-                    <div className="w-full overflow-x-auto">
-                        <table className="w-full text-sm text-left text-gray-500">
-                            <thead className="text-xs bg-gray-50 text-gray-700">
-                                <tr>
-                                    <th scope="col" className="px-6 py-3">
-                                        Lounge
-                                    </th>
-                                    <th scope="col" className="px-6 py-3">
-                                        Place
-                                    </th>
-                                    <th scope="col" className="px-6 py-3">
-                                        Facility
-                                    </th>
-                                    <th scope="col" className="px-6 py-3">
-                                        Date
-                                    </th>
-                                    <th scope="col" className="px-6 py-3">
-                                        Slots
-                                    </th>
-                                    <th scope="col" className="px-6 py-3">
-                                        Amount Paid
-                                    </th>
-                                    <th scope="col" className="px-6 py-3">
-                                        <div className="relative">
-                                            <select
-                                                className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                                onChange={handleStatusFilter}
-                                            >
-                                                <option value="">All</option>
-                                                <option value="booked">Booked</option>
-                                                <option value="cancelled">Cancelled</option>
-                                            </select>
-                                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                                <svg
-                                                    className="fill-current h-4 w-4"
-                                                    viewBox="0 0 20 20"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-2a6 6 0 100-12 6 6 0 000 12z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </div>
+                                <div className="flex flex-wrap justify-center">
+                                    <div className="w-full lg:w-9/12 px-4">
+                                        <div className="mb-4 text-lg leading-relaxed text-blueGray-700 w-full">
+                                            {bookings.length !== 0 && (
+                                                <div className="w-full overflow-x-auto">
+                                                    <table className="w-full text-sm text-left text-gray-500">
+                                                        <thead className="text-xs bg-gray-50 text-gray-700">
+                                                            <tr>
+                                                                <th scope="col" className="px-6 py-3">
+                                                                    Lounge
+                                                                </th>
+                                                                <th scope="col" className="px-6 py-3">
+                                                                    Place
+                                                                </th>
+                                                                <th scope="col" className="px-6 py-3">
+                                                                    Facility
+                                                                </th>
+                                                                <th scope="col" className="px-6 py-3">
+                                                                    Date
+                                                                </th>
+                                                                <th scope="col" className="px-6 py-3">
+                                                                    Slots
+                                                                </th>
+                                                                <th scope="col" className="px-6 py-3">
+                                                                    Amount Paid
+                                                                </th>
+                                                                <th scope="col" className="px-6 py-3">
+                                                                    <div className="relative">
+                                                                        <select
+                                                                            className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                                                            onChange={handleStatusFilter}
+                                                                        >
+                                                                            <option value="">All</option>
+                                                                            <option value="booked">Booked</option>
+                                                                            <option value="cancelled">Cancelled</option>
+                                                                        </select>
+                                                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                                                            <svg
+                                                                                className="fill-current h-4 w-4"
+                                                                                viewBox="0 0 20 20"
+                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                            >
+                                                                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                                                <path
+                                                                                    fillRule="evenodd"
+                                                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-2a6 6 0 100-12 6 6 0 000 12z"
+                                                                                    clipRule="evenodd"
+                                                                                />
+                                                                            </svg>
+                                                                        </div>
+                                                                    </div>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {filteredBookings?.map((booking, index) => (
+                                                                <tr key={index} className="bg-white border-b cursor-pointer">
+                                                                    <td className="px-6 py-4">{booking.lounge_id.loungeName}</td>
+                                                                    <td className="px-6 py-4">{booking.lounge_id.loungeDistrict}</td>
+                                                                    <td className="px-6 py-4">{booking.facility_id.facilityName}</td>
+                                                                    <td className="px-6 py-4">{moment(booking.booked_date).format("DD/MM/YY")}</td>
+                                                                    <td className="px-6 py-4">{booking.booked_slots?.join(', ')}</td>
+                                                                    <td className="px-6 py-4">{booking.amount_paid}</td>
+                                                                    <td className="px-6 py-4">
+                                                                        <div className="flex flex-col justify-center items-center">
+                                                                            {booking.status}
+                                                                            {booking.status === "booked" ? (
+                                                                                <a className="text-xs text-red-400 mt-0 cursor-pointer" onClick={() => showModal(booking._id)}>cancel</a>
+                                                                            ) : null}
+                                                                            {booking.status === "completed" ? (
+                                                                                <div className='flex flex-col'>
+                                                                                    {booking.review_added ? <a className="text-xs text-blue-400 mt-0  disabled" >Rated</a> : <a className="text-xs text-blue-400 mt-0 cursor-pointer" onClick={() => showRatingModal(booking._id)}>Rate Now</a>}
+                                                                                    {booking.complaint_added?<a className="text-xs text-red-400 mt-0  disabled">Reported</a>:<a className="text-xs text-red-400 mt-0 cursor-pointer" onClick={() => showReportModal(booking._id)}>Report</a>}
+                                                                                </div>
+                                                                            ) : null}
+                                                                        </div>
+                                                                    </td>
+
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            )}
                                         </div>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredBookings?.map((booking, index) => (
-                                    <tr key={index} className="bg-white border-b cursor-pointer">
-                                        <td className="px-6 py-4">{booking.lounge_id.loungeName}</td>
-                                        <td className="px-6 py-4">{booking.lounge_id.loungeDistrict}</td>
-                                        <td className="px-6 py-4">{booking.facility_id.facilityName}</td>
-                                        <td className="px-6 py-4">{moment(booking.booked_date).format("DD/MM/YY")}</td>
-                                        <td className="px-6 py-4">{booking.booked_slots?.join(', ')}</td>
-                                        <td className="px-6 py-4">{booking.amount_paid}</td>
-                                        <td className="px-6 py-4">
-                                            <div className="flex-col flex justify-center items-center">
-                                                {booking.status}
-                                                {booking.status === "booked" ? (
-                                                    <a className="text-xs text-red-400 mt-0 cursor-pointer" onClick={() => showModal(booking._id)}>cancel</a>
-                                                ) : null}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                )}
-            </div>
-        </div>
-    </div>
-</div>
+                                    </div>
+                                </div>
+                            </div>
 
 
 
@@ -348,6 +420,35 @@ function UserProfile() {
                 </div>
 
             </Modal>
+            <Modal
+                    title="Rate Now"
+                    open={isRatingModalOpen}
+                    onCancel={handleCancel}
+                    className="flex justify-center"
+                    footer={null}
+                    bodyStyle={{height:'400px',overflow:'auto'}}
+                    width={525}
+                >
+
+                   <RatingForm  setRating={setRating}  setRatingText={setRatingText}/>
+            </Modal>
+           
+
+<Modal
+  
+  open={isReportModalOpen}
+  onCancel={handleCancel}
+  className="flex justify-center"
+  footer={null}
+  bodyStyle={{ height: '400px', overflow: 'auto' }}
+  width={1000}
+>
+    <div className='flex justify-center top-0'>
+
+  <ComplaintLetter setComplaint={setComplaint}/>
+    </div>
+</Modal>
+
         </main>
     );
 }

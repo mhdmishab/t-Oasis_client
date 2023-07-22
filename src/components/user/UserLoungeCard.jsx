@@ -66,6 +66,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setLoungeId, setVendorId } from '../../slices/user/Lounges';
+import { FaStar } from 'react-icons/fa';
 
 function UserLoungeCard({ lounge }) {
   const dispatch = useDispatch();
@@ -80,6 +81,16 @@ function UserLoungeCard({ lounge }) {
       console.log(error);
     }
   };
+
+  const ratings = lounge.reviews?.map(review => review.rating);
+const totalRating = ratings?.reduce((sum, rating) => sum + rating, 0) || 0;
+const averageRating = totalRating / (ratings?.length || 1);
+const outOfFiveRating = Math.floor((averageRating / 5) * 5);
+
+
+console.log(outOfFiveRating, lounge.loungeName);
+
+  
 
   return (
     <div
@@ -101,6 +112,19 @@ function UserLoungeCard({ lounge }) {
           <p className="mt-1 text-sm md:text-base  text-gray-600">
             {lounge.loungeState}
           </p>
+          <div className="flex items-center mt-2">
+            {[...Array(5)].map((_, index) => {
+              const starNumber = index + 1;
+              return (
+                <FaStar
+                  key={starNumber}
+                  className="w-4 h-4 fill-current text-yellow-400"
+                  color={starNumber <= outOfFiveRating ? '#ffc107' : '#e4e5e9'}
+                />
+              );
+            })}
+            {/* <span className="ml-1 text-gray-600">{outOfFiveRating}</span> */}
+          </div>
         </div>
       </div>
     </div>

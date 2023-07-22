@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import UserLoungeCard from './UserLoungeCard';
 import { useNavigate } from 'react-router-dom';
 
-function Search() {
+function Search({ limit }) {
   const lounges = useSelector((state) => state.loungeuser).lounges;
   const [filteredLounges, setFilteredLounges] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const filterLounges = (query) => {
     const filtered = lounges?.filter(
@@ -22,7 +22,7 @@ function Search() {
     setSearchQuery(query);
     filterLounges(query);
   };
-  const handleclick=()=>{
+  const handleclick = () => {
     navigate('/search-lounges')
   }
 
@@ -67,9 +67,13 @@ function Search() {
         </span>
       </div>
       <div className='flex flex-wrap max-h-[calc(100vh-64px)]'>
-        {filteredLounges?.map((lounge) => (
-          <UserLoungeCard key={lounge._id} lounge={lounge} />
-        ))}
+        {limit
+          ? filteredLounges?.slice(0, limit).map((lounge) => (
+            <UserLoungeCard key={lounge._id} lounge={lounge} />
+          ))
+          : filteredLounges?.map((lounge) => (
+            <UserLoungeCard key={lounge._id} lounge={lounge} />
+          ))}
       </div>
     </div>
   );
