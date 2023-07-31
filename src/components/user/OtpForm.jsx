@@ -9,11 +9,10 @@ function OtpForm() {
   const dispatch = useDispatch();
   const [timer, settimer] = useState();
   const [OTP, setOTP] = useState('');
-  const { isLoggedIn } = useSelector(state => state.userauth);
   const { loading } = useSelector(state => state.userauth);
   const errorMessage = useSelector((state) => state.userauth.errorMessage);
 
-  const token = localStorage.getItem("userToken");
+
 
 
 
@@ -90,7 +89,7 @@ function OtpForm() {
 
   return (
     <>
-
+      <h2 className='text-2xl dark:text-gray-800 font-bold text-center mb-8'>OTP </h2>
       <OTPInput
         value={OTP}
         onChange={handleOTPChange}

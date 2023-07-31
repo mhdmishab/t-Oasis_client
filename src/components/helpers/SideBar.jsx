@@ -4,11 +4,10 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../slices/vendor/Auth';
 import { resetLoungeSlice } from '../../slices/vendor/Lounges';
-import { resetLoungeSliceAdmin } from '../../slices/admin/Lounges';
-import { Button, Modal } from 'antd';
-import { LogoutAdmin } from '../../slices/admin/Auth';
+import { Modal } from 'antd';
 import { resetFacilitySlice } from '../../slices/vendor/Facility';
 import { resetBookingSlice } from '../../slices/vendor/Bookings';
+import { useEffect } from 'react';
 
 function SideBar({ Menus }) {
   const dispatch = useDispatch();
@@ -16,7 +15,16 @@ function SideBar({ Menus }) {
   const [open, setOpen] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  
+  useEffect(() => {
+    const handleResize = () => {
+      setOpen(window.innerWidth > 768); // Set open to true if the screen is less than 768px (md breakpoint)
+    };
+    handleResize(); // Check on mount
+    window.addEventListener('resize', handleResize); // Check on resize
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const showModal = () => {
     setIsModalOpen(true);

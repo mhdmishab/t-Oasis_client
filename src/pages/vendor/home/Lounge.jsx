@@ -1,8 +1,8 @@
 import React from 'react'
-import LoungeSidebar from '../../../components/vendor/LoungeSidebar'
+
 import { useSelector } from 'react-redux';
 import LoungeDetails from '../../../components/helpers/LoungeDetails';
-import VendorSidebar from '../../../components/vendor/VendorSidebar';
+
 
 
 function Lounge() {

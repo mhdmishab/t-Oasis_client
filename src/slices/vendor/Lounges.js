@@ -1,10 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { setMessage } from "../Message";
-import { toast } from "react-toastify";
-// import axios from "axios";
-// import { Url } from "../../apis/Axios";
 import axios from "../../apis/AxiosVendor";
-import { useSelector } from "react-redux";
 import { message } from "antd";
 
 
@@ -87,10 +82,31 @@ export const editloungestatus=createAsyncThunk(
 }
 )
 
+export const GetDashboard=createAsyncThunk(
+  'lounge/dashboard',
+  async({id})=>{
+    try{
+      console.log(id);
+      const response= await axios.get(`/vendor/get-dashboard/${id}`);
+     
+      console.log(response,"vendor dashbpard");
+      return response;
+
+    }catch(error){
+
+          console.log(error);
+
+          message.error(error.response?.data.message);
+          throw error;
+
+    }
+  }
+)
 
 
 
-const initialState = { vendor_id: null, loading: false,lounges:null ,loungeId:null};
+
+const initialState = { vendor_id: null, loading: false,lounges:null ,loungeId:null,chartData:null};
 
 
 
@@ -130,7 +146,18 @@ const LoungeSlice = createSlice({
       })
       .addCase(getlounge.rejected, (state, action) => {
         state.loading = false;
-      });
+      })
+      .addCase(GetDashboard.pending, (state, action) => {
+        state.loading = true;
+      
+      })
+      .addCase(GetDashboard.fulfilled, (state, action) => {
+        state.loading = false;
+        state.chartData=action.payload.data;
+      })
+      .addCase(GetDashboard.rejected, (state, action) => {
+        state.loading = false;
+      })
   },
 });
 

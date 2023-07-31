@@ -2,7 +2,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import UserFacilityDetail from '../../../components/user/UserFacilityDetail';
-import { DatePicker, TimePicker, Space, message, Modal, Button } from 'antd';
+import { DatePicker, message } from 'antd';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import { BookingPayment, GetAvailableSlots, VerifyPayment, bookFacility } from '../../../slices/user/Facility';
@@ -101,7 +101,7 @@ function FacilityBooking() {
                         const {
                             razorpay_order_id,
                             razorpay_payment_id,
-                            razorpay_signature } = response;
+                             } = response;
                         const bookedDate = selectedDate.toISOString().substring(0, 10);
                         const bookedSlots = selectedSlots;
                         const bookedData = { bookedDate, bookedSlots, razorpay_order_id, razorpay_payment_id, amount_paid };
@@ -139,7 +139,7 @@ function FacilityBooking() {
 
         }
 
-    }, [selectedDate])
+    }, [selectedDate,vendorId,facilityId,dispatch])
 
 
 
@@ -164,7 +164,7 @@ function FacilityBooking() {
 
     };
 
-    if (selectedSlots.length == 6) {
+    if (selectedSlots.length === 6) {
         message.error('Max 6 slots are allowed')
     }
 
@@ -235,6 +235,7 @@ function FacilityBooking() {
                 <DatePicker onChange={handleDateChange} changeOnBlur={true} disabledDate={DisabledDate} className='bg-blue-100 ' />
 
                 <div className='w-full flex flex-col sm:flex-row justify-between'>
+                   
                     <div className='w-full sm:w-2/3'>
                         <div className='flex flex-wrap m-3'>
                             {Array.from({ length: 24 }).map((_, index) => {
@@ -245,9 +246,9 @@ function FacilityBooking() {
 
                                 let slotClassName;
                                 if (isDisabled) {
-                                    slotClassName = 'm-1 rounded-lg bg-red-500 w-full sm:w-1/3 md:w-1/6 lg:w-1/9 xl:w-1/12 p-2';
+                                    slotClassName = 'm-1 rounded-lg bg-red-500 w-16 sm:w-1/3 md:w-1/6 lg:w-1/9 xl:w-1/12 p-2';
                                 } else {
-                                    slotClassName = `m-1 rounded-lg w-full sm:w-1/3 md:w-1/6 lg:w-1/9 xl:w-1/12 p-2 ${isSelected ? 'bg-blue-500' : 'bg-green-300'}`;
+                                    slotClassName = `m-1 rounded-lg w-16 sm:w-1/3 md:w-1/6 lg:w-1/9 xl:w-1/12 p-2 ${isSelected ? 'bg-blue-500' : 'bg-green-300'}`;
                                 }
 
                                 return (
@@ -256,13 +257,14 @@ function FacilityBooking() {
                                         className={slotClassName}
                                         onClick={() => isDisabled ? '' : handleSlotClick(hour)}
                                     >
-                                        <div className='w-full h-20 sm:h-12 rounded-md flex justify-center items-center cursor-pointer'>
+                                        <div className='w-16 h-12 rounded-md flex justify-center items-center cursor-pointer'>
                                             {slotLabel}
                                         </div>
                                     </div>
                                 );
                             })}
                         </div>
+                  
                     </div>
                     <div className="w-full md:w-1/3 bg-green-200 p-3 rounded-lg m-1 flex flex-col justify-start overflow-auto">
                         <div className="h-full flex flex-col justify-around items-center">

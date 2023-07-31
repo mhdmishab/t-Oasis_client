@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from "../../assets/images/t-oasis logo.png";
-import { Button, Drawer, Radio, Space, Menu, Dropdown } from 'antd';
+import {  Menu, Dropdown } from 'antd';
 import jwtDecode from 'jwt-decode';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../slices/user/Auth';
-import { getuserprofile, resetLoungeSliceUser } from '../../slices/user/Lounges';
+import {  resetLoungeSliceUser } from '../../slices/user/Lounges';
 import { resetFacilitySliceUser } from '../../slices/user/Facility';
-import { useEffect } from 'react';
+
 
 function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
   const userToken = localStorage?.getItem("userToken");
   const  userprofile  = useSelector(state => state.loungeuser).user;
  
@@ -22,6 +21,7 @@ function Navbar() {
     console.log("inside user logout")
     localStorage.removeItem("userToken");
     dispatch(logout());
+    navigate('/login');
     
     // dispatch(resetLoungeSliceUser());
     // dispatch(resetFacilitySliceUser());
@@ -88,7 +88,7 @@ function Navbar() {
             aria-expanded="false"
           >
             <span className="sr-only">Open user menu</span>
-            <img className="w-8 h-8 rounded-full" src={userprofile?userprofile[0]?.image?.url:''} alt="user photo" />
+            <img className="w-8 h-8 rounded-full" src={userprofile?userprofile[0]?.image?.url:''} alt="user" />
           </button>
         </Dropdown>
       ),
@@ -97,13 +97,6 @@ function Navbar() {
 
   const NavItems = user ? NavItemsLoggedIn : NavItemsLoggedOut;
 
-  
-    
-  
-
-  const toggleNavbar = () => {
-    setIsOpen(!isOpen);
-  };
 
   return (
     <nav className="z-10 fixed w-screen h-16 flex justify-between items-center bg-white shadow-md">
@@ -111,8 +104,7 @@ function Navbar() {
         <img className="w-16 h-16" src={logo} alt="" />
       </div>
       <div className="flex justify-center items-center ">
-        {/* <div className={`flex lg:hidden ${isOpen ? 'block' : 'hidden'}`}> */}
-          {/* Render the mobile menu items */}
+        
           {NavItems.map((item, index) => (
             <NavLink
               key={index}
@@ -123,28 +115,7 @@ function Navbar() {
               {item.icon}
             </NavLink>
           ))}
-        {/* </div> */}
-        {/* Render the toggle button */}
-        {/* <button
-          className="lg:hidden ml-4 p-2 rounded-md bg-red-500 focus:outline-none"
-          onClick={toggleNavbar}
-        >
-          <svg className="h-5 w-5" viewBox="0 0 20 20" fill="white">
-            <path fillRule="evenodd" d="M3 6a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-          </svg>
-        </button> */}
-        {/* Render the desktop menu items */}
-        {/* <div className="hidden lg:flex">
-          {NavItems.map((item, index) => (
-            <NavLink
-              key={index}
-              to={item.path}
-              className={({ isActive }) => isActive ? 'active-state' : 'inactive-state'}
-            >
-              {item.icon}
-            </NavLink>
-          ))}
-        </div> */}
+   
       </div>
     </nav>
   );

@@ -1,6 +1,4 @@
 import React from 'react'
-import VendorSidebar from '../../../components/vendor/VendorSidebar'
-import LoungeSidebar from '../../../components/vendor/LoungeSidebar'
 import Facilities from '../../../components/vendor/Facilities'
 
 function LoungeFacilities() {

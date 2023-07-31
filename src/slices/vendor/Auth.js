@@ -1,7 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import authService from "../../services/vendor/AuthService";
-import { setMessage } from "../Message";
-import { toast } from "react-toastify";
 import { message } from "antd";
 import axios from "../../apis/AxiosVendor";
 import { VendorLogin, VendorOtp, VendorResendOtp, VendorSignup } from "../../utils/endpoints/endpoints";
@@ -196,7 +193,7 @@ const authSlice = createSlice({
       .addCase(otpVerification.rejected, (state, action) => {
         state.loading = false;
         state.isLoggedInVendor = false;
-        state.errorMessage = action.payload.message;
+        state.errorMessage = action.payload?.data?.message;
       })
       .addCase(login.pending, (state, action) => {
         state.loading = true;

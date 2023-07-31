@@ -6,19 +6,19 @@ function LoungeDetails({ loungeId, lounges }) {
   return (
     <>
       {filteredLounge?.map((lounge) => (
-        <div className="flex text-center" key={lounge._id}>
-          <div className="w-1/2">
+        <div className="flex flex-col md:flex-row text-center" key={lounge._id}>
+          <div className="md:w-1/2">
             <img
               src={lounge.loungeImages[0]?.url}
               alt="Lounge"
               className="w-96 h-96 rounded-md object-cover custom-image"
             />
           </div>
-          <div className="w-1/2 p-4">
+          <div className="md:w-1/2 p-4">
             <h2 className="text-2xl text-green-700 font-bold mb-2">Lounge Name: {lounge.loungeName}</h2>
             <br />
             <p className="text-lg mb-2 font-semibold">Lounge Location: {lounge.loungeLocation}</p>
-            <p className="text-lg font-semibold">Lounge Distict: {lounge.loungeDistrict}</p>
+            <p className="text-lg font-semibold">Lounge District: {lounge.loungeDistrict}</p>
             <p className="text-lg font-semibold">Lounge State: {lounge.loungeState}</p>
             {/* <p className="text-lg mb-2 font-semibold">Hostel Location: {lounge.location}</p> */}
           </div>
@@ -37,4 +37,5 @@ function LoungeDetails({ loungeId, lounges }) {
 }
 
 export default LoungeDetails;
+
 

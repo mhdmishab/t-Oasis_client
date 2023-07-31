@@ -43,6 +43,7 @@ export const getlounges = createAsyncThunk(
     }
   )
 
+
 export const UploadUserImage=createAsyncThunk(
     'auth/uploadImage',
     async({user_id,data})=>{
@@ -119,8 +120,10 @@ export const AddComplaint=createAsyncThunk(
       }
   }
 )
+
+
   
-  const initialState = { loading: false,lounges: null,vendorId:null,loungeId:null,user:null,bookings:null};
+  const initialState = { loading: false,lounges: null,vendorId:null,loungeId:null,user:null,bookings:null,chartData:null};
   
   
   
@@ -164,6 +167,7 @@ export const AddComplaint=createAsyncThunk(
           .addCase(getuserprofile.rejected, (state, action) => {
             state.loading = false;
           })
+          
           
     },
   });

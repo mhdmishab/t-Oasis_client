@@ -1,7 +1,7 @@
 import React from 'react'
 
 import LoungesManagement from '../../../components/vendor/LoungesManagement'
-import VendorSidebar from '../../../components/vendor/VendorSidebar'
+
 
 
 function Lounges() {

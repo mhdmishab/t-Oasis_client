@@ -1,11 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { setMessage } from "../Message";
-import { toast } from "react-toastify";
 import { message } from "antd";
-// import axios from "axios";
-// import { Url } from "../../apis/Axios";
 import axios from "../../apis/AxiosUser";
-import { useSelector } from "react-redux";
+
 
 
 export const getfacilities = createAsyncThunk(
@@ -88,7 +84,7 @@ export const getfacilities = createAsyncThunk(
 
         }catch(error){
             console.log(error)
-            message.error(error.response?.data.message);
+            // message.error(error.response?.data.message);
             throw error;
         }
     }

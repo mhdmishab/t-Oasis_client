@@ -42,6 +42,8 @@ function UserProfile() {
         setBookId(id);
         setIsReportModalOpen(true);
     };
+
+    
     const handleCancel = () => {
         setComplaint(null);
         setRating(null);
@@ -63,7 +65,7 @@ function UserProfile() {
           dispatch(getuserprofile(user_id));
           
         }
-      }, [dispatch,user_id]);
+      }, [dispatch,user_id,navigate]);
 
     console.log(user);
 
@@ -118,12 +120,7 @@ function UserProfile() {
 
     console.log(filteredBookings);
 
-    const [userImage, setUserImage] = useState(null);
-    const [isHovered, setIsHovered] = useState(false);
 
-    setTimeout(() => {
-        { isHovered && setIsHovered(false) }
-    }, 5000)
 
     const formik = useFormik({
         initialValues: {
@@ -154,7 +151,8 @@ function UserProfile() {
         console.log(bookId, "cancel booking id");
         dispatch(CancelBooking({user_id,bookId})).then((response)=>{
             console.log(response);
-            navigate('/profile')
+            handleCancel();
+            navigate('/profile');
         })
 
     }
@@ -163,7 +161,7 @@ function UserProfile() {
     const handleImageChange = async (event) => {
         const file = event.currentTarget.files[0];
         formik.setFieldValue("userImage", file);
-        setUserImage(URL.createObjectURL(file));
+        
 
         if (file) {
             const data = new FormData();
@@ -219,8 +217,8 @@ function UserProfile() {
                                                 <div className="w-32 h-32 rounded-full overflow-hidden flex justify-center items-center">
                                                     {formik.values.userImage ? (
                                                         <img
-                                                            src={user[0]?.image?.url || ''}
-                                                            alt="User Image"
+                                                            src={user[0]?.image?.url}
+                                                            alt="user"
                                                             className="object-cover w-full h-full cursor-pointer"
                                                         />
                                                     ) : (
@@ -291,7 +289,7 @@ function UserProfile() {
                                 <div className="flex flex-wrap justify-center">
                                     <div className="w-full lg:w-9/12 px-4">
                                         <div className="mb-4 text-lg leading-relaxed text-blueGray-700 w-full">
-                                            {bookings.length !== 0 && (
+                                            {bookings?.length !== 0 && (
                                                 <div className="w-full overflow-x-auto">
                                                     <table className="w-full text-sm text-left text-gray-500">
                                                         <thead className="text-xs bg-gray-50 text-gray-700">
@@ -355,12 +353,12 @@ function UserProfile() {
                                                                         <div className="flex flex-col justify-center items-center">
                                                                             {booking.status}
                                                                             {booking.status === "booked" ? (
-                                                                                <a className="text-xs text-red-400 mt-0 cursor-pointer" onClick={() => showModal(booking._id)}>cancel</a>
+                                                                                <span  className="text-xs text-red-400 mt-0 cursor-pointer" onClick={() => showModal(booking._id)}>cancel</span>
                                                                             ) : null}
                                                                             {booking.status === "completed" ? (
                                                                                 <div className='flex flex-col'>
-                                                                                    {booking.review_added ? <a className="text-xs text-blue-400 mt-0  disabled" >Rated</a> : <a className="text-xs text-blue-400 mt-0 cursor-pointer" onClick={() => showRatingModal(booking._id)}>Rate Now</a>}
-                                                                                    {booking.complaint_added?<a className="text-xs text-red-400 mt-0  disabled">Reported</a>:<a className="text-xs text-red-400 mt-0 cursor-pointer" onClick={() => showReportModal(booking._id)}>Report</a>}
+                                                                                    {booking.review_added ? <span className="text-xs text-blue-400 mt-0  disabled" >Rated</span> : <span className="text-xs text-blue-400 mt-0 cursor-pointer" onClick={() => showRatingModal(booking._id)}>Rate Now</span>}
+                                                                                    {booking.complaint_added?<span className="text-xs text-red-400 mt-0  disabled">Reported</span>:<span className="text-xs text-red-400 mt-0 cursor-pointer" onClick={() => showReportModal(booking._id)}>Report</span>}
                                                                                 </div>
                                                                             ) : null}
                                                                         </div>
@@ -387,7 +385,7 @@ function UserProfile() {
                         <div className="flex flex-wrap items-center md:justify-between justify-center">
                             <div className="w-full md:w-6/12 px-4 mx-auto text-center">
                                 <div className="text-sm text-blueGray-500 font-semibold py-1">
-                                    <a href="#" className="text-blueGray-500 hover:text-gray-800" target="_blank" rel="noreferrer">Wishes</a> by <a href="https://www.creative-tim.com" className="text-blueGray-500 hover:text-blueGray-800" target="_blank" rel="noreferrer">t-Oasis</a>.
+                                    <span className="text-blueGray-500 hover:text-gray-800">Wishes</span> by <span className="text-blueGray-500 hover:text-blueGray-800" >t-Oasis</span>.
                                 </div>
                             </div>
                         </div>

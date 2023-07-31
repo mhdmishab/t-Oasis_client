@@ -9,22 +9,9 @@ function OtpForm() {
   const dispatch = useDispatch();
   const [timer, settimer] = useState();
   const [OTP, setOTP] = useState('');
-  const { isLoggedIn } = useSelector(state => state.vendorauth);
   const { loading } = useSelector(state => state.vendorauth);
   const errorMessage = useSelector((state) => state.vendorauth.errorMessage);
 
-  const token = localStorage.getItem("vendorToken");
-
-
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-
-  //     if (token) {
-  //       navigate('/manager/dashboard');
-  //     }
-  //   }
-
-  // }, [isLoggedIn, navigate])
 
   let startTimer = (timer) => {
     if (timer === 0) {
@@ -99,7 +86,7 @@ function OtpForm() {
 
   return (
     <>
-
+      <h2 className='text-2xl dark:text-gray-800 font-bold text-center mb-8'>OTP </h2>
       <OTPInput
         value={OTP}
         onChange={handleOTPChange}

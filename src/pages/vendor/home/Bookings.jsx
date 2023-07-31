@@ -1,6 +1,6 @@
 import React from 'react'
 import BookingManagment from '../../../components/vendor/BookingManagment'
-import VendorSidebar from '../../../components/vendor/VendorSidebar'
+
 
 
 function Bookings() {

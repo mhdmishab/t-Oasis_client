@@ -1,7 +1,7 @@
 import React from 'react'
 import FacilityDetails from '../../../components/helpers/FacilityDetails';
 import { useSelector } from 'react-redux';
-import VendorSidebar from '../../../components/vendor/VendorSidebar';
+
 
 function Facility() {
     

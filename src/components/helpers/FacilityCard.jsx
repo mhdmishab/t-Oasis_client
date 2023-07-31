@@ -180,3 +180,7 @@ function FacilityCard({ facilities,vendorId}) {
 }
 
 export default FacilityCard
+
+
+
+

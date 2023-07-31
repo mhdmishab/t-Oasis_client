@@ -8,10 +8,10 @@ import Dashboard from '../pages/vendor/home/Dashboard'
 import Lounges from '../pages/vendor/home/Lounges'
 import Bookings from '../pages/vendor/home/Bookings'
 import Lounge from '../pages/vendor/home/Lounge'
-import LoungeSubcription from '../pages/vendor/home/LoungeSubcription'
 import LoungeFacilities from '../pages/vendor/home/LoungeFacilities'
 import Facility from '../pages/vendor/home/Facility'
 import VendorSidebar from '../components/vendor/VendorSidebar'
+import Chats from '../pages/vendor/home/Chats'
 
 
 
@@ -30,8 +30,8 @@ function VendorRouter() {
             <Route path='/bookings' element={<VendorAuthentication><Bookings/></VendorAuthentication>}/>
             <Route path='/lounge/dashboard' element={<VendorAuthentication><Lounge/></VendorAuthentication>}/>
             <Route path='/facilities' element={<VendorAuthentication><LoungeFacilities/></VendorAuthentication>}/>
-            <Route path='/lounge/subcriptions' element={<VendorAuthentication><LoungeSubcription/></VendorAuthentication>}/>
             <Route path='/lounge/facility' element={<VendorAuthentication><Facility/></VendorAuthentication>}/>
+            <Route path='/chats' element={<VendorAuthentication><Chats/></VendorAuthentication>}/>
             </Route>
 
               
