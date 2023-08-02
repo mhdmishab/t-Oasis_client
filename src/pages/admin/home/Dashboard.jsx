@@ -1,5 +1,5 @@
 import React from 'react';
-import DashboardManagement from '../../../components/vendor/DashboardManagement'
+import DashboardManagement from '../../../components/admin/DashboardManagement'
 import AdminSidebar from '../../../components/admin/AdminSideBar'
 
 

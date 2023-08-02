@@ -125,7 +125,7 @@ function UserChatBox({vendorId,userId}) {
  };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-[400px] sm:min-h-[500px] md:min-h-[500px] lg:min-h-[700px] xl:min-h-[500px] bg-gray-100 text-gray-800">
+    <div className="flex flex-col items-center rounded-md justify-start min-h-[400px] sm:min-h-[500px] md:min-h-[500px] lg:min-h-[700px] xl:min-h-[500px] bg-gray-100 text-gray-800">
       {/* Component Start */}
       <div className="flex flex-col flex-grow w-full max-w-xl bg-white shadow-xl rounded-lg overflow-hidden">
       

@@ -121,7 +121,7 @@ function ChatBox({vendorId,userId}) {
     };
   
     return (
-      <div className="flex flex-col items-center justify-start min-h-screen sm:min-h-[700px] md:min-h-[700px] lg:min-h-[700px] xl:min-h-[800px] bg-gray-100 text-gray-800">
+      <div className="flex flex-col items-center justify-start min-h-[500px] sm:min-h-[500px] md:min-h-[500px] lg:min-h-[700px] xl:min-h-[700px]  text-gray-800">
         {/* Component Start */}
         <div className="flex flex-col flex-grow w-full max-w-xl bg-white shadow-xl rounded-lg overflow-hidden">
           <div className="flex flex-col flex-grow h-0 p-4 overflow-auto" ref={chatMessagesRef}>

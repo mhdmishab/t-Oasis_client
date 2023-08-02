@@ -1,17 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import bgImg from '../../../assets/images/signupbg.jpg';
-import Navbar from '../../../components/navbar/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { getlounges } from '../../../slices/user/Lounges';
 import Search from '../../../components/user/Search';
-import UserLoungeCard from '../../../components/user/UserLoungeCard';
 
 function Home() {
   const lounges = useSelector((state) => state.loungeuser).lounges;
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  // const [searchQuery, setSearchQuery] = useState('');
+  const text = "t-Oasis";
+  const [animatedText, setAnimatedText] = useState('');
+  
+  useEffect(() => {
+    let currentIndex = 0;
+    const interval = setInterval(() => {
+      if (currentIndex <= text.length) {
+        setAnimatedText(text.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 200);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     dispatch(getlounges()).then((response) => {
@@ -29,7 +40,7 @@ function Home() {
       >
         <div className="h-4/5 w-4/5 mx-auto md:w-1/3 bg-slate-300 mt-20 p-8 md:p-24 sm:mt-48 md:mt-0 md:pt-48 bg-opacity-40">
           <h3 className="text-white text-5xl font-semibold md:text-6xl leading-tight">
-            t-Oasis
+            {animatedText}
           </h3>
           <p className="text-white text-lg mt-4 md:text-xl md:leading-relaxed">
             A fertile spot for travellers.

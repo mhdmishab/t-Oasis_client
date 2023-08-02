@@ -18,3 +18,33 @@
 body{
     overflow: scroll;
 }
+
+@keyframes inside-out {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes inside-out-reverse {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0);
+      opacity: 0;
+    }
+  }
+  
+  .animate-inside-out {
+    animation: inside-out 0.3s ease-in-out;
+  }
+  
+  .animate-inside-out-reverse {
+    animation: inside-out-reverse 0.3s ease-in-out;
+  }

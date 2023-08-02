@@ -15,7 +15,7 @@ const Chat = () => {
     <div className="h-full bg-white rounded-lg shadow-md">
       <div className="border-b">
         <ul className="flex">
-          <li className="w-full py-2 text-center cursor-pointer text-blue-500 border-b-2 border-blue-500">
+          <li className="w-full py-2 text-center cursor-pointer text-green-500 border-b-2 border-green-500">
             Chats
           </li>
         </ul>
