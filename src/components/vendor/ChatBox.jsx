@@ -21,7 +21,7 @@ function ChatBox({vendorId,userId}) {
     
     useEffect(() => {
 
-        const ENDPOINT = process.env.REACT_APP_BASE_URL; 
+        const ENDPOINT = 'https://toasis.restinpillows.shop'; 
         // socket = socketIOClient(ENDPOINT);
         socketRef.current = socketIOClient(ENDPOINT);
     
