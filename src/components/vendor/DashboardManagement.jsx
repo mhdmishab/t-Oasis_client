@@ -46,7 +46,7 @@ function Dashboard() {
   const vendorToken = localStorage.getItem('vendorToken');
   const parsedVendorToken = JSON.parse(vendorToken);
   const id = parsedVendorToken?.vendorId;
-  const {chartData}=useSelector(state=>state.loungevendor)
+  const {chartData}=useSelector(state=>state?.loungevendor)
   
   const dispatch=useDispatch();
   
