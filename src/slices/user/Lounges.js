@@ -150,7 +150,7 @@ export const AddComplaint=createAsyncThunk(
         })
         .addCase(getlounges.fulfilled, (state, action) => {
           state.loading = false;
-          state.lounges=action.payload.data.lounges;
+          state.lounges=action.payload?.data?.lounges;
         })
         .addCase(getlounges.rejected, (state, action) => {
           state.loading = false;
@@ -161,8 +161,8 @@ export const AddComplaint=createAsyncThunk(
           })
           .addCase(getuserprofile.fulfilled, (state, action) => {
             state.loading = false;
-            state.user=action.payload.data.user;
-            state.bookings=action.payload.data.bookings;
+            state.user=action.payload?.data?.user;
+            state.bookings=action.payload?.data?.bookings;
           })
           .addCase(getuserprofile.rejected, (state, action) => {
             state.loading = false;
