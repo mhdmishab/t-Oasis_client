@@ -21,7 +21,7 @@ function UserChatBox({vendorId,userId}) {
  
  useEffect(() => {
 
-     const ENDPOINT = 'http://127.0.0.1:5000'; 
+     const ENDPOINT = process.env.REACT_APP_BASE_URL; 
    
      socketRef.current = socketIOClient(ENDPOINT);
  
