@@ -58,7 +58,7 @@ function Map({ lat, setLat, lng, setLng, updatePlaceName }) {
   const getPlaceName = async (latitude, longitude) => {
     try {
       const response = await fetch(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${mapboxgl.accessToken}`
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token='pk.eyJ1IjoidG9hc2lzIiwiYSI6ImNsaXR0cWFmYzA4ZnUzbG8ycHZkZjJ6YWYifQ.Es8eobMW0-oa_Gr1jY7pGA'`
         ).catch(err=>console.log(err))
       const data = await response.json();
       const placeName = data.features[0].place_name;
