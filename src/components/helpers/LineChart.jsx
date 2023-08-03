@@ -19,8 +19,8 @@ function LineChart({datas,title}) {
   console.log(datas);
   console.log(labels);
 
-  const filteredData = labels.map((label) => {
-    const dataEntry = datas.find((data) => data.month === label);
+  const filteredData = labels?.map((label) => {
+    const dataEntry = datas?.find((data) => data.month === label);
     const count = dataEntry ? dataEntry.count : 0;
     return  count;
   });
