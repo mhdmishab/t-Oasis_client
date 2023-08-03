@@ -7,10 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 
-
-
-
 function App() {
+
   return (
     <>
     <div className="max-w-screen-4xl mx-auto">
