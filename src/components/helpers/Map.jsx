@@ -5,7 +5,7 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import mapboxgl from 'mapbox-gl';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoidG9hc2lzIiwiYSI6ImNsaXR0cWFmYzA4ZnUzbG8ycHZkZjJ6YWYifQ.Es8eobMW0-oa_Gr1jY7pGA';
+mapboxgl.accessToken = process.env.REACT_APP_MAP_TOKEN;
 
 
 function Map({ lat, setLat, lng, setLng, updatePlaceName }) {
