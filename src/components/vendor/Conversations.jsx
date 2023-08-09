@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ChatAltIcon } from "@heroicons/react/outline";
 
 import commonUtilites from "../../utils/Common";
-import { Avatar } from "antd";
+import { Avatar, notification } from "antd";
 import { useDispatch } from "react-redux";
 import { GetConversation } from "../../slices/vendor/ChatService";
 
@@ -12,6 +12,7 @@ const Conversations = (props) => {
     const dispatch=useDispatch();
   const [conversations, setConversations] = useState([]);
   
+  
 
 
   useEffect(() => {
@@ -20,8 +21,9 @@ const Conversations = (props) => {
         console.log(response);
         console.log(response?.payload?.data);
         setConversations(response?.payload?.data)
+        props?.setLastMessageStatus(false);
     })
-  }, [dispatch,props?.vendorId]);
+  }, [dispatch,props.user,props.lastMessageStatus]);
 
   return (
     <div className="max-h-[calc(100vh-112px)] overflow-y-auto">
@@ -54,7 +56,7 @@ const Conversations = (props) => {
                 <div className="text-gray-900 text-sm">{c?.userId?.name}</div>
                 <div className="text-gray-500 text-xs">{c?.lastMessage}</div>
               </div>
-              <ChatAltIcon className="w-6 h-6 text-gray-500" />
+              {<ChatAltIcon className="w-6 h-6 text-gray-500"/> && props.unread}
             </div>
           ))}
         </React.Fragment>

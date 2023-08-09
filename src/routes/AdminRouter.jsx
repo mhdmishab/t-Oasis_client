@@ -7,6 +7,7 @@ import Lounges from '../pages/admin/home/Lounges'
 import LoungeApproval from '../pages/admin/home/LoungeApproval';
 import Facilitytypes from '../pages/admin/home/Facilitytypes';
 import Banners from '../pages/admin/home/Banners';
+import Errorpage from '../components/helpers/Errorpage';
 
 
 function AdminRouter() {
@@ -20,6 +21,7 @@ function AdminRouter() {
             <Route path='/facilities' element={<AdminAuthentication><Facilitytypes/></AdminAuthentication>}/>
             <Route path='/banner' element={<AdminAuthentication><Banners/></AdminAuthentication>}/>
             <Route path='/approval' element={<AdminAuthentication><LoungeApproval/></AdminAuthentication>}/>
+            <Route path='/*'  element={<Errorpage/>}/>
         </Routes>
       
     </>

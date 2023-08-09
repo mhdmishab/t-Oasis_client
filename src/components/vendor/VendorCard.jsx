@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { editloungestatus, setLoungeId } from '../../slices/vendor/Lounges';
 
-function VendorCard({ lounges,vendorId }) {
+function VendorCard({ lounges,vendorId}) {
     const dispatch=useDispatch();
     const navigate=useNavigate();
 
@@ -18,7 +18,7 @@ function VendorCard({ lounges,vendorId }) {
 
     const showEditModal = (id) => {
          setloungeId(id);
-    
+        
         setIsEditModalOpen(true);
     };
 
@@ -50,6 +50,7 @@ function VendorCard({ lounges,vendorId }) {
             dispatch(editloungestatus({vendorId,loungeId})).then((response)=>{
                 if(response){
                     navigate('/manager/dashboard');
+                   
                 }
             })
             

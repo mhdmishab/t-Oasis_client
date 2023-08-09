@@ -4,7 +4,7 @@ import socketIOClient from 'socket.io-client';
 import { GetConversationMessages, GetPrivateChatMessages } from '../../slices/vendor/ChatService';
 import { useRef } from 'react';
 
-function ChatBox({vendorId,userId}) {
+function ChatBox({vendorId,userId,setUnread,setLastMessageStatus,lastMessageStatus}) {
     const dispatch=useDispatch();
     const [inputMessage, setInputMessage] = useState('');
     const [chatMessages, setChatMessages] = useState([]);
@@ -21,7 +21,8 @@ function ChatBox({vendorId,userId}) {
     
     useEffect(() => {
 
-        const ENDPOINT = 'https://toasis.restinpillows.shop'; 
+        // const ENDPOINT = 'https://toasis.restinpillows.shop'; 
+        const ENDPOINT = 'http://localhost:5000';
         // socket = socketIOClient(ENDPOINT);
         socketRef.current = socketIOClient(ENDPOINT);
     
@@ -33,7 +34,7 @@ function ChatBox({vendorId,userId}) {
     socketRef.current.on('connected', () => setSocketConnected(true));
     
           dispatch(GetConversationMessages({vendorId,userId})).then((response)=>{
-              console.log(response?.payload?.data);
+              // console.log(response?.payload?.data);
               const messages=response?.payload?.data;
               let chatId=response?.payload?.data[0].conversation;
             // socket.emit("join chat", chatId);
@@ -56,7 +57,7 @@ function ChatBox({vendorId,userId}) {
   
                   }
               })
-              console.log(filteredMessages);
+              // console.log(filteredMessages);
               setChatMessages(filteredMessages)
           })
    
@@ -70,13 +71,14 @@ function ChatBox({vendorId,userId}) {
     useEffect(() => {
         // Scroll to the bottom when component first renders
         chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
-      }, [chatMessages]);
+      }, [chatMessages,userId]);
 
     useEffect(() => {
         console.log("message recieved")
 
         // socket.on("message received", (newMessageRecieved) => {
         socketRef.current.on("message received", (newMessageRecieved) => {
+          
           console.log("newMessageRecieved : ",newMessageRecieved)
           if ( !newMessageRecieved.recieverId ) {
             console.log("Something went wrong")
@@ -88,8 +90,10 @@ function ChatBox({vendorId,userId}) {
                 isChatOwner: false,
               };
               setChatMessages((prevMessages) => [...prevMessages, newMessage]);
+              setLastMessageStatus(true);
          }
         });
+        
        
       },[]);
   
@@ -108,6 +112,7 @@ function ChatBox({vendorId,userId}) {
       if (inputMessage.trim() !== '') {
           // const data=inputMessage.trim();
         setChatMessages((prevMessages) => [...prevMessages, newMessage]);
+        
         dispatch(GetPrivateChatMessages({vendorId,userId,data:inputMessage.trim()})).then((response)=>{
             console.log(response?.payload.data);
             let newMessage=response?.payload.data;
@@ -115,6 +120,7 @@ function ChatBox({vendorId,userId}) {
             socketRef.current.emit("new message", newMessage);
         })
         setInputMessage('');
+        setLastMessageStatus(true);
         
         
       }

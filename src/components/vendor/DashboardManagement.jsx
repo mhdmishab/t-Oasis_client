@@ -1,35 +1,4 @@
-// import React, { useEffect } from 'react';
-// import { CurrencyDollarIcon } from '@heroicons/react/outline';
-// import { Line } from "react-chartjs-2";
-// import { Chart, registerables } from 'chart.js';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { GetDashboard } from '../../slices/vendor/Lounges';
-// import DashboardCard from '../helpers/DashboardCard';
-// Chart.register(...registerables);
 
-// const DashboardManagement = () => {
-//   // Your useEffect logic can be added here if needed
-
-//   return (
-//     <div>
-//       {/* Example usage */}
-//       <DashboardCard
-//         icon={
-//           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-//           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-//         </svg>
-//         }
-//         amount="$3.456K"
-//         title="Total views"
-//         percentage="0.43%"
-//       />
-
-    
-//     </div>
-//   );
-// };
-
-// export default DashboardManagement;
 
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -37,6 +6,7 @@ import { GetDashboard } from '../../slices/vendor/Lounges';
 import DashboardCard from '../helpers/DashboardCard'
 import LineChart from '../helpers/LineChart'
 import { FaStar } from 'react-icons/fa';
+import SalesReport from '../helpers/SalesReport';
 
 
 
@@ -88,7 +58,7 @@ function Dashboard() {
   ];
 
 
-
+  const allsalesReport=chartData?.bookings;
 
   return (
     <>
@@ -97,11 +67,17 @@ function Dashboard() {
           <DashboardCard key={k} {...d} colorIndex={k}/>
         ))}
       </div>
+      
 
       <div className="grid lg:grid-cols-2 mt-4 grid-cols-1 gap-6">
         <LineChart datas={chartData?.bookingChart} title={"Monthly Bookings"}/>
         <LineChart datas={chartData?.revenueChart} title={"Monthly Revenue"}/>
         {/* <BarChart /> */}
+      </div>
+      
+
+      <div>
+        <SalesReport allsalesReport={allsalesReport}/>
       </div>
     </>
   );

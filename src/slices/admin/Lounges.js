@@ -59,11 +59,32 @@ export const getlounge = createAsyncThunk(
         }
     }
   )
+
+  export const GetDashboard=createAsyncThunk(
+    'lounge/dashboard',
+    async()=>{
+      try{
+       
+        const response= await axios.get(`/admin/get-dashboard`);
+       
+        console.log(response,"admin dashbpard");
+        return response;
+  
+      }catch(error){
+  
+            console.log(error);
+  
+            message.error(error.response?.data.message);
+            throw error;
+  
+      }
+    }
+  )
   
   
   
   
-  const initialState = { loading: false,lounges: null,loungeid:null};
+  const initialState = { loading: false,lounges: null,loungeid:null,chartData:null};
   
   
   
@@ -71,6 +92,7 @@ export const getlounge = createAsyncThunk(
     name: "lounges",
     initialState,
     reducers: {
+ 
       resetLoungeSliceAdmin:()=>initialState
   
     },
@@ -88,9 +110,21 @@ export const getlounge = createAsyncThunk(
         })
         .addCase(getlounge.rejected, (state, action) => {
           state.loading = false;
-        });
+        })
+        .addCase(GetDashboard.pending, (state, action) => {
+          state.loading = true;
+        
+        })
+        .addCase(GetDashboard.fulfilled, (state, action) => {
+          state.loading = false;
+          state.chartData=action.payload.data;
+        })
+        .addCase(GetDashboard.rejected, (state, action) => {
+          state.loading = false;
+        })
     },
   });
+
   
 
   export const {resetLoungeSliceAdmin}=LoungeSlice.actions;

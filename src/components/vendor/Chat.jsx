@@ -4,9 +4,12 @@ import Conversations from './Conversations.jsx';
 
 const Chat = () => {
   const [user, setUser] = useState(null);
+  const [lastMessageStatus, setLastMessageStatus] = useState(false);
   const vendorToken = localStorage.getItem('vendorToken');
     const parsedVendorToken = JSON.parse(vendorToken);
     const vendorId = parsedVendorToken?.vendorId;
+    const [unread,setUnread]=useState(false);
+    console.log(lastMessageStatus)
 
   return (
     <>
@@ -20,11 +23,11 @@ const Chat = () => {
           </li>
         </ul>
       </div>
-      <Conversations setUser={setUser} vendorId={vendorId} />
+      <Conversations setUser={setUser} user={user} vendorId={vendorId} unread={unread} setLastMessageStatus={setLastMessageStatus} lastMessageStatus={lastMessageStatus}/>
     </div>
   </div>
   <div className="flex-1">
-    {user && <ChatBox userId={user} vendorId={vendorId} />}
+    {user && <ChatBox userId={user} vendorId={vendorId} setUnread={setUnread} lastMessageStatus={lastMessageStatus} setLastMessageStatus={setLastMessageStatus} />}
   </div>
 </div>
 

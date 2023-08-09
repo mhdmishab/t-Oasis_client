@@ -8,7 +8,7 @@ import Map from '../helpers/Map';
 import imgPreview from '../../assets/images/signupbg.jpg';
 import { useNavigate } from 'react-router-dom';
 
-function LoungeEditForm({ loungeId }) {
+function LoungeEditForm({ loungeId}) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -54,7 +54,7 @@ function LoungeEditForm({ loungeId }) {
                 .min(3, 'The loungename must be at least 3 characters.')
                 .max(20, 'The loungename must be at most 20 characters.')
                 .required('This field is required!'),
-            loungeDescription: Yup.string().min(5, 'Description must be at least 5 letters').required(),
+            loungeDescription: Yup.string().min(5, 'Description must be at least 5 letters').max(100,"Description must be maximum 100 letters").required(),
             loungeDistrict: Yup.string().required(),
             loungeState: Yup.string().required(),
             loungeName: Yup.string()
@@ -115,6 +115,7 @@ function LoungeEditForm({ loungeId }) {
             dispatch(editlounge({ data: data, vendorId: vendorId, loungeId:loungeId }))
                 .then((response) => {
                     navigate('/manager/dashboard');
+                 
                     console.log('response is here', response);
                 })
                 .catch((err) => {

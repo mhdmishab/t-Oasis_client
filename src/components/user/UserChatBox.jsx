@@ -4,15 +4,17 @@ import { GetConversationMessages, GetPrivateChatMessages } from '../../slices/us
 import socketIOClient from 'socket.io-client';
 import { useRef } from 'react';
 
+
+
+
 function UserChatBox({vendorId,userId}) {
     const dispatch=useDispatch();
   const [inputMessage, setInputMessage] = useState('');
   const [chatMessages, setChatMessages] = useState([]);
   const  userprofile  = useSelector(state => state.loungeuser).user;
+  
   const [socketConnected,setSocketConnected]=useState(false);
 
-
-  
 
 
  const socketRef = useRef(null);
@@ -20,8 +22,9 @@ function UserChatBox({vendorId,userId}) {
 
  
  useEffect(() => {
-
-     const ENDPOINT = 'https://toasis.restinpillows.shop'; 
+ 
+    //  const ENDPOINT = 'https://toasis.restinpillows.shop'; 
+    const ENDPOINT = 'http://localhost:5000';
    
      socketRef.current = socketIOClient(ENDPOINT);
  
@@ -71,9 +74,12 @@ function UserChatBox({vendorId,userId}) {
 
  useEffect(() => {
 
-
+  console.log("msg recieved useeffect");
 
      socketRef.current.on("message received", (newMessageRecieved) => {
+      
+      // console.log(notificationRef.current);
+      
        console.log("newMessageRecieved : ",newMessageRecieved)
        if ( !newMessageRecieved.recieverId ) {
          console.log("Something went wrong")
@@ -90,11 +96,12 @@ function UserChatBox({vendorId,userId}) {
    
    },[]);
 
+
    useEffect(() => {
   
     console.log("herer in side scroll use effect")
     chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
-  }, [chatMessages,userId]);
+  }, [chatMessages,inputMessage]);
 
 
  const handleSubmit = async(e) => {

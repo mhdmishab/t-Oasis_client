@@ -11,13 +11,14 @@ function FacilitytypesManagment() {
     const dispatch=useDispatch();
     const navigate=useNavigate();
     const {newfacilitys}=useSelector(state=>state.facilityadmin);
+    const [statusUpdated,setStatusUpdated]=useState(false);
 
     useEffect(()=>{
         dispatch(getnewfacility());
-        
-        
-    
-    },[dispatch])
+        if(statusUpdated){
+          setStatusUpdated(false)
+        }    
+    },[dispatch,statusUpdated])
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
@@ -33,7 +34,8 @@ function FacilitytypesManagment() {
         console.log(id);
         const response=await dispatch(managestatusfacility(id));
         if(response.payload?.data?.success){
-            navigate('/admin/dashboard');
+            setStatusUpdated(true);
+            navigate('/admin/facilities');
         }
 
     }

@@ -132,6 +132,7 @@ export const AddComplaint=createAsyncThunk(
     initialState,
     reducers: {
       resetLoungeSliceUser:()=>initialState,
+      
 
       setVendorId:(state,action)=>{
         state.vendorId=action.payload.id;
@@ -165,6 +166,15 @@ export const AddComplaint=createAsyncThunk(
             state.bookings=action.payload?.data?.bookings;
           })
           .addCase(getuserprofile.rejected, (state, action) => {
+            state.loading = false;
+          })
+          .addCase(UploadUserImage.pending, (state, action) => {
+            state.loading = true;
+          })
+          .addCase(UploadUserImage.fulfilled, (state, action) => {
+            state.loading = false;
+          })
+          .addCase(UploadUserImage.rejected, (state, action) => {
             state.loading = false;
           })
           

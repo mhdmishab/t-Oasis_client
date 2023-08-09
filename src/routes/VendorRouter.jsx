@@ -12,6 +12,7 @@ import LoungeFacilities from '../pages/vendor/home/LoungeFacilities'
 import Facility from '../pages/vendor/home/Facility'
 import VendorSidebar from '../components/vendor/VendorSidebar'
 import Chats from '../pages/vendor/home/Chats'
+import Errorpage from '../components/helpers/Errorpage'
 
 
 
@@ -32,6 +33,7 @@ function VendorRouter() {
             <Route path='/facilities' element={<VendorAuthentication><LoungeFacilities/></VendorAuthentication>}/>
             <Route path='/lounge/facility' element={<VendorAuthentication><Facility/></VendorAuthentication>}/>
             <Route path='/chats' element={<VendorAuthentication><Chats/></VendorAuthentication>}/>
+            <Route path='/*'  element={<Errorpage/>}/>
             </Route>
 
               

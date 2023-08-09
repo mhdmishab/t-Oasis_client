@@ -95,7 +95,7 @@ export const getfacilities = createAsyncThunk(
   
   
   
-  const initialState = { loading: false,facilities: null,facilityId:null,bookedSlots:null};
+  const initialState = { loading: false,facilities: null,facilityId:null,bookedSlots:null,};
   
   
   
@@ -104,6 +104,8 @@ export const getfacilities = createAsyncThunk(
     initialState,
     reducers: {
       resetFacilitySliceUser:()=>initialState,
+
+     
 
       setFacilityId:(state,action)=>{
         state.facilityId=action.payload.id;

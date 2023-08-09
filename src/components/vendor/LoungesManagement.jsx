@@ -18,6 +18,7 @@ function LoungesManagement() {
 
     
 
+   
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
         setIsModalOpen(true);
@@ -27,6 +28,8 @@ function LoungesManagement() {
         try{
             if(isLoggedInVendor){
         dispatch(getlounge(id));
+        setIsModalOpen(false);
+        
             }
         }catch(error){
             console.log(error)
@@ -63,7 +66,7 @@ function LoungesManagement() {
                     width={1000}
                 >
 
-                   <LoungeForm/>
+                   <LoungeForm />
                 </Modal>
         </div>
     )
