@@ -23,8 +23,8 @@ function UserChatBox({vendorId,userId}) {
  
  useEffect(() => {
  
-    //  const ENDPOINT = 'https://toasis.restinpillows.shop'; 
-    const ENDPOINT = 'http://localhost:5000';
+     const ENDPOINT = 'https://toasis.restinpillows.shop'; 
+    // const ENDPOINT = 'http://localhost:5000';
    
      socketRef.current = socketIOClient(ENDPOINT);
  
