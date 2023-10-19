@@ -5,9 +5,9 @@ import signupImg from '../../../assets/images/signupbg.jpg'
 function Signup() {
   return (
  
-    <div className="font-alata w-screen h-screen flex justify-center items-center p-4 sm:p-8 md:p-12 lg:p-16">
-    <div className="flex bg-white shadow-xl shadow-white-600/80 sm:flex-col md:flex-row lg:flex-row">
-      <div className="hidden md:block flex-1 pt-12">
+    <div className="font-alata w-full h-full flex justify-center items-center pt-32 sm:p-9 md:p-28 lg:p-32">
+    <div className="flex bg-white-100 shadow-xl shadow-white-600/80 sm:flex-col md:flex-row lg:flex-row">
+      <div className="hidden lg:block flex-1 ">
         <img className="" src={signupImg} alt="loginpic" />
       </div>
       <div className="flex-1 flex items-center justify-center">

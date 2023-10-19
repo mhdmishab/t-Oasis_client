@@ -46,7 +46,7 @@ function LoungeDetails({ lounge }) {
         </div>
 
         <div className="w-full md:w-1/2 p-4">
-          <div className="bg-gray-200 mt-2 p-4 rounded-md">
+          <div className="bg-white-100 mt-2 p-4 rounded-md">
             <p className="text-lg">{lounge[0].loungeDescription}</p>
           </div>
         </div>

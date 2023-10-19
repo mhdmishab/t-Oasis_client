@@ -83,7 +83,7 @@ function SignupForm() {
                     <div className='flex flex-col text-black py-2'>
                         <label className='text-gray-800'>Name</label>
                         <Field
-                            className='pl-8 m-2 border-b-2 font-display focus:outline-none focus:border-black  text-base'
+                            className='pl-8 m-2 border-b-2 opacity-70 font-display focus:outline-none focus:border-black  text-base'
                             type='text'
                             name='name'
                         />
@@ -96,7 +96,7 @@ function SignupForm() {
                     <div className='flex flex-col text-black py-2'>
                         <label className='text-gray-800'>Email</label>
                         <Field
-                            className='pl-8 m-2 border-b-2 font-display focus:outline-none focus:border-black  text-base'
+                            className='pl-8 m-2 border-b-2 opacity-70 font-display focus:outline-none focus:border-black  text-base'
                             type='text'
                             name='email'
                         />
@@ -109,7 +109,7 @@ function SignupForm() {
                     <div className='flex flex-col text-black py-2'>
                         <label className='text-gray-800'>Password</label>
                         <Field
-                            className='pl-8 m-2 border-b-2 font-display focus:outline-none focus:border-black  text-base'
+                            className='pl-8 m-2 opacity-70 border-b-2 font-display focus:outline-none focus:border-black  text-base'
                             type='password'
                             name='password'
                         />

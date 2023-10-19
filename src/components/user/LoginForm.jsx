@@ -71,7 +71,7 @@ function LoginForm() {
             <div className='flex flex-col  py-2'>
                 <label className='text-gray-800'>Email</label>
                 <Field
-                    className="pl-8 m-2 border-b-2 font-display focus:outline-none focus:border-black  text-base"
+                    className="pl-8 m-2 border-b-2 opacity-70 font-display focus:outline-none focus:border-black  text-base"
                     type='text'
                     name='email'
                 />
@@ -84,7 +84,7 @@ function LoginForm() {
             <div className='flex flex-col  py-2'>
                 <label className='text-gray-800'>Password</label>
                 <Field
-                    className='pl-8 m-2 border-b-2 font-display focus:outline-none focus:border-black text-base'
+                    className='pl-8 m-2 border-b-2 opacity-70 font-display focus:outline-none focus:border-black text-base'
                     type='password'
                     name='password'
                 />
@@ -97,8 +97,9 @@ function LoginForm() {
             <button className='w-full my-5 py-5 bg-teal-500 shadow-lg shadow-teal-500/50 text-white font-semibold rounded-lg' disabled={loading}  type='submit'>
             {loading ? 'Loading...' : 'Login'} 
             </button>
-            <div className='flex justify-center'>
+            <div className='flex justify-between '>
                   <p className='text-gray-400'><NavLink to={'/register'}>Need a account?</NavLink></p>
+                  <p className='text-gray-400'><NavLink to={'/manager/login'}>Manager Login?</NavLink></p>
               </div>
         </Form>
     </Formik>

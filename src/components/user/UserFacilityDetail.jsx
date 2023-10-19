@@ -39,7 +39,7 @@ function UserFacilityDetail({ facility }) {
         />
       </div>
 
-      <div className="bg-blue-200 p-4 rounded-md mt-4 md:mt-0 w-full md:w-[60rem]">
+      <div className="bg-white-200 text-center p-4 rounded-md mt-4 md:mt-0 w-full md:w-[60rem]">
         <p className="text-lg">{facility[0].facilityDescription}</p>
       </div>
     </div>

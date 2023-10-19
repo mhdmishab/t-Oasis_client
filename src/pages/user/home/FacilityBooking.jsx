@@ -232,7 +232,7 @@ function FacilityBooking() {
             <UserFacilityDetail facility={facility} key={facility?._id} />
             <div className='m-4 flex flex-col justify-center items-center'>
 
-                <DatePicker onChange={handleDateChange} changeOnBlur={true} disabledDate={DisabledDate} className='bg-blue-100 ' />
+                <DatePicker onChange={handleDateChange} changeOnBlur={true} disabledDate={DisabledDate} className='bg-white-100 ' />
 
                 <div className='w-full flex flex-col sm:flex-row justify-between'>
                    
@@ -266,7 +266,7 @@ function FacilityBooking() {
                         </div>
                   
                     </div>
-                    <div className="w-full md:w-1/3 bg-green-200 p-3 rounded-lg m-1 flex flex-col justify-start overflow-auto">
+                    <div className="w-full md:w-1/3 bg-white-200 p-3 rounded-lg m-1 flex flex-col justify-start overflow-auto">
                         <div className="h-full flex flex-col justify-around items-center">
                             <div className="w-full m-3 p-3 flex flex-col justify-between">
                                 <div>
@@ -306,7 +306,7 @@ function FacilityBooking() {
                 </div>
 
             </div>
-            <div className='w-full flex justify-start'>
+            <div className='w-full flex justify-center'>
                 <ReviewBox facility={facility}/>
             </div>
         </div>

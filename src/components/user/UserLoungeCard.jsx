@@ -31,7 +31,7 @@ function UserLoungeCard({ lounge }) {
       onClick={() => handleInsideCard(lounge.vendor_id, lounge._id)}
       className="cursor-pointer w-full sm:w-1/2 md:w-1/3  p-2"
     >
-      <div className="w-full max-w-sm mx-auto bg-white rounded-md overflow-hidden shadow-md">
+      <div className="w-full max-w-sm mx-auto bg-white-100 rounded-md overflow-hidden shadow-md">
         <div className="w-full h-36">
           <img
             src={lounge.loungeImages[0]?.url}

@@ -5,12 +5,12 @@ function ReviewBox({ facility }) {
   console.log(facility);
 
   return (
-    <div className="bg-white rounded-lg p-6 shadow-md w-full max-w-md mx-4">
-      <h2 className="text-xl font-bold mb-4 text-gray-500">Reviews</h2>
+    <div className="bg-slate-200 rounded-lg p-6 shadow-md w-1/2  mx-4">
+      <h2 className="text-xl font-bold mb-4 text-gray-500 flex justify-center  ">Reviews</h2>
       <div>
         {facility[0].reviews?.map((review, index) => (
-          <div key={index} className="mb-8 border-b pb-4">
-            <div className="flex items-center mb-2">
+          <div key={index} className="mb-8 border-b pb-4 ">
+            <div className="flex items-center mb-3">
               {[...Array(5)].map((_, starIndex) => {
                 const starNumber = starIndex + 1;
                 return (
@@ -26,6 +26,7 @@ function ReviewBox({ facility }) {
             <div>
               <p className="text-gray-800">{review.review_text}</p>
             </div>
+            <span>---------------------------------------------------------------------------------------------------------</span>
           </div>
         ))}
       </div>

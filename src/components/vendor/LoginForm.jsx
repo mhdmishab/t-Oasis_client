@@ -101,8 +101,9 @@ function LoginForm() {
             <button className='w-full my-5 py-5 bg-teal-500 shadow-lg shadow-teal-500/50 text-white font-semibold rounded-lg' disabled={loading}  type='submit'>
             {loading ? 'Loading...' : 'Login'} 
             </button>
-            <div className='flex justify-center'>
+            <div className='flex justify-between'>
                   <p className='text-gray-400'><NavLink to={'/manager/register'}>Need a account?</NavLink></p>
+                  <p className='text-gray-400'><NavLink to={'/login'}>User Login?</NavLink></p>
               </div>
         </Form>
     </Formik>
