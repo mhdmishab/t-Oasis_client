@@ -1,4 +1,4 @@
-import React, {  useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -7,30 +7,30 @@ import { register } from '../../slices/vendor/Auth';
 import { clearmessage } from '../../slices/Message';
 
 function RegisterForm() {
-   
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
-   
-    const {loading } = useSelector((state) => state.vendorauth);
 
-    const {message} = useSelector((state)=>state.message);
-    
-    
+    const { loading } = useSelector((state) => state.vendorauth);
 
-  
-    const user={
+    const { message } = useSelector((state) => state.message);
+
+
+
+
+    const user = {
         name: '',
         email: '',
         password: ''
     }
-    
+
 
     useEffect(() => {
-        
-        dispatch(clearmessage());
-      }, [dispatch]);
 
-   
+        dispatch(clearmessage());
+    }, [dispatch]);
+
+
 
 
     const validationSchema = Yup.object().shape({
@@ -44,25 +44,29 @@ function RegisterForm() {
         password: Yup.string()
             .min(6, 'The password must be at least 6 characters.')
             .max(40, 'The password must be at most 40 characters.')
+            .matches(
+                /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=]).*$/,
+                'Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@#$%^&+=)'
+            )
             .required('This field is required!'),
     });
 
 
     const handleSubmit = (user) => {
-    
-        dispatch(register(user)).unwrap().then((response)=>{
+
+        dispatch(register(user)).unwrap().then((response) => {
             console.log("register dispatch response at vendor aide")
             console.log(response);
-            if(response?.data?.success){
+            if (response?.data?.success) {
                 navigate('/manager/otp')
             }
-       
-        }).catch((err)=>{
+
+        }).catch((err) => {
             console.log("error catched");
             console.log(err);
-            
+
         })
-    
+
     };
 
 
@@ -70,67 +74,67 @@ function RegisterForm() {
 
     return (
         <div>
-        <Formik
-            initialValues={user}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-        >
-            <Form className='p-8 px-8 rounded-lg'>
-                <h2 className='text-4xl mb-5 dark:text-gray-800 font-bold text-center'>Manager Sign up </h2>
-                <div className='flex flex-col text-black py-2'>
-                    <label className='text-gray-800'>Name</label>
-                    <Field
-                        className='pl-8 m-2 border-b-2 font-display focus:outline-none focus:border-black  text-base'
-                        type='text'
-                        name='name'
-                    />
-                    <ErrorMessage
-                        name='name'
-                        component='div'
-                        className='text-red-500' // Set the error text color to red
-                    />
+            <Formik
+                initialValues={user}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+            >
+                <Form className='p-8 px-8 rounded-lg'>
+                    <h2 className='text-4xl mb-5 dark:text-gray-800 font-bold text-center'>Manager Sign up </h2>
+                    <div className='flex flex-col text-black py-2'>
+                        <label className='text-gray-800'>Name</label>
+                        <Field
+                            className='pl-8 m-2 border-b-2 font-display focus:outline-none focus:border-black  text-base'
+                            type='text'
+                            name='name'
+                        />
+                        <ErrorMessage
+                            name='name'
+                            component='div'
+                            className='text-red-500' // Set the error text color to red
+                        />
+                    </div>
+                    <div className='flex flex-col text-black py-2'>
+                        <label className='text-gray-800'>Email</label>
+                        <Field
+                            className='pl-8 m-2 border-b-2 font-display focus:outline-none focus:border-black  text-base'
+                            type='text'
+                            name='email'
+                        />
+                        <ErrorMessage
+                            name='email'
+                            component='div'
+                            className='text-red-500' // Set the error text color to red
+                        />
+                    </div>
+                    <div className='flex flex-col text-black py-2'>
+                        <label className='text-gray-800'>Password</label>
+                        <Field
+                            className='pl-8 m-2 border-b-2 font-display focus:outline-none focus:border-black  text-base'
+                            type='password'
+                            name='password'
+                        />
+                        <ErrorMessage
+                            name='password'
+                            component='div'
+                            className='text-red-500' // Set the error text color to red
+                        />
+                    </div>
+                    <button className='w-full my-5 py-5 bg-teal-500 shadow-lg shadow-teal-500/50 text-white font-semibold rounded-lg' disabled={loading} type='submit'>
+                        {loading ? 'Loading...' : 'Sign Up'}
+                    </button>
+                </Form>
+            </Formik>
+
+            {message && (
+                <div className="form-group">
+                    <div className="alert alert-danger" role="alert">
+                        {message}
+                    </div>
                 </div>
-                <div className='flex flex-col text-black py-2'>
-                    <label className='text-gray-800'>Email</label>
-                    <Field
-                        className='pl-8 m-2 border-b-2 font-display focus:outline-none focus:border-black  text-base'
-                        type='text'
-                        name='email'
-                    />
-                    <ErrorMessage
-                        name='email'
-                        component='div'
-                        className='text-red-500' // Set the error text color to red
-                    />
-                </div>
-                <div className='flex flex-col text-black py-2'>
-                    <label className='text-gray-800'>Password</label>
-                    <Field
-                        className='pl-8 m-2 border-b-2 font-display focus:outline-none focus:border-black  text-base'
-                        type='password'
-                        name='password'
-                    />
-                    <ErrorMessage
-                        name='password'
-                        component='div'
-                        className='text-red-500' // Set the error text color to red
-                    />
-                </div>
-                <button className='w-full my-5 py-5 bg-teal-500 shadow-lg shadow-teal-500/50 text-white font-semibold rounded-lg' disabled={loading}  type='submit'>
-                {loading ? 'Loading...' : 'Sign Up'} 
-                </button>
-            </Form>
-        </Formik>
-        
-        {message && (
-        <div className="form-group">
-          <div className="alert alert-danger" role="alert">
-            {message}
-          </div>
+            )}
         </div>
-      )}
-          </div>
-         
+
     );
 }
 

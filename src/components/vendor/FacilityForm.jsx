@@ -34,7 +34,7 @@ function FacilityForm() {
           .min(4, 'Name must be 4 characters or more')
           .max(17, 'Name must be 17 characters or less')
           .required('Required'),
-        facilityDescription: Yup.string().min(5).max(100).required('Required'),
+        facilityDescription: Yup.string().min(5).required('Required'),
         facilityImage: Yup.mixed()
           .required('Document is required')
           .test('FILE_SIZE', 'Too big!', (value) => value && value.size < 1024 * 1024)

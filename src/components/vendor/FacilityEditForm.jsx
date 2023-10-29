@@ -66,7 +66,7 @@ function FacilityEditForm({facilityId}) {
           .min(4, 'Name must be 4 characters or more')
           .max(17, 'Name must be 17 characters or less')
           .required('Required'),
-        facilityDescription: Yup.string().min(5).max(100).required('Required'),
+        facilityDescription: Yup.string().min(5).required('Required'),
         facilityImage: Yup.mixed().nullable().test('fileFormat', 'Invalid file format', function (value) {
             if (this.parent.facilityImage && !value) {
                 // New image not selected, no validation required

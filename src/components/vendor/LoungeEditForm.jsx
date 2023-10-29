@@ -54,7 +54,7 @@ function LoungeEditForm({ loungeId}) {
                 .min(3, 'The loungename must be at least 3 characters.')
                 .max(20, 'The loungename must be at most 20 characters.')
                 .required('This field is required!'),
-            loungeDescription: Yup.string().min(5, 'Description must be at least 5 letters').max(100,"Description must be maximum 100 letters").required(),
+            loungeDescription: Yup.string().min(5, 'Description must be at least 5 letters').required(),
             loungeDistrict: Yup.string().required(),
             loungeState: Yup.string().required(),
             loungeName: Yup.string()

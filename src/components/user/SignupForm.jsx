@@ -43,21 +43,25 @@ function SignupForm() {
         password: Yup.string()
             .min(6, 'The password must be at least 6 characters.')
             .max(40, 'The password must be at most 40 characters.')
+            .matches(
+                /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=]).*$/,
+                'Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@#$%^&+=)'
+            )
             .required('This field is required!'),
-       
+
 
     });
 
 
     const handleSubmit = (user) => {
 
-        
-        
+
+
         dispatch(register(user)).unwrap().then((response) => {
 
             console.log(response);
-            if(response?.data || response.payload?.data?.success){
-            navigate('/otp')
+            if (response?.data || response.payload?.data?.success) {
+                navigate('/otp')
             }
 
         }).catch((err) => {
