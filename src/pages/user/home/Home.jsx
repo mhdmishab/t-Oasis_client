@@ -100,11 +100,12 @@ function Home() {
 
       </Carousel>
 
-      <div className=" mt-5 flex justify-center items-center">
+      <div className=" mt-5 flex justify-center items-center flex-col">
       
       <img className='cursor-pointer w-32 h-32' onClick={handleclick} src={search} alt="search-locations" />
+      <h4 className='font-bold text-xl cursor-pointer text' onClick={handleclick}>Explore <span className='text-green-500'>Lounges</span></h4>
       </div>
-
+ 
       <div className='h-auto w-auto flex flex-wrap justify-center items-center  bg-opacity-40'>
         <div className='flex-col'>
           <div className='w-72 h-72 m-3 flex items-center justify-center'>
