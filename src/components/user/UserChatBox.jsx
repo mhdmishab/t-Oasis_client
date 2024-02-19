@@ -23,7 +23,7 @@ function UserChatBox({vendorId,userId}) {
  
  useEffect(() => {
  
-     const ENDPOINT = 'https://toasis.restinpillows.shop'; 
+     const ENDPOINT = 'https://toasis-server.onrender.com'; 
     // const ENDPOINT = 'http://localhost:5000';
    
      socketRef.current = socketIOClient(ENDPOINT);

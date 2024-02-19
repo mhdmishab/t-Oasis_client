@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = 'https://toasisnew.restinpillows.shop';
+const BASE_URL = 'https://toasis-server.onrender.com';
 // const BASE_URL = 'http://localhost:5000';
 
 const axiosPublic = axios.create({

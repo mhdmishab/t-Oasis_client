@@ -21,7 +21,7 @@ function ChatBox({vendorId,userId,setUnread,setLastMessageStatus,lastMessageStat
     
     useEffect(() => {
 
-        const ENDPOINT = 'https://toasis.restinpillows.shop'; 
+        const ENDPOINT = 'https://toasis-server.onrender.com'; 
         // const ENDPOINT = 'http://localhost:5000';
         // socket = socketIOClient(ENDPOINT);
         socketRef.current = socketIOClient(ENDPOINT);
