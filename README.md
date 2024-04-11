@@ -1,70 +1,106 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# T-Oasis - a fertile spot for travellers
 
-## Available Scripts
+T-Oasis is a multivendor project designed to serve as a facility booking website for travelers. This project empowers both lounge managers and users to efficiently manage and book facilities, creating a seamless experience for all parties involved. This platform caters to a diverse user base, including lounge managers who manage lounge spaces and a administrator responsible for overseeing the entire system.🚀🐦
 
-In the project directory, you can run:
+**The following tools were utilized for the project-:**
 
-### `npm start`
+- libraries: jwt, cronjob, socket-io, formik, mapbox, nodemailer, Axios, Antd, Tailwind CSS, redux_toolkit, react-persist, chart.js, cloudinary, razorpay,etc..
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Deployment Instructions:
 
-### `npm test`
+#### Prerequisites:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js(above v-14) should be installed on your system.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Step 1: Clone the Project 
+#### Prerequisites:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- clone client and server repo separetly from github in a single folder.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Open a terminal and run the following command to clone client side:
+```bash
+git clone https://github.com/mhdmishab/t-Oasis_client
+ 
+```
+Open a terminal and run the following command to clone server side:
+```bash
+git clone https://github.com/mhdmishab/t-Oasis
+ 
+```
+#### Step 2: Navigate to the Project Directory of Client 
 
-### `npm run eject`
+Navigate to the `client` directory within the cloned project using the command:
+```bash
+cd mhdmishab/t-Oasis_client
+ 
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### Step 3: Install Global Dependencies
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Run the following command. This will help with server restarts during development.
+```bash
+ npm install
+ 
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### Step 3: Start Running the Front-end 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+After navigating to the `client` directory, start the front end using the following command:
+```bash
+npm start
+ 
+```
 
-## Learn More
+#### Step 4: Navigate to the Project Directory of server 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Open Another terminal and Navigate to the `server` directory using the command:
+```bash
+cd mhdmishab/t-Oasis
+ 
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### Step 5: Configure Environment Variables
 
-### Code Splitting
+Before running the backend server, make sure to create an `.env` file in the `server` directory. Add the following environment variables to the file:
+```bash
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+CONNECTION_STRING=mongodb_connection_string
+PORT=your_port
+JWT_SECRET_KEY=your_jwt_key
+OTP_SECRET_KEY=your_otp_key
+EMAIL_ADDRESS=your_email
+EMAIL_PASSWORD=your_email_pass
+ADMIN_EMAIL=admin_email
+ADMIN_PASSWORD=admin_password
+CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_cloud_apikey
+CLOUDINARY_API_SECRET=cloud_api_secret
+RAZORPAY_KEY_ID=razor_key
+RAZORPAY_KEY_SECRET=razor_secret
+ 
+```
 
-### Analyzing the Bundle Size
+#### Step 6: Install Global Dependencies and nodemon
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Run the following command to install nodemon globally. This will help with server restarts during development.
+```bash
+ npm install
+ npm install -g nodemon
+ 
+```
+#### Step 7: Start Running the Back-end 
 
-### Making a Progressive Web App
+After navigating to the `server` directory, start the backend using the following command:
+```bash
+npm start
+ 
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Conclusion
 
-### Advanced Configuration
+T-Oasis revolutionizes the way travelers book facilities by offering a comprehensive and intuitive platform. By empowering lounge managers and users alike, it ensures a seamless experience for all parties involved. With its diverse user base and robust features, including efficient facility management and oversight by administrators, T-Oasis sets a new standard for facility booking websites. As we continue to innovate and enhance the platform, we are committed to delivering an unparalleled experience that exceeds the expectations of travelers worldwide. 🚀🐦
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
